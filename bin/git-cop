@@ -1,0 +1,9 @@
+#! /usr/bin/env ruby
+# frozen_string_literal: true
+
+require "git/cop"
+require "git/cop/cli"
+require "git/cop/identity"
+
+Process.setproctitle Git::Cop::Identity.version_label
+Git::Cop::CLI.start
