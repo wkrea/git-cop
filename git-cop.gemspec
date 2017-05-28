@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://github.com/bkuhlmann/git-cop"
-  spec.summary = ""
+  spec.summary = "Enforces consistent Git commits."
   spec.license = "MIT"
 
   if File.exist?(Gem.default_key_path) && File.exist?(Gem.default_cert_path)
@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = "~> 2.4"
   spec.add_dependency "thor", "~> 0.19"
   spec.add_dependency "thor_plus", "~> 5.1"
+  spec.add_dependency "refinements", "~> 4.1"
   spec.add_dependency "runcom", "~> 0.6"
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "gemsmith", "~> 9.6"

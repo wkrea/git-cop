@@ -15,11 +15,16 @@ module Git
       package_name Identity.version_label
 
       def self.configuration
-        Runcom::Configuration.new file_name: Identity.file_name
+        defaults = Styles::Abstract.descendants.reduce({}) do |settings, cop|
+          settings.merge cop.id => cop.defaults
+        end
+
+        Runcom::Configuration.new file_name: Identity.file_name, defaults: defaults
       end
 
       def initialize args = [], options = {}, config = {}
         super args, options, config
+        @runner = Runner.new configuration: self.class.configuration.to_h
       end
 
       desc "-c, [--config]", %(Manage gem configuration ("#{configuration.computed_path}").)
@@ -41,6 +46,21 @@ module Git
         end
       end
 
+      desc "-p, [--police]", "Police current branch for issues."
+      map %w[-p --police] => :police
+      # :reek:TooManyStatements
+      def police
+        report = runner.run
+
+        if report.empty?
+          say "No issues detected."
+        else
+          cops = report.cops
+          cops.each { |cop| say_status :error, "#{cop.class.id} (#{cop.sha}): #{cop.error}", :red }
+          abort "#{cops.size} issues detected."
+        end
+      end
+
       desc "-v, [--version]", "Show gem version."
       map %w[-v --version] => :version
       def version
@@ -51,6 +71,13 @@ module Git
       map %w[-h --help] => :help
       def help task = nil
         say and super
+      end
+
+      private
+
+      attr_reader :runner
+
+      def print_issues
       end
     end
   end

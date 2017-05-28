@@ -33,6 +33,43 @@ RSpec.describe Git::Cop::CLI do
     end
   end
 
+  shared_examples_for "a police command", :git_repo do
+    context "with issues" do
+      before do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test`
+          `printf "%s\n" "Test content." > one.txt`
+          `git add --all .`
+          `git commit --no-verify --message "Made a test commit"`
+        end
+      end
+
+      it "prints errors" do
+        Dir.chdir git_repo_dir do
+          begin
+            expect(&cli).to output(/Invalid\sprefix.+Invalid\ssuffix.+Missing.+space/m).to_stdout
+          rescue SystemExit => error
+            expect(error.status).to eq(1)
+          end
+        end
+      end
+
+      it "aborts with total number of issues" do
+        Dir.chdir git_repo_dir do
+          expect(&cli).to raise_error(SystemExit, "3 issues detected.")
+        end
+      end
+    end
+
+    context "with no issues" do
+      it "prints no issues detected" do
+        Dir.chdir git_repo_dir do
+          expect(&cli).to output("No issues detected.\n").to_stdout
+        end
+      end
+    end
+  end
+
   shared_examples_for "a version command" do
     it "prints version" do
       expect(&cli).to output(/Git::Cop\s#{Git::Cop::Identity.version}\n/).to_stdout
@@ -53,6 +90,16 @@ RSpec.describe Git::Cop::CLI do
   describe "-c" do
     let(:command) { "-c" }
     it_behaves_like "a config command"
+  end
+
+  describe "--police" do
+    let(:command) { "--police" }
+    it_behaves_like "a police command"
+  end
+
+  describe "-p" do
+    let(:command) { "-p" }
+    it_behaves_like "a police command"
   end
 
   describe "--version" do
