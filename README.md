@@ -68,6 +68,9 @@ The following is what the default configuration consists of:
 
     :commit_body_leading_space:
       :enabled: true
+    :commit_body_line_length:
+      :enabled: true
+      :length: 72
     :commit_subject_length:
       :enabled: true
       :length: 50
