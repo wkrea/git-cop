@@ -4,10 +4,6 @@ module Git
   module Cop
     module Styles
       class CommitSubjectLength < Abstract
-        def self.id
-          :commit_subject_length
-        end
-
         def self.defaults
           {
             enabled: true,

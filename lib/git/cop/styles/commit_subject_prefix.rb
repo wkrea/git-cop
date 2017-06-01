@@ -4,10 +4,6 @@ module Git
   module Cop
     module Styles
       class CommitSubjectPrefix < Abstract
-        def self.id
-          :commit_subject_prefix
-        end
-
         def self.defaults
           {
             enabled: true,
