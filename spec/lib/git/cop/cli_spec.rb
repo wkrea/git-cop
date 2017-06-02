@@ -47,7 +47,7 @@ RSpec.describe Git::Cop::CLI do
       it "prints errors" do
         Dir.chdir git_repo_dir do
           begin
-            expect(&cli).to output(/Invalid\sprefix.+Invalid\ssuffix.+Missing.+space/m).to_stdout
+            expect(&cli).to output(/Invalid\sprefix.+Invalid\ssuffix/m).to_stdout
           rescue SystemExit => error
             expect(error.status).to eq(1)
           end
@@ -56,7 +56,7 @@ RSpec.describe Git::Cop::CLI do
 
       it "aborts with total number of issues" do
         Dir.chdir git_repo_dir do
-          expect(&cli).to raise_error(SystemExit, "3 issues detected.")
+          expect(&cli).to raise_error(SystemExit, "2 issues detected.")
         end
       end
     end

@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
-  let(:content) { "Added documentation.\n\n- Necessary for testing purposes.\n" }
-  let(:commit) { object_double Git::Cop::Commit.new(sha: "1"), raw_body: content }
+  let(:raw_body) { "Added documentation.\n\n- Necessary for testing purposes.\n" }
+  let(:commit) { object_double Git::Cop::Commit.new(sha: "1"), raw_body: raw_body }
   let(:settings) { {enabled: true} }
   subject { described_class.new commit: commit, settings: settings }
 
@@ -22,31 +22,31 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
     end
 
     context "with subject only" do
-      let(:content) { "A commit message." }
+      let(:raw_body) { "A commit message." }
 
-      it "answers false" do
-        expect(subject.valid?).to eq(false)
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
       end
     end
 
     context "with no space between subject and body" do
-      let(:content) { "Subject\nBody\n" }
+      let(:raw_body) { "Subject\nBody\n" }
 
       it "answers false" do
         expect(subject.valid?).to eq(false)
       end
     end
 
-    context "with subject, space, and no body" do
-      let(:content) { "Subject\n\n" }
+    context "with subject and no body" do
+      let(:raw_body) { "A test subject.\n\n" }
 
-      it "answers false" do
-        expect(subject.valid?).to eq(false)
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
       end
     end
 
     context "with no content" do
-      let(:content) { "" }
+      let(:raw_body) { "" }
 
       it "answers false" do
         expect(subject.valid?).to eq(false)
@@ -62,10 +62,10 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
     end
 
     context "when invalid" do
-      let(:content) { "A commit message." }
+      let(:raw_body) { "A commit message.\nWithout leading space." }
 
       it "answers error message" do
-        message = "Missing leading space. Use space between subject and body."
+        message = "Invalid leading space. Use space between subject and body."
         expect(subject.error).to eq(message)
       end
     end

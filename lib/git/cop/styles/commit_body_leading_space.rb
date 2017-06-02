@@ -9,12 +9,16 @@ module Git
         end
 
         def valid?
-          commit.raw_body.match?(/\A.+\n\n.+/)
+          raw_body = commit.raw_body
+          subject, body = raw_body.split "\n", 2
+          return true if !String(subject).empty? && String(body).strip.empty?
+
+          raw_body.match?(/\A.+\n\n.+/)
         end
 
         def error
           return "" if valid?
-          "Missing leading space. Use space between subject and body."
+          "Invalid leading space. Use space between subject and body."
         end
       end
     end
