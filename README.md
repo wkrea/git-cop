@@ -66,6 +66,8 @@ You can configure a global configuration via the following file:
 
 The following is what the default configuration consists of:
 
+    :commit_author_email:
+      :enabled: true
     :commit_author_name_capitalization:
       :enabled: true
     :commit_author_name_parts:
