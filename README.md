@@ -66,6 +66,9 @@ You can configure a global configuration via the following file:
 
 The following is what the default configuration consists of:
 
+    :commit_author_name_parts:
+      :enabled: true
+      :minimum: 2
     :commit_body_leading_space:
       :enabled: true
     :commit_body_line_length:

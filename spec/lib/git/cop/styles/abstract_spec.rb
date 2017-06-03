@@ -25,6 +25,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
   describe ".descendants" do
     it "answers descendant classes" do
       expect(described_class.descendants).to contain_exactly(
+        Git::Cop::Styles::CommitAuthorNameParts,
         Git::Cop::Styles::CommitBodyLeadingSpace,
         Git::Cop::Styles::CommitBodyLineLength,
         Git::Cop::Styles::CommitSubjectLength,
