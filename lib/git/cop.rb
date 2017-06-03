@@ -3,6 +3,7 @@
 require "git/cop/identity"
 require "git/cop/commit"
 require "git/cop/styles/abstract"
+require "git/cop/styles/commit_author_name_capitalization"
 require "git/cop/styles/commit_author_name_parts"
 require "git/cop/styles/commit_body_leading_space"
 require "git/cop/styles/commit_body_line_length"
