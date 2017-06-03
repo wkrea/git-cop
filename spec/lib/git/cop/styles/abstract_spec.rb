@@ -30,6 +30,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitAuthorNameParts,
         Git::Cop::Styles::CommitBodyLeadingSpace,
         Git::Cop::Styles::CommitBodyLineLength,
+        Git::Cop::Styles::CommitBodyPhrase,
         Git::Cop::Styles::CommitSubjectLength,
         Git::Cop::Styles::CommitSubjectPrefix,
         Git::Cop::Styles::CommitSubjectSuffix

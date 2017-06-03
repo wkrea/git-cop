@@ -78,6 +78,17 @@ The following is what the default configuration consists of:
     :commit_body_line_length:
       :enabled: true
       :length: 72
+    :commit_body_phrase:
+      :enabled: true
+      :blacklist:
+        - obviously
+        - basically
+        - simply
+        - of course
+        - just
+        - everyone knows
+        - however
+        - easy
     :commit_subject_length:
       :enabled: true
       :length: 50
