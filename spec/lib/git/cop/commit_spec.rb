@@ -97,6 +97,45 @@ RSpec.describe Git::Cop::Commit, :git_repo do
     end
   end
 
+  describe "#body_lines" do
+    before do
+      Dir.chdir git_repo_dir do
+        `touch test.txt`
+        `git add --all .`
+        `git commit --message $'#{commit_message}'`
+      end
+    end
+
+    context "with body" do
+      let :commit_message do
+        "Added test file.\n\n" \
+        "- First bullet.\n" \
+        "- Second bullet.\n" \
+        "- Third bullet.\n"
+      end
+
+      it "answers body lines" do
+        Dir.chdir git_repo_dir do
+          expect(subject.body_lines).to contain_exactly(
+            "- First bullet.",
+            "- Second bullet.",
+            "- Third bullet."
+          )
+        end
+      end
+    end
+
+    context "without body" do
+      let(:commit_message) { "Added test file." }
+
+      it "answers empty array" do
+        Dir.chdir git_repo_dir do
+          expect(subject.body_lines).to be_empty
+        end
+      end
+    end
+  end
+
   describe "#raw_body" do
     it "answers raw body" do
       content = "Added test documentation.\n\n- Necessary for testing purposes.\n"

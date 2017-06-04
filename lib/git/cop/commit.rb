@@ -20,6 +20,10 @@ module Git
         @data = `git show --stat --pretty=format:"#{self.class.pattern}" #{sha} 2> /dev/null`
       end
 
+      def body_lines
+        body.split "\n"
+      end
+
       private
 
       attr_reader :data
