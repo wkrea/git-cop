@@ -7,28 +7,28 @@ module Git
         def self.defaults
           {
             enabled: true,
-            suffixes: ["."]
+            whitelist: ["."]
           }
         end
 
         def valid?
-          return true if suffixes.empty?
-          commit.subject.match?(/#{Regexp.union suffixes}\Z/)
+          return true if whitelist.empty?
+          commit.subject.match?(/#{Regexp.union whitelist}\Z/)
         end
 
         def error
           return "" if valid?
-          %(Invalid suffix. Use: #{formatted_suffixes.join ", "}.)
+          %(Invalid suffix. Use: #{formatted_whitelist.join ", "}.)
         end
 
         private
 
-        def suffixes
-          settings.fetch :suffixes
+        def whitelist
+          settings.fetch :whitelist
         end
 
-        def formatted_suffixes
-          suffixes.map { |suffix| %("#{suffix}") }
+        def formatted_whitelist
+          whitelist.map { |suffix| %("#{suffix}") }
         end
       end
     end

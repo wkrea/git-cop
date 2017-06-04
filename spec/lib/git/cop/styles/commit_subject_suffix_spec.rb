@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
   let(:content) { "Added test subject." }
   let(:commit) { object_double Git::Cop::Commit.new(sha: "1"), subject: content }
   let(:enabled) { true }
-  let(:settings) { {enabled: enabled, suffixes: [".", "[✓]", "#skip"]} }
+  let(:settings) { {enabled: enabled, whitelist: [".", "[✓]", "#skip"]} }
   subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
@@ -22,19 +22,19 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
       end
     end
 
-    context "when invalid" do
-      let(:content) { "Added bad subject" }
-
-      it "answers false" do
-        expect(subject.valid?).to eq(false)
-      end
-    end
-
-    context "with empty suffixes" do
+    context "with empty whitelist" do
       let(:suffixes) { [] }
 
       it "answers true" do
         expect(subject.valid?).to eq(true)
+      end
+    end
+
+    context "with invalid suffix" do
+      let(:content) { "Added bad subject" }
+
+      it "answers false" do
+        expect(subject.valid?).to eq(false)
       end
     end
   end

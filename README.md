@@ -107,7 +107,7 @@ The following is what the default configuration consists of:
         - Refactored
     :commit_subject_suffix:
       :enabled: true
-      :suffixes:
+      :whitelist:
         "."
 
 It is also possible to configure `Git::Cop` at a per project level by adding a `.git-coprc` to the
