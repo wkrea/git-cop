@@ -99,7 +99,7 @@ The following is what the default configuration consists of:
       :length: 50
     :commit_subject_prefix:
       :enabled: true
-      :prefixes:
+      :whitelist:
         - Fixed
         - Added
         - Updated

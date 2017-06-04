@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
   let(:content) { "Added test subject." }
   let(:commit) { object_double Git::Cop::Commit.new(sha: "1"), subject: content }
-  let(:settings) { {enabled: true, prefixes: %w[Added Removed Fixed]} }
+  let(:settings) { {enabled: true, whitelist: %w[Added Removed Fixed]} }
   subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
@@ -21,19 +21,19 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       end
     end
 
-    context "when invalid" do
+    context "with empty whitelist" do
+      let(:whitelist) { [] }
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
+    context "with invalid prefix" do
       let(:content) { "Bogus subject line." }
 
       it "answers false" do
         expect(subject.valid?).to eq(false)
-      end
-    end
-
-    context "with empty prefixes" do
-      let(:prefixes) { [] }
-
-      it "answers true" do
-        expect(subject.valid?).to eq(true)
       end
     end
   end

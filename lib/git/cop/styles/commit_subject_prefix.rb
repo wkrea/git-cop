@@ -7,28 +7,28 @@ module Git
         def self.defaults
           {
             enabled: true,
-            prefixes: %w[Fixed Added Updated Removed Refactored]
+            whitelist: %w[Fixed Added Updated Removed Refactored]
           }
         end
 
         def valid?
-          return true if prefixes.empty?
-          commit.subject.match?(/\A#{Regexp.union prefixes}/)
+          return true if whitelist.empty?
+          commit.subject.match?(/\A#{Regexp.union whitelist}/)
         end
 
         def error
           return "" if valid?
-          %(Invalid prefix. Use: #{formatted_prefixes.join ", "}.)
+          %(Invalid prefix. Use: #{formatted_whitelist.join ", "}.)
         end
 
         private
 
-        def prefixes
-          settings.fetch :prefixes
+        def whitelist
+          settings.fetch :whitelist
         end
 
-        def formatted_prefixes
-          prefixes.map { |prefix| %("#{prefix}") }
+        def formatted_whitelist
+          whitelist.map { |prefix| %("#{prefix}") }
         end
       end
     end
