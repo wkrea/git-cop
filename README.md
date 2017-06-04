@@ -19,6 +19,7 @@ history.
 - [Setup](#setup)
   - [Install](#install)
   - [Configuration](#configuration)
+  - [Rake](#rake)
 - [Usage](#usage)
 - [Tests](#tests)
 - [Versioning](#versioning)
@@ -114,6 +115,17 @@ It is also possible to configure this gem at a per project level by adding a `.g
 root of your project. Doing this will override any global settings. This is also handy for
 customized CI builds as well.
 
+## Rake
+
+This gem provides optional Rake tasks. They can be added to your project by adding the following
+requirement to the top of your `Rakefile`:
+
+    require "git/cop/rake/setup"
+
+Now, when running `bundle exec rake -T`, you'll see `git_cop` included in the list.
+
+If you need a concrete example, check out the [Rakefile](Rakefile) of this project for details.
+
 # Usage
 
 From the command line, type: `git-cop --help`
@@ -141,14 +153,17 @@ Here is an example workflow, using the gem defaults where errors would be raised
     git-cop --police
 
     # Output:
-    error  commit_subject_prefix (62b701a5145bfca148f2ca07c6288c4dd6face40): Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
-    error  commit_subject_suffix (62b701a5145bfca148f2ca07c6288c4dd6face40): Invalid suffix. Use: ".".
-    error  commit_subject_length (62b701a5145bfca148f2ca07c6288c4dd6face40): Invalid length. Use 50 characters or less.
-    error  commit_body_leading_space (62b701a5145bfca148f2ca07c6288c4dd6face40): Missing leading space. Use space between subject and body.
-    4 issues detected.
+    Running Git Cop...
 
-With this output, you can see 4 issues were detected. Each issue shows the cop name, commit SHA (in
-parenthesis), and the error with help text.
+    Commit cfea4b29d4181b628f4e6577310a42c3e485b0d8:
+      commit_subject_length: Invalid length. Use 72 characters or less.
+      commit_subject_prefix: Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
+      commit_subject_suffix: Invalid suffix. Use: ".".
+
+    3 issues detected.
+
+With this output, you can see the number of issues detected. Each issue shows the cop name, commit
+SHA (in parenthesis), and the error with help text.
 
 # Tests
 
