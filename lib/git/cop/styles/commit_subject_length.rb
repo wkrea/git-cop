@@ -7,7 +7,7 @@ module Git
         def self.defaults
           {
             enabled: true,
-            length: 50
+            length: 72
           }
         end
 

@@ -96,7 +96,7 @@ The following is what the default configuration consists of:
         - easy
     :commit_subject_length:
       :enabled: true
-      :length: 50
+      :length: 72
     :commit_subject_prefix:
       :enabled: true
       :whitelist:
