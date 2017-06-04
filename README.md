@@ -73,6 +73,11 @@ The following is what the default configuration consists of:
     :commit_author_name_parts:
       :enabled: true
       :minimum: 2
+    :commit_body_bullet:
+      :enabled: true
+      :blacklist:
+        - *
+        - •
     :commit_body_leading_space:
       :enabled: true
     :commit_body_line_length:
