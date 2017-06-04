@@ -48,16 +48,15 @@ module Git
 
       desc "-p, [--police]", "Police current branch for issues."
       map %w[-p --police] => :police
-      # :reek:TooManyStatements
       def police
         report = runner.run
 
         if report.empty?
           say "No issues detected."
         else
-          cops = report.cops
-          cops.each { |cop| say_status :error, "#{cop.class.id} (#{cop.sha}): #{cop.error}", :red }
-          abort "#{cops.size} issues detected."
+          say "Running #{Identity.label}...\n\n"
+          say report
+          abort "#{report.total} issues detected."
         end
       end
 

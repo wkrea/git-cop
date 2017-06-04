@@ -7,6 +7,10 @@ module Git
     class Reporter
       using Refinements::Strings
 
+      def self.errors cops
+        cops.reduce("") { |message, cop| message + "  #{cop.class.id}: #{cop.error}\n" }
+      end
+
       def initialize
         @collection = Hash.new { |default, missing_id| default[missing_id] = [] }
       end
@@ -14,7 +18,7 @@ module Git
       # :reek:FeatureEnvy
       def add cop
         return if cop.valid?
-        collection[cop.class.id] << cop
+        collection[cop.sha] << cop
         cop
       end
 
@@ -22,12 +26,22 @@ module Git
         collection[id]
       end
 
-      def cops
-        collection.values.flatten
-      end
-
       def empty?
         collection.empty?
+      end
+
+      def total
+        collection.values.flatten.size
+      end
+
+      def to_h
+        collection
+      end
+
+      def to_s
+        to_h.reduce("") do |summary, (sha, cops)|
+          summary + "Commit #{sha}:\n#{self.class.errors cops}\n"
+        end
       end
 
       private

@@ -45,7 +45,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
           `git commit --no-verify --message "Add one.txt." --message "- For testing purposes only."`
           report = subject.run
 
-          expect(report.cops.first.error).to match(/Invalid\sprefix\./)
+          expect(report.total).to eq(1)
         end
       end
     end
