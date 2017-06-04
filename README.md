@@ -1,4 +1,4 @@
-# Git::Cop
+# Git Cop
 
 [![Gem Version](https://badge.fury.io/rb/git-cop.svg)](http://badge.fury.io/rb/git-cop)
 [![Code Climate GPA](https://codeclimate.com/github/bkuhlmann/git-cop.svg)](https://codeclimate.com/github/bkuhlmann/git-cop)
@@ -110,7 +110,7 @@ The following is what the default configuration consists of:
       :whitelist:
         "."
 
-It is also possible to configure `Git::Cop` at a per project level by adding a `.git-coprc` to the
+It is also possible to configure this gem at a per project level by adding a `.git-coprc` to the
 root of your project. Doing this will override any global settings. This is also handy for
 customized CI builds as well.
 
@@ -123,7 +123,7 @@ From the command line, type: `git-cop --help`
     git-cop -p, [--police]        # Police current branch for issues.
     git-cop -v, [--version]       # Show gem version.
 
-To check if your Git commit history is clean, run: `git-cop --police`. `Git::Cop` will exit with a
+To check if your Git commit history is clean, run: `git-cop --police`. It will exit with a
 failure if at least one issue is detected (handy for CI builds).
 
 This gem does not check commits on `master`. This is intentional as you would generally not want to

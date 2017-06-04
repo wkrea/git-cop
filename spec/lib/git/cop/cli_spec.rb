@@ -72,13 +72,13 @@ RSpec.describe Git::Cop::CLI do
 
   shared_examples_for "a version command" do
     it "prints version" do
-      expect(&cli).to output(/Git::Cop\s#{Git::Cop::Identity.version}\n/).to_stdout
+      expect(&cli).to output(/Git\sCop\s#{Git::Cop::Identity.version}\n/).to_stdout
     end
   end
 
   shared_examples_for "a help command" do
     it "prints usage" do
-      expect(&cli).to output(/Git::Cop\s#{Git::Cop::Identity.version}\scommands:\n/).to_stdout
+      expect(&cli).to output(/Git\sCop\s#{Git::Cop::Identity.version}\scommands:\n/).to_stdout
     end
   end
 

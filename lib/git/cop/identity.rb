@@ -9,7 +9,7 @@ module Git
       end
 
       def self.label
-        "Git::Cop"
+        "Git Cop"
       end
 
       def self.version
