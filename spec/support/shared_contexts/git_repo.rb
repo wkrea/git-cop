@@ -17,7 +17,7 @@ RSpec.shared_context "Git Repository", :git_repo do
       `git config user.name "#{git_user_name}"`
       `git config user.email "#{git_user_email}"`
       `git config core.hooksPath /dev/null`
-      `git config remote.origin.url git@github.com:example/example.git`
+      `git config remote.origin.url https://github.com/example/example.git`
       `git add --all .`
       `git commit --all --message "Added dummy files."`
     end
