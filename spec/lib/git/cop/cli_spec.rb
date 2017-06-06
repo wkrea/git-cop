@@ -44,16 +44,6 @@ RSpec.describe Git::Cop::CLI do
         end
       end
 
-      it "prints errors" do
-        Dir.chdir git_repo_dir do
-          begin
-            expect(&cli).to output(/Invalid\sprefix.+Invalid\ssuffix/m).to_stdout
-          rescue SystemExit => error
-            expect(error.status).to eq(1)
-          end
-        end
-      end
-
       it "aborts with total number of issues" do
         Dir.chdir git_repo_dir do
           expect(&cli).to raise_error(SystemExit, "2 issues detected.")
@@ -64,7 +54,7 @@ RSpec.describe Git::Cop::CLI do
     context "with no issues" do
       it "prints no issues detected" do
         Dir.chdir git_repo_dir do
-          expect(&cli).to output("No issues detected.\n").to_stdout
+          expect(&cli).to output("Running Git Cop...\n\nNo issues detected.\n").to_stdout
         end
       end
     end

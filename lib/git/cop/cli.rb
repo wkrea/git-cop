@@ -49,12 +49,12 @@ module Git
       desc "-p, [--police]", "Police current branch for issues."
       map %w[-p --police] => :police
       def police
+        say "Running #{Identity.label}...\n\n"
         report = runner.run
 
         if report.empty?
           say "No issues detected."
         else
-          say "Running #{Identity.label}...\n\n"
           say report
           abort "#{report.total} issues detected."
         end
