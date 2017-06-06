@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "git/cop/identity"
+require "git/cop/branch"
 require "git/cop/commit"
 require "git/cop/styles/abstract"
 require "git/cop/styles/commit_author_email"
