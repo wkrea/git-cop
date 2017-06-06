@@ -7,10 +7,14 @@ SimpleCov.start
 require "pry"
 require "pry-byebug"
 require "pry-state"
+require "climate_control"
 require "git/cop"
 Dir[File.join(File.dirname(__FILE__), "support/shared_contexts/**/*.rb")].each do |file|
   require file
 end
+
+# Ensure CI environment is disabled for testing purposes since it is used directly.
+ENV["CI"] = "false"
 
 RSpec.configure do |config|
   config.color = true
