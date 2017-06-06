@@ -3,10 +3,10 @@
 module Git
   module Cop
     class Runner
-      def initialize configuration:, root_dir: Dir.pwd, reporter: Reporter.new
+      def initialize configuration:, reporter: Reporter.new
         @configuration = configuration
-        @root_dir = root_dir
         @reporter = reporter
+        @branch = Branch.new
       end
 
       def run
@@ -16,16 +16,10 @@ module Git
 
       private
 
-      attr_reader :configuration, :root_dir, :reporter
-
-      def current_branch
-        `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
-      end
+      attr_reader :configuration, :reporter, :branch
 
       def commits
-        `git log --pretty=format:"%H" master...#{current_branch}`.split("\n").map do |sha|
-          Git::Cop::Commit.new sha: sha
-        end
+        branch.shas.map { |sha| Git::Cop::Commit.new sha: sha }
       end
 
       def initialize_cop id, commit, settings
