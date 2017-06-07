@@ -1,3 +1,11 @@
+# v0.3.0 (2017-06-06)
+
+- Fixed generated report to include gem label.
+- Added Climate Control gem.
+- Added Git branch support.
+- Updated Git repo shared context to use HTTPS.
+- Refactored Runner to use Branch object.
+
 # v0.2.0 (2017-06-04)
 
 - Fixed Code Climate Rubocop configuration.
