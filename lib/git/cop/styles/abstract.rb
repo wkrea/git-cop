@@ -10,6 +10,11 @@ module Git
       class Abstract
         using Refinements::Strings
 
+        def self.inherited klass
+          @descendants ||= []
+          @descendants << klass
+        end
+
         def self.id
           to_s.sub("Git::Cop::Styles", "").snakecase.to_sym
         end
@@ -19,9 +24,7 @@ module Git
         end
 
         def self.descendants
-          (Git::Cop::Styles.constants - [:Abstract]).map do |klass|
-            Git::Cop::Styles.const_get klass
-          end
+          @descendants || []
         end
 
         def initialize commit:, settings: self.class.defaults
