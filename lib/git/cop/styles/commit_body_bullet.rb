@@ -32,7 +32,9 @@ module Git
           blacklist.map { |bullet| %("#{bullet}") }
         end
 
+        # :reek:FeatureEnvy
         def valid_line? line
+          return true if line.strip.empty?
           line.match?(/\A(?!\s*#{Regexp.union blacklist}\s+).+\Z/)
         end
 

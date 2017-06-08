@@ -26,6 +26,14 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       end
     end
 
+    context "with empty lines" do
+      let(:body_lines) { ["", " ", "\n"] }
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
     context "with blacklisted bullet" do
       let(:body_lines) { ["* Test message."] }
 
