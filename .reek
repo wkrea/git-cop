@@ -1,2 +1,5 @@
+BooleanParameter:
+  exclude:
+    - "#respond_to_missing?"
 IrresponsibleModule:
   enabled: false

@@ -33,7 +33,6 @@ module Git
         String data[%r(\<#{name}\>(?<content>.*?)\<\/#{name}\>)m, :content]
       end
 
-      # :reek:BooleanParameter
       def respond_to_missing? name, include_private = false
         FORMATS.keys.include?(name.to_sym) || super
       end
