@@ -114,7 +114,7 @@ RSpec.describe Git::Cop::Reporter do
 
       expect(subject.to_s).to eq(
         "Commit #{sha}:\n" \
-        "  commit_subject_prefix: This is an error.\n\n"
+        "  Commit Subject Prefix: This is an error.\n\n"
       )
     end
   end

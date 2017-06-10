@@ -8,7 +8,7 @@ module Git
       using Refinements::Strings
 
       def self.errors cops
-        cops.reduce("") { |message, cop| message + "  #{cop.class.id}: #{cop.error}\n" }
+        cops.reduce("") { |message, cop| message + "  #{cop.class.label}: #{cop.error}\n" }
       end
 
       def initialize
