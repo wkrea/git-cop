@@ -85,7 +85,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
         expect(subject.error).to eq(
           "Invalid bullet. Avoid: \"*\", \"•\". Affected lines:\n" \
           "    Line 1: * Invalid bullet.\n" \
-          "    Line 3: • Invalid bullet.\n"
+          "    Line 3: • Invalid bullet."
         )
       end
     end

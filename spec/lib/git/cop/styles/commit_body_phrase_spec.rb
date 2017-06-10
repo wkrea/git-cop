@@ -96,7 +96,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
         expect(subject.error).to eq(
           "Invalid body. Avoid these phrases: \"obviously\", \"of course\". Affected lines:\n" \
           "    Line 1: Obviously, this can't work.\n" \
-          "    Line 2: ...and, of course, this won't work either.\n"
+          "    Line 2: ...and, of course, this won't work either."
         )
       end
     end
