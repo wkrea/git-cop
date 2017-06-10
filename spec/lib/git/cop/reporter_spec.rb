@@ -2,15 +2,23 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Reporter do
-  let(:sha) { "23a857160cce81b0e8adb19cb78256fcd1901d2f" }
+RSpec.describe Git::Cop::Reporter, :git_repo do
+  let(:sha) { Dir.chdir(git_repo_dir) { `git log --pretty=format:%H -1` } }
+  let(:commit) { Dir.chdir(git_repo_dir) { Git::Cop::Commit.new sha: sha } }
   let(:valid) { false }
 
   let :cop do
     instance_spy Git::Cop::Styles::CommitSubjectPrefix,
                  class: Git::Cop::Styles::CommitSubjectPrefix,
-                 sha: sha,
+                 commit: commit,
                  valid?: valid
+  end
+
+  describe ".label" do
+    it "answers formatted label" do
+      pattern = /\A[0-9a-f]{40}\s\(Testy\sTester\,\s\d{1}\ssecond.+\)\:\sAdded\sdummy\sfiles\.\Z/
+      expect(described_class.label(commit)).to match(pattern)
+    end
   end
 
   describe "#add" do
@@ -32,7 +40,7 @@ RSpec.describe Git::Cop::Reporter do
 
       it "adds cop" do
         subject.add cop
-        expect(subject.retrieve(sha)).to contain_exactly(cop)
+        expect(subject.retrieve(commit)).to contain_exactly(cop)
       end
 
       it "answers added cop" do
@@ -47,14 +55,14 @@ RSpec.describe Git::Cop::Reporter do
 
       it "answers single cop for ID" do
         subject.add cop
-        expect(subject.retrieve(sha)).to contain_exactly(cop)
+        expect(subject.retrieve(commit)).to contain_exactly(cop)
       end
 
       it "answers multiple cops for ID" do
         subject.add cop
         subject.add cop
 
-        expect(subject.retrieve(sha)).to contain_exactly(cop, cop)
+        expect(subject.retrieve(commit)).to contain_exactly(cop, cop)
       end
     end
 
@@ -63,7 +71,7 @@ RSpec.describe Git::Cop::Reporter do
 
       it "answers empty array for ID" do
         subject.add cop
-        expect(subject.retrieve(sha)).to be_empty
+        expect(subject.retrieve(commit)).to be_empty
       end
     end
 
@@ -99,7 +107,7 @@ RSpec.describe Git::Cop::Reporter do
   describe "#to_h" do
     it "answers hash of invalid cops" do
       subject.add cop
-      expect(subject.to_h).to eq(sha => [cop])
+      expect(subject.to_h).to eq(commit => [cop])
     end
   end
 
@@ -113,7 +121,7 @@ RSpec.describe Git::Cop::Reporter do
       subject.add cop
 
       expect(subject.to_s).to eq(
-        "Commit #{sha}:\n" \
+        "#{described_class.label commit}\n" \
         "  Commit Subject Prefix: This is an error.\n\n"
       )
     end

@@ -7,6 +7,10 @@ module Git
     class Reporter
       using Refinements::Strings
 
+      def self.label commit
+        "#{commit.sha} (#{commit.author_name}, #{commit.author_date_relative}): #{commit.subject}"
+      end
+
       def self.errors cops
         cops.reduce("") { |message, cop| message + "  #{cop.class.label}: #{cop.error}\n" }
       end
@@ -18,7 +22,7 @@ module Git
       # :reek:FeatureEnvy
       def add cop
         return if cop.valid?
-        collection[cop.sha] << cop
+        collection[cop.commit] << cop
         cop
       end
 
@@ -39,8 +43,10 @@ module Git
       end
 
       def to_s
-        to_h.reduce("") do |summary, (sha, cops)|
-          summary + "Commit #{sha}:\n#{self.class.errors cops}\n"
+        klass = self.class
+
+        to_h.reduce("") do |summary, (commit, cops)|
+          summary + "#{klass.label commit}\n#{klass.errors cops}\n"
         end
       end
 
