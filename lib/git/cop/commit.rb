@@ -21,6 +21,20 @@ module Git
         @data = `git show --stat --pretty=format:"#{self.class.pattern}" #{sha} 2> /dev/null`
       end
 
+      # :reek:FeatureEnvy
+      def == other
+        other.is_a?(Commit) && sha == other.sha
+      end
+      alias eql? ==
+
+      def <=> other
+        sha <=> other.sha
+      end
+
+      def hash
+        sha.hash
+      end
+
       def body_lines
         body.split "\n"
       end

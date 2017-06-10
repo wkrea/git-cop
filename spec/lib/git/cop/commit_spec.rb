@@ -47,6 +47,154 @@ RSpec.describe Git::Cop::Commit, :git_repo do
     end
   end
 
+  describe "#==" do
+    let(:sha_1) { `git log --pretty=format:%H -1` }
+    let(:sha_2) { `git log --pretty=format:%H -1 @~` }
+    let(:similar) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_1 } }
+    let(:different) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_2 } }
+
+    context "with same instances" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to eq(subject)
+        end
+      end
+    end
+
+    context "with same values" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to eq(similar)
+        end
+      end
+    end
+
+    context "with different values" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not eq(different)
+        end
+      end
+    end
+
+    context "with different type" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not eq("A string.")
+        end
+      end
+    end
+  end
+
+  describe "#eql?" do
+    let(:sha_1) { `git log --pretty=format:%H -1` }
+    let(:sha_2) { `git log --pretty=format:%H -1 @~` }
+    let(:similar) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_1 } }
+    let(:different) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_2 } }
+
+    context "with same instances" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to eql(subject)
+        end
+      end
+    end
+
+    context "with same values" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to eql(similar)
+        end
+      end
+    end
+
+    context "with different values" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not eql(different)
+        end
+      end
+    end
+
+    context "with different type" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not eql("A string.")
+        end
+      end
+    end
+  end
+
+  describe "#equal?" do
+    let(:sha_1) { `git log --pretty=format:%H -1` }
+    let(:sha_2) { `git log --pretty=format:%H -1 @~` }
+    let(:similar) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_1 } }
+    let(:different) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_2 } }
+
+    context "with same instances" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to equal(subject)
+        end
+      end
+    end
+
+    context "with same values" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not equal(similar)
+        end
+      end
+    end
+
+    context "with different values" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not equal(different)
+        end
+      end
+    end
+
+    context "with different type" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject).to_not equal("A string.")
+        end
+      end
+    end
+  end
+
+  describe "#hash" do
+    let(:sha_1) { `git log --pretty=format:%H -1` }
+    let(:sha_2) { `git log --pretty=format:%H -1 @~` }
+    let(:similar) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_1 } }
+    let(:different) { Dir.chdir(git_repo_dir) { described_class.new sha: sha_2 } }
+
+    context "with same instances" do
+      it "is identical" do
+        expect(subject.hash).to eq(subject.hash)
+      end
+    end
+
+    context "with same values" do
+      it "is identical" do
+        expect(subject.hash).to eq(similar.hash)
+      end
+    end
+
+    context "with different values" do
+      it "is different" do
+        expect(subject.hash).to_not eq(different.hash)
+      end
+    end
+
+    context "with different type" do
+      it "is different" do
+        expect(subject.hash).to_not eq("not the same".hash)
+      end
+    end
+  end
+
   describe "#sha" do
     it "answers SHA" do
       expect(subject.sha).to match(/[0-9a-f]{40}/)
