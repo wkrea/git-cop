@@ -7,6 +7,7 @@ module Git
         sha: "%H",
         author_name: "%an",
         author_email: "%ae",
+        author_date_relative: "%ar",
         subject: "%s",
         body: "%b",
         raw_body: "%B"

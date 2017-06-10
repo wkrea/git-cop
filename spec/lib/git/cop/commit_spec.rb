@@ -20,6 +20,7 @@ RSpec.describe Git::Cop::Commit, :git_repo do
         "<sha>%H</sha>%n" \
         "<author_name>%an</author_name>%n" \
         "<author_email>%ae</author_email>%n" \
+        "<author_date_relative>%ar</author_date_relative>%n" \
         "<subject>%s</subject>%n" \
         "<body>%b</body>%n" \
         "<raw_body>%B</raw_body>%n"
@@ -61,6 +62,12 @@ RSpec.describe Git::Cop::Commit, :git_repo do
   describe "#author_email" do
     it "answers author email" do
       expect(subject.author_email).to eq("tester@example.com")
+    end
+  end
+
+  describe "#author_date_relative" do
+    it "answers author date" do
+      expect(subject.author_date_relative).to match(/\A\d{1}\ssecond.+ago\Z/)
     end
   end
 
