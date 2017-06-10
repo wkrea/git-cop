@@ -31,13 +31,11 @@ module Git
           @descendants || []
         end
 
+        attr_reader :commit
+
         def initialize commit:, settings: self.class.defaults
           @commit = commit
           @settings = settings
-        end
-
-        def sha
-          commit.sha
         end
 
         def enabled?
@@ -54,7 +52,7 @@ module Git
 
         protected
 
-        attr_reader :commit, :settings
+        attr_reader :settings
       end
     end
   end

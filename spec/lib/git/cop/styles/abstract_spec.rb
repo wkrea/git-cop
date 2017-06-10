@@ -45,12 +45,6 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
   end
 
-  describe "#sha" do
-    it "answers commit SHA" do
-      expect(subject.sha).to eq(sha)
-    end
-  end
-
   describe "#enabled?" do
     context "when enabled" do
       let(:enabled) { true }
