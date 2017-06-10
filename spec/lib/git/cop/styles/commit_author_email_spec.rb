@@ -13,6 +13,12 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Commit Author Email")
+    end
+  end
+
   describe "#valid?" do
     context "with valid email" do
       let(:email) { "a@b.c" }

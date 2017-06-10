@@ -15,6 +15,12 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Commit Author Name Parts")
+    end
+  end
+
   describe "#valid?" do
     context "when exactly minimum" do
       let(:name) { "Example" }

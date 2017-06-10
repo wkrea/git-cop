@@ -15,6 +15,12 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Abstract")
+    end
+  end
+
   describe ".defaults" do
     it "fails with NotImplementedError" do
       result = -> { described_class.defaults }

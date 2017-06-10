@@ -15,6 +15,12 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Commit Body Phrase")
+    end
+  end
+
   describe "#valid?" do
     it "answers true when valid" do
       expect(subject.valid?).to eq(true)

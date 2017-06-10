@@ -14,6 +14,12 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Commit Subject Prefix")
+    end
+  end
+
   describe "#valid?" do
     context "when valid" do
       it "answers true" do

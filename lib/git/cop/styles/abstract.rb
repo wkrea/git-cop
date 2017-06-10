@@ -19,6 +19,10 @@ module Git
           to_s.sub("Git::Cop::Styles", "").snakecase.to_sym
         end
 
+        def self.label
+          to_s.sub("Git::Cop::Styles", "").titleize
+        end
+
         def self.defaults
           fail NotImplementedError, "The `.defaults` method has not been implemented."
         end

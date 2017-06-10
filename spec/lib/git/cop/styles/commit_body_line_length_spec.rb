@@ -15,6 +15,12 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Commit Body Line Length")
+    end
+  end
+
   describe "#valid?" do
     context "when valid" do
       it "answers true" do

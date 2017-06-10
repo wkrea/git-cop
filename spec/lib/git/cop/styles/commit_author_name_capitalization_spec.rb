@@ -15,6 +15,12 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
     end
   end
 
+  describe ".label" do
+    it "answers class label" do
+      expect(described_class.label).to eq("Commit Author Name Capitalization")
+    end
+  end
+
   describe "#valid?" do
     context "with single name, capitalized" do
       let(:name) { "Example" }
