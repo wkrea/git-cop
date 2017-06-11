@@ -19,7 +19,7 @@ module Git
           settings.merge cop.id => cop.defaults
         end
 
-        Runcom::Configuration.new file_name: Identity.file_name, defaults: defaults
+        Runcom::Configuration.new project_name: Identity.name, defaults: defaults
       end
 
       def initialize args = [], options = {}, config = {}
@@ -27,7 +27,7 @@ module Git
         @runner = Runner.new configuration: self.class.configuration.to_h
       end
 
-      desc "-c, [--config]", %(Manage gem configuration ("#{configuration.computed_path}").)
+      desc "-c, [--config]", %(Manage gem configuration ("#{configuration.path}").)
       map %w[-c --config] => :config
       method_option :edit,
                     aliases: "-e",
@@ -38,7 +38,7 @@ module Git
                     desc: "Print gem configuration.",
                     type: :boolean, default: false
       def config
-        path = self.class.configuration.computed_path
+        path = self.class.configuration.path
 
         if options.edit? then `#{editor} #{path}`
         elsif options.info? then say(path)

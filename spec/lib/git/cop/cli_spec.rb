@@ -13,8 +13,7 @@ RSpec.describe Git::Cop::CLI do
   end
 
   shared_examples_for "a config command", :temp_dir do
-    let(:configuration_path) { File.join temp_dir, Git::Cop::Identity.file_name }
-    before { FileUtils.touch configuration_path }
+    let(:configuration_path) { described_class.configuration.path }
 
     context "with info option" do
       let(:options) { %w[-i] }
