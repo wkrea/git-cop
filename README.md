@@ -77,8 +77,8 @@ The following is what the default configuration consists of:
     :commit_body_bullet:
       :enabled: true
       :blacklist:
-        - *
-        - •
+        - "*"
+        - "•"
     :commit_body_leading_space:
       :enabled: true
     :commit_body_line_length:
@@ -109,7 +109,7 @@ The following is what the default configuration consists of:
     :commit_subject_suffix:
       :enabled: true
       :whitelist:
-        "."
+        - "."
 
 It is also possible to configure this gem at a per project level by adding a `.git-coprc` to the
 root of your project. Doing this will override any global settings. This is also handy for
@@ -155,15 +155,15 @@ Here is an example workflow, using the gem defaults where errors would be raised
     # Output:
     Running Git Cop...
 
-    Commit cfea4b29d4181b628f4e6577310a42c3e485b0d8:
-      commit_subject_length: Invalid length. Use 72 characters or less.
-      commit_subject_prefix: Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
-      commit_subject_suffix: Invalid suffix. Use: ".".
+    d0f9bf40a09d10618bcf8a38a5ddd3bcf12fd550 (Brooke Kuhlmann, 3 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
+      Commit Subject Length: Invalid length. Use 72 characters or less.
+      Commit Subject Prefix: Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
+      Commit Subject Suffix: Invalid suffix. Use: ".".
 
     3 issues detected.
 
-With this output, you can see the number of issues detected. Each issue shows the cop name, commit
-SHA (in parenthesis), and the error with help text.
+With this output, you can see the number of issues detected. Each issue shows the commit, cop name,
+and the error with help text.
 
 # Tests
 

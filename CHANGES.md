@@ -1,3 +1,21 @@
+# v0.4.0 (2017-06-11)
+
+- Fixed Reek method missing issue.
+- Fixed commit body bullet cop with blank lines.
+- Fixed style abstract descendants implementation.
+- Added Circle CI support.
+- Added commit author date (relative).
+- Added cop labels.
+- Updated commit to be a value object.
+- Updated reporter to use commit details.
+- Updated reporter to use cop labels.
+- Updated to Runcom 1.0.0.
+- Removed Gemsmith support (temporary).
+- Removed Travis CI support.
+- Removed abstract class commit sha method.
+- Removed extra carriage return from affected line errors.
+- Refactored runner implementation.
+
 # v0.3.0 (2017-06-06)
 
 - Fixed generated report to include gem label.
