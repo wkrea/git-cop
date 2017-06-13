@@ -27,7 +27,7 @@ module Git
         @runner = Runner.new configuration: self.class.configuration.to_h
       end
 
-      desc "-c, [--config]", %(Manage gem configuration ("#{configuration.path}").)
+      desc "-c, [--config]", "Manage gem configuration."
       map %w[-c --config] => :config
       method_option :edit,
                     aliases: "-e",
@@ -41,7 +41,8 @@ module Git
         path = self.class.configuration.path
 
         if options.edit? then `#{editor} #{path}`
-        elsif options.info? then say(path)
+        elsif options.info?
+          path ? say(path) : say("Configuration doesn't exist.")
         else help(:config)
         end
       end
