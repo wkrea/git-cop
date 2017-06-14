@@ -61,11 +61,14 @@ For an insecure install, type the following (not recommended):
 
 ## Configuration
 
-You can configure a global configuration via the following file:
+This gem can be configured via a global configuration:
 
-    ~/.git-coprc
+    ~/.config/git-cop/configuration.yml
 
-The following is what the default configuration consists of:
+It can also be configured via [XDG environment variables](https://github.com/bkuhlmann/runcom#xdg)
+as provided by the [Runcom](https://github.com/bkuhlmann/runcom) gem.
+
+The default configuration is as follows:
 
     :commit_author_email:
       :enabled: true
@@ -111,9 +114,8 @@ The following is what the default configuration consists of:
       :whitelist:
         - "."
 
-It is also possible to configure this gem at a per project level by adding a `.git-coprc` to the
-root of your project. Doing this will override any global settings. This is also handy for
-customized CI builds as well.
+Feel free to take this default configuration, modify, and save as your own custom
+`configuration.yml`.
 
 ## Rake
 
