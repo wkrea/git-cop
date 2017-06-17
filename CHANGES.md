@@ -1,3 +1,8 @@
+# v1.0.0 (2017-06-17)
+
+- Fixed gem configuration CLI options.
+- Updated README usage configuration documenation.
+
 # v0.4.0 (2017-06-11)
 
 - Fixed Reek method missing issue.
