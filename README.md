@@ -12,39 +12,39 @@ history.
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
 
-# Table of Contents
+## Table of Contents
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Setup](#setup)
-  - [Install](#install)
-  - [Configuration](#configuration)
-  - [Rake](#rake)
-- [Usage](#usage)
-- [Tests](#tests)
-- [Versioning](#versioning)
-- [Code of Conduct](#code-of-conduct)
-- [Contributions](#contributions)
-- [License](#license)
-- [History](#history)
-- [Credits](#credits)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+    - [Install](#install)
+    - [Configuration](#configuration)
+    - [Rake](#rake)
+  - [Usage](#usage)
+  - [Tests](#tests)
+  - [Versioning](#versioning)
+  - [Code of Conduct](#code-of-conduct)
+  - [Contributions](#contributions)
+  - [License](#license)
+  - [History](#history)
+  - [Credits](#credits)
 
 <!-- Tocer[finish]: Auto-generated, don't remove. -->
 
-# Features
+## Features
 
 - Enforces a [Git Rebase Workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history).
 - Enforces a consistent [Git Commit Style](https://github.com/bkuhlmann/style_guides/blob/master/tools/git.md#commits).
 - Enforces good commit subjects with consistent prefixes, suffixes, and lengths.
 - Enforces good commit messages where subject and body are properly separated.
 
-# Requirements
+## Requirements
 
 0. [Ruby 2.4.1](https://www.ruby-lang.org)
 
-# Setup
+## Setup
 
-## Install
+### Install
 
 For a secure install, type the following (recommended):
 
@@ -59,7 +59,7 @@ For an insecure install, type the following (not recommended):
 
     gem install git-cop
 
-## Configuration
+### Configuration
 
 This gem can be configured via a global configuration:
 
@@ -117,7 +117,7 @@ The default configuration is as follows:
 Feel free to take this default configuration, modify, and save as your own custom
 `configuration.yml`.
 
-## Rake
+### Rake
 
 This gem provides optional Rake tasks. They can be added to your project by adding the following
 requirement to the top of your `Rakefile`:
@@ -128,7 +128,7 @@ Now, when running `bundle exec rake -T`, you'll see `git_cop` included in the li
 
 If you need a concrete example, check out the [Rakefile](Rakefile) of this project for details.
 
-# Usage
+## Usage
 
 From the command line, type: `git-cop --help`
 
@@ -167,13 +167,13 @@ Here is an example workflow, using the gem defaults where errors would be raised
 With this output, you can see the number of issues detected. Each issue shows the commit, cop name,
 and the error with help text.
 
-# Tests
+## Tests
 
 To test, run:
 
     bundle exec rake
 
-# Versioning
+## Versioning
 
 Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
 
@@ -181,26 +181,26 @@ Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
 - Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
 - Patch (x.y.Z) - Incremented for small, backwards compatible, bug fixes.
 
-# Code of Conduct
+## Code of Conduct
 
 Please note that this project is released with a [CODE OF CONDUCT](CODE_OF_CONDUCT.md). By
 participating in this project you agree to abide by its terms.
 
-# Contributions
+## Contributions
 
 Read [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-# License
+## License
 
 Copyright (c) 2017 [Alchemists](https://www.alchemists.io).
 Read [LICENSE](LICENSE.md) for details.
 
-# History
+## History
 
 Read [CHANGES](CHANGES.md) for details.
 Built with [Gemsmith](https://github.com/bkuhlmann/gemsmith).
 
-# Credits
+## Credits
 
 Developed by [Brooke Kuhlmann](https://www.alchemists.io) at
 [Alchemists](https://www.alchemists.io).
