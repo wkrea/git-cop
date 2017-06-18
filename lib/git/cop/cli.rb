@@ -2,7 +2,6 @@
 
 require "thor"
 require "thor/actions"
-require "thor_plus/actions"
 require "runcom"
 
 module Git
@@ -10,7 +9,6 @@ module Git
     # The Command Line Interface (CLI) for the gem.
     class CLI < Thor
       include Thor::Actions
-      include ThorPlus::Actions
 
       package_name Identity.version_label
 
@@ -40,7 +38,7 @@ module Git
       def config
         path = self.class.configuration.path
 
-        if options.edit? then `#{editor} #{path}`
+        if options.edit? then `#{ENV["EDITOR"]} #{path}`
         elsif options.info?
           path ? say(path) : say("Configuration doesn't exist.")
         else help(:config)
@@ -76,9 +74,6 @@ module Git
       private
 
       attr_reader :runner
-
-      def print_issues
-      end
     end
   end
 end
