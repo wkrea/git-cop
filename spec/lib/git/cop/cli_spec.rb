@@ -5,17 +5,13 @@ require "spec_helper"
 RSpec.describe Git::Cop::CLI do
   let(:options) { [] }
   let(:command_line) { Array(command).concat options }
-  let :cli do
-    lambda do
-      load "git/cop/cli.rb" # Ensures clean Thor `.method_option` evaluation per spec.
-      described_class.start command_line
-    end
-  end
+  let(:cli) { described_class.start command_line }
 
   shared_examples_for "a config command", :temp_dir do
     context "with no options" do
       it "prints help text" do
-        expect(&cli).to output(/Manage gem configuration./).to_stdout
+        result = -> { cli }
+        expect(&result).to output(/Manage gem configuration./).to_stdout
       end
     end
   end
@@ -33,7 +29,8 @@ RSpec.describe Git::Cop::CLI do
 
       it "aborts with total number of issues" do
         Dir.chdir git_repo_dir do
-          expect(&cli).to raise_error(SystemExit, "2 issues detected.")
+          result = -> { cli }
+          expect(&result).to raise_error(SystemExit, "2 issues detected.")
         end
       end
     end
@@ -41,7 +38,8 @@ RSpec.describe Git::Cop::CLI do
     context "with no issues" do
       it "prints no issues detected" do
         Dir.chdir git_repo_dir do
-          expect(&cli).to output("Running Git Cop...\n\nNo issues detected.\n").to_stdout
+          result = -> { cli }
+          expect(&result).to output("Running Git Cop...\n\nNo issues detected.\n").to_stdout
         end
       end
     end
@@ -49,13 +47,15 @@ RSpec.describe Git::Cop::CLI do
 
   shared_examples_for "a version command" do
     it "prints version" do
-      expect(&cli).to output(/Git\sCop\s#{Git::Cop::Identity.version}\n/).to_stdout
+      result = -> { cli }
+      expect(&result).to output(/Git\sCop\s#{Git::Cop::Identity.version}\n/).to_stdout
     end
   end
 
   shared_examples_for "a help command" do
     it "prints usage" do
-      expect(&cli).to output(/Git\sCop\s#{Git::Cop::Identity.version}\scommands:\n/).to_stdout
+      result = -> { cli }
+      expect(&result).to output(/Git\sCop\s#{Git::Cop::Identity.version}\scommands:\n/).to_stdout
     end
   end
 
