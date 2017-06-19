@@ -1,3 +1,11 @@
+# v1.1.0 (2017-06-19)
+
+- Updated README headers.
+- Updated command line usage in CLI specs.
+- Updated to Gemsmith 10.0.0.
+- Removed Thor+ gem.
+- Refactored CLI version/help specs.
+
 # v1.0.0 (2017-06-17)
 
 - Fixed gem configuration CLI options.

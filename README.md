@@ -21,6 +21,8 @@ history.
     - [Configuration](#configuration)
     - [Rake](#rake)
   - [Usage](#usage)
+    - [Command Line Interface (CLI)](#command-line-interface-cli)
+    - [Continuous Integration (CI)](#continuous-integration-ci)
   - [Tests](#tests)
   - [Versioning](#versioning)
   - [Code of Conduct](#code-of-conduct)
@@ -130,9 +132,11 @@ If you need a concrete example, check out the [Rakefile](Rakefile) of this proje
 
 ## Usage
 
+### Command Line Interface (CLI)
+
 From the command line, type: `git-cop --help`
 
-    git-cop -c, [--config]        # Manage gem configuration ("~/.git-coprc").
+    git-cop -c, [--config]        # Manage gem configuration.
     git-cop -h, [--help=COMMAND]  # Show this message or get help for a command.
     git-cop -p, [--police]        # Police current branch for issues.
     git-cop -v, [--version]       # Show gem version.
@@ -166,6 +170,21 @@ Here is an example workflow, using the gem defaults where errors would be raised
 
 With this output, you can see the number of issues detected. Each issue shows the commit, cop name,
 and the error with help text.
+
+### Continuous Integration (CI)
+
+This gem automatically detects when it is running on a CI build server via the `CI=true` environment
+variable. Most CI build servers respect and enable this variable. If your CI server doesn't, you'll
+want to make sure you have `CI=true` set in your environment.
+
+Calculation of commits is done by reviewing all commits made on the current feature branch since
+branching from `master`. Some CI servers don't respect this and blow away any branch information,
+most notibly, Travis CI. For that reason, Travis CI is not supported or recommended as they use
+`git clone --depth=<number>` cloning which can't be customized and destroys any knowledge of
+`master` and feature branch information.
+
+Build servers like [Circle CI](https://circleci.com) are recommended. The builds for this gem are
+done via Circle CI as well.
 
 ## Tests
 
