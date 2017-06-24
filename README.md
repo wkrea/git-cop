@@ -23,6 +23,17 @@ history.
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
     - [Continuous Integration (CI)](#continuous-integration-ci)
+  - [Cops](#cops)
+    - [Commit Author Email](#commit-author-email)
+    - [Commit Author Name Capitalization](#commit-author-name-capitalization)
+    - [Commit Author Name Parts](#commit-author-name-parts)
+    - [Commit Body Bullet](#commit-body-bullet)
+    - [Commit Body Leading Space](#commit-body-leading-space)
+    - [Commit Body Line Length](#commit-body-line-length)
+    - [Commit Body Phrase](#commit-body-phrase)
+    - [Commit Subject Length](#commit-subject-length)
+    - [Commit Subject Prefix](#commit-subject-prefix)
+    - [Commit Subject Suffix](#commit-subject-suffix)
   - [Tests](#tests)
   - [Versioning](#versioning)
   - [Code of Conduct](#code-of-conduct)
@@ -36,9 +47,8 @@ history.
 ## Features
 
 - Enforces a [Git Rebase Workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history).
-- Enforces a consistent [Git Commit Style](https://github.com/bkuhlmann/style_guides/blob/master/tools/git.md#commits).
-- Enforces good commit subjects with consistent prefixes, suffixes, and lengths.
-- Enforces good commit messages where subject and body are properly separated.
+- Enforces a clean and consistent Git commit history.
+- Provides a suite of cops which can be enabled/disabled or customized for your preference.
 
 ## Requirements
 
@@ -185,6 +195,175 @@ most notibly, Travis CI. For that reason, Travis CI is not supported or recommen
 
 Build servers like [Circle CI](https://circleci.com) are recommended. The builds for this gem are
 done via Circle CI as well.
+
+## Cops
+
+The following details the various cops provided by this gem to ensure a high standard of commits for
+your project.
+
+### Commit Author Email
+
+| Enabled | Defaults |
+|---------|----------|
+| true    | none     |
+
+Ensures author email address exists. Git requires an author email when you use it for the first time
+too. This takes it a step further to ensure the email address loosely resembles an email address.
+
+    # Disallowed
+    mudder_man
+
+    # Allowed
+    jayne@serenity.com
+
+### Commit Author Name Capitalization
+
+| Enabled | Defaults |
+|---------|----------|
+| true    | none     |
+
+Ensures auther name is properly capitalized. Example:
+
+    # Disallowed
+    jayne cobb
+    dr. simon tam
+
+    # Allowed
+    Jayne Cobb
+    Dr. Simon Tam
+
+### Commit Author Name Parts
+
+| Enabled |  Defaults  |
+|---------|------------|
+| true    | minimum: 2 |
+
+Ensures author name consists of, at least, a first and last name. Example:
+
+    # Disallowed
+    Kaylee
+
+    # Allowed
+    Kaywinnet Lee Frye
+
+### Commit Body Bullet
+
+| Enabled |        Defaults       |
+|---------|-----------------------|
+| true    | blacklist: ["*", "•"] |
+
+Ensures commit message bodies use a standard Markdown syntax for bullet points. Markdown supports
+the following syntax for bullets:
+
+    *
+    -
+
+It's best to use `-` for bullet point syntax as `*` are easier to read when used for *emphasis*.
+This makes parsing the Markdown syntax easier when reviewing a Git commit as the syntax used for
+bullet points and *emphasis* are now, distinctly, unique.
+
+### Commit Body Leading Space
+
+| Enabled | Defaults |
+|---------|----------|
+| true    | none     |
+
+Ensures there is a leading space between the commit subject and body. Generally, this isn't an issue
+but sometimes the Git CLI can be misued or a misconfigured Git editor will smash the subject line
+and start of the body as one run-on paragraph. Example:
+
+    # Disallowed
+
+    Curabitur eleifend wisi iaculis ipsum.
+    Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+    quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu_libero sit amet quam
+    egestas semper. Aenean ultricies mi vitae est. Mauris placerat's eleifend leo. Quisque et sapien
+    ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, orn si amt wit.
+
+    # Allowed
+
+    Curabitur eleifend wisi iaculis ipsum.
+
+    Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+    quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu_libero sit amet quam
+    egestas semper. Aenean ultricies mi vitae est. Mauris placerat's eleifend leo. Quisque et sapien
+    ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, orn si amt wit.
+
+### Commit Body Line Length
+
+| Enabled |  Defaults  |
+|---------|------------|
+| true    | length: 72 |
+
+Ensures each line of the commit body is no longer than 72 characters in length for consistent
+readabilty and word-wrap prevention on smaller screen sizes. For further details, read Tim Pope's
+original [article](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) on the
+subject.
+
+### Commit Body Phrase
+
+| Enabled |                       Defaults                       |
+|---------|------------------------------------------------------|
+| true    | blacklist: (see configuration list, mentioned above) |
+
+Ensures non-descriptive words/phrases are avoided in order to keep commit message bodies informative
+and specific. The blacklist is case insensitive. Detection of blacklisted words/phrases is case
+insensitve as well. Example:
+
+    # Disallowed
+
+    Obviously, the existing implementation was too simple for my tastes. Of course, this couldn't be
+    allowed. Everyone knows the correct way to implement this code is to do just what I've added in
+    this commit. Easy!
+
+    # Allowed
+
+    Necessary to fix due to a bug detected in production. The included implentation fixes the bug
+    and provides the missing spec to ensure this doesn't happen again.
+
+### Commit Subject Length
+
+| Enabled |  Defaults  |
+|---------|------------|
+| true    | length: 72 |
+
+Ensures the commit subject length is no more than 72 characters in length. This default is more
+lenient than Tim Pope's
+[50/72 rule](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) as it gives one
+the ability to formulate a more descriptive subject line without being too wordy or suffer being
+word wrapped.
+
+### Commit Subject Prefix
+
+| Enabled |        Defaults        |
+|---------|------------------------|
+| true    | whitelist: (see below) |
+
+Ensures the commit subject uses consistent prefixes that help explain *what* is being commited. The
+whitelist *is* case sensitive. The default whitelist consists of the following prefixes:
+
+- *Fixed* - Existing code that has been fixed.
+- *Removed* - Code that was once added and is now removed.
+- *Added* - New code that is an enhancement, feature, etc.
+- *Updated* - Existing code that has been modified.
+- *Refactored* - Existing code that has been cleaned up and does not change functionality.
+
+In practice, using a prefix other than what has been detailed above to explain *what* is being
+committed is never needed. This whitelist is not only short and easy to remember but also has the
+added benefit of categorizing the commits for building release notes, change logs, etc. This becomes
+handy when coupled with another tool, [Milestoner](https://github.com/bkuhlmann/milestoner), for
+producing consistent project milestones and Git tag histories.
+
+### Commit Subject Suffix
+
+| Enabled |     Defaults     |
+|---------|------------------|
+| true    | whitelist: ["."] |
+
+Ensures commit subjects are suffixed consistently. The whitelist *is* case sensitive and only allows
+for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git tags,
+change logs, etc. This is handy when coupled with a tool, like
+[Milestoner](https://github.com/bkuhlmann/milestoner), which automate project milestone releases.
 
 ## Tests
 
