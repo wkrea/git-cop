@@ -2,6 +2,7 @@
 
 require "git/cop/identity"
 require "git/cop/errors/base"
+require "git/cop/errors/severity"
 require "git/cop/kit/branch"
 require "git/cop/kit/commit"
 require "git/cop/styles/abstract"
