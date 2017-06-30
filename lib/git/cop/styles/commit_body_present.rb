@@ -6,7 +6,8 @@ module Git
       class CommitBodyPresent < Abstract
         def self.defaults
           {
-            enabled: false,
+            enabled: true,
+            severity: :warn,
             minimum: 1
           }
         end

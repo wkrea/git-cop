@@ -7,6 +7,7 @@ module Git
         def self.defaults
           {
             enabled: true,
+            severity: :error,
             whitelist: %w[Fixed Added Updated Removed Refactored]
           }
         end

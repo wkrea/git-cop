@@ -8,6 +8,7 @@ module Git
         def self.defaults
           {
             enabled: true,
+            severity: :error,
             blacklist: [
               "obviously",
               "basically",

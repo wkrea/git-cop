@@ -42,6 +42,12 @@ module Git
           settings.fetch :enabled
         end
 
+        def severity
+          level = settings.fetch :severity
+          fail(Errors::Severity, level: level) unless Errors::Severity::LEVELS.include?(level)
+          level
+        end
+
         def valid?
           fail NotImplementedError, "The `#valid?` method has not been implemented."
         end

@@ -64,6 +64,34 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
   end
 
+  describe "#severity" do
+    context "with severity" do
+      let(:settings) { {severity: :error} }
+
+      it "answers severity" do
+        expect(subject.severity).to eq(:error)
+      end
+    end
+
+    context "without severity" do
+      let(:settings) { Hash.new }
+
+      it "fails with key error" do
+        result = -> { subject.severity }
+        expect(&result).to raise_error(KeyError)
+      end
+    end
+
+    context "with invalid severity" do
+      let(:settings) { {severity: :bogus} }
+
+      it "fails with invalid severity error" do
+        result = -> { subject.severity }
+        expect(&result).to raise_error(Git::Cop::Errors::Severity)
+      end
+    end
+  end
+
   describe "#valid?" do
     it "fails with NotImplementedError" do
       result = -> { subject.valid? }

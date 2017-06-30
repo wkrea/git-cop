@@ -5,7 +5,10 @@ module Git
     module Styles
       class CommitAuthorNameCapitalization < Abstract
         def self.defaults
-          {enabled: true}
+          {
+            enabled: true,
+            severity: :error
+          }
         end
 
         def valid?
