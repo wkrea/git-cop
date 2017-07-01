@@ -60,19 +60,19 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.error).to eq("")
+        expect(subject.issue).to eq("")
       end
     end
 
     context "when invalid" do
       let(:raw_body) { "A commit message.\nWithout leading space." }
 
-      it "answers error message" do
+      it "answers issue" do
         message = "Invalid leading space. Use space between subject and body."
-        expect(subject.error).to eq(message)
+        expect(subject.issue).to eq(message)
       end
     end
   end

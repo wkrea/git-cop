@@ -19,7 +19,7 @@ module Git
           raw_body.match?(/\A.+\n\n.+/)
         end
 
-        def error
+        def issue
           return "" if valid?
           "Invalid leading space. Use space between subject and body."
         end

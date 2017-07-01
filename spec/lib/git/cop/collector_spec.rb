@@ -117,7 +117,7 @@ RSpec.describe Git::Cop::Collector, :git_repo do
     end
 
     it "answers summary with detected issues" do
-      allow(cop).to receive(:error).and_return("This is an error.")
+      allow(cop).to receive(:issue).and_return("This is an error.")
       subject.add cop
 
       expect(subject.to_s).to eq(

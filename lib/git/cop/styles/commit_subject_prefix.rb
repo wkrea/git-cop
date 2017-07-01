@@ -17,7 +17,7 @@ module Git
           commit.subject.match?(/\A#{Regexp.union whitelist}/)
         end
 
-        def error
+        def issue
           return "" if valid?
           %(Invalid prefix. Use: #{formatted_whitelist.join ", "}.)
         end

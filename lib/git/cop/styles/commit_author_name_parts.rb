@@ -17,7 +17,7 @@ module Git
           parts.all? { |name| !String(name).empty? }
         end
 
-        def error
+        def issue
           return "" if valid?
           %(Invalid name: "#{full_name}". Detected #{parts.size} out of #{minimum} parts required.)
         end

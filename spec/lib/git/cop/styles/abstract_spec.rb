@@ -99,10 +99,10 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     it "fails with NotImplementedError" do
-      result = -> { subject.error }
-      expect(&result).to raise_error(NotImplementedError, /.+\#error.+/)
+      result = -> { subject.issue }
+      expect(&result).to raise_error(NotImplementedError, /.+\#issue.+/)
     end
   end
 end

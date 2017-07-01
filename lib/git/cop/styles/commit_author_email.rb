@@ -16,7 +16,7 @@ module Git
           address.match?(/\A.+\@.+\Z/) && address.match?(/\.{1}.+\Z/)
         end
 
-        def error
+        def issue
           return "" if valid?
           %(Invalid email: "#{email}". Use format: <name>@<server>.<domain>.)
         end

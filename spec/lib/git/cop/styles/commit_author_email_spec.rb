@@ -53,18 +53,18 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.error).to eq("")
+        expect(subject.issue).to eq("")
       end
     end
 
     context "when invalid" do
       let(:email) { "bogus" }
 
-      it "answers error message" do
-        expect(subject.error).to match(/Invalid\semail\:\s\"bogus\"\..+/)
+      it "answers issue" do
+        expect(subject.issue).to match(/Invalid\semail\:\s\"bogus\"\..+/)
       end
     end
   end

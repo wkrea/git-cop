@@ -53,10 +53,10 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.error).to eq("")
+        expect(subject.issue).to eq("")
       end
     end
 
@@ -65,8 +65,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
         ["Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egest."]
       end
 
-      it "answers empty string" do
-        expect(subject.error).to eq(
+      it "answers issue with single line" do
+        expect(subject.issue).to eq(
           "Invalid line length. Use 72 characters or less per line. Affected lines:\n" \
           "    Line 1: Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egest."
         )
@@ -83,8 +83,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
         ]
       end
 
-      it "answers empty string" do
-        expect(subject.error).to eq(
+      it "answers issue with multiple lines" do
+        expect(subject.issue).to eq(
           "Invalid line length. Use 60 characters or less per line. Affected lines:\n" \
           "    Line 2: - Vestibulum tortor quam, feugiat vitae, ultricies eget bon apt.\n" \
           "    Line 3: - Donec eu_libero sit amet quam egestas semper. Aenean ultricies."

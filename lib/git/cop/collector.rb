@@ -11,8 +11,8 @@ module Git
         "#{commit.sha} (#{commit.author_name}, #{commit.author_date_relative}): #{commit.subject}"
       end
 
-      def self.errors cops
-        cops.reduce("") { |message, cop| message + "  #{cop.class.label}: #{cop.error}\n" }
+      def self.issues cops
+        cops.reduce("") { |message, cop| message + "  #{cop.class.label}: #{cop.issue}\n" }
       end
 
       def initialize
@@ -46,7 +46,7 @@ module Git
         klass = self.class
 
         to_h.reduce("") do |summary, (commit, cops)|
-          summary + "#{klass.label commit}\n#{klass.errors cops}\n"
+          summary + "#{klass.label commit}\n#{klass.issues cops}\n"
         end
       end
 

@@ -52,8 +52,8 @@ module Git
           fail NotImplementedError, "The `#valid?` method has not been implemented."
         end
 
-        def error
-          fail NotImplementedError, "The `#error` method has not been implemented."
+        def issue
+          fail NotImplementedError, "The `#issue` method has not been implemented."
         end
 
         protected

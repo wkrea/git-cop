@@ -16,7 +16,7 @@ module Git
           commit.subject.size <= length
         end
 
-        def error
+        def issue
           return "" if valid?
           "Invalid length. Use #{length} characters or less."
         end

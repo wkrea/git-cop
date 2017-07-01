@@ -65,10 +65,10 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.error).to eq("")
+        expect(subject.issue).to eq("")
       end
     end
 
@@ -81,8 +81,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
         ]
       end
 
-      it "answers error message" do
-        expect(subject.error).to eq(
+      it "answers issue" do
+        expect(subject.issue).to eq(
           "Invalid bullet. Avoid: \"*\", \"•\". Affected lines:\n" \
           "    Line 1: * Invalid bullet.\n" \
           "    Line 3: • Invalid bullet."

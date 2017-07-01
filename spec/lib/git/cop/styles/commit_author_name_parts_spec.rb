@@ -48,18 +48,18 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.error).to eq("")
+        expect(subject.issue).to eq("")
       end
     end
 
     context "when invalid" do
       let(:name) { "Example" }
-      it "answers error message" do
+      it "answers issue" do
         message = %(Invalid name: "Example". Detected 1 out of 2 parts required.)
-        expect(subject.error).to eq(message)
+        expect(subject.issue).to eq(message)
       end
     end
   end

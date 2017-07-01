@@ -77,10 +77,10 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
     end
   end
 
-  describe "#error" do
+  describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.error).to eq("")
+        expect(subject.issue).to eq("")
       end
     end
 
@@ -92,8 +92,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
         ]
       end
 
-      it "answers error message" do
-        expect(subject.error).to eq(
+      it "answers issue" do
+        expect(subject.issue).to eq(
           "Invalid body. Avoid these phrases: \"obviously\", \"of course\". Affected lines:\n" \
           "    Line 1: Obviously, this can't work.\n" \
           "    Line 2: ...and, of course, this won't work either."

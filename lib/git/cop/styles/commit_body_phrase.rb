@@ -26,7 +26,7 @@ module Git
           commit.body_lines.all? { |line| valid_line? line }
         end
 
-        def error
+        def issue
           return "" if valid?
 
           %(Invalid body. Avoid these phrases: #{formatted_blacklist.join ", "}. ) +

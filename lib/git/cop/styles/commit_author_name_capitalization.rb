@@ -15,7 +15,7 @@ module Git
           parts.all? { |name| String(name).match?(/\A[[:upper:]].*\Z/) }
         end
 
-        def error
+        def issue
           return "" if valid?
           %(Invalid name: "#{full_name}". Capitalize each part of name.)
         end

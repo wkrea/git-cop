@@ -21,7 +21,7 @@ module Git
           settings.fetch :minimum
         end
 
-        def error
+        def issue
           return "" if valid?
 
           "Write at least #{minimum} non-empty line#{"s" if minimum > 1} in" \
