@@ -3,15 +3,15 @@
 module Git
   module Cop
     class Runner
-      def initialize configuration:, reporter: Reporter.new
+      def initialize configuration:, collector: Collector.new
         @configuration = configuration
-        @reporter = reporter
+        @collector = collector
         @commits = Kit::Branch.new.shas.map { |sha| Kit::Commit.new sha: sha }
       end
 
       def run
         commits.each { |commit| check commit }
-        reporter
+        collector
       end
 
       def number_commits
@@ -20,7 +20,7 @@ module Git
 
       private
 
-      attr_reader :configuration, :reporter, :commits
+      attr_reader :configuration, :collector, :commits
 
       def load_cop id, commit, settings
         klass = Styles::Abstract.descendants.find { |descendant| descendant.id == id }
@@ -30,7 +30,7 @@ module Git
 
       def check commit
         cops = configuration.map { |id, settings| load_cop id, commit, settings }
-        cops.select(&:enabled?).map { |cop| reporter.add cop }
+        cops.select(&:enabled?).map { |cop| collector.add cop }
       end
     end
   end

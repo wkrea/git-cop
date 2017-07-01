@@ -4,7 +4,7 @@ require "refinements/strings"
 
 module Git
   module Cop
-    class Reporter
+    class Collector
       using Refinements::Strings
 
       def self.label commit
