@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Branch, :git_repo do
+RSpec.describe Git::Cop::Kit::Branch, :git_repo do
   let(:branch) { "test" }
   subject { described_class.new }
 

@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
   let(:name) { "Example Tester" }
-  let(:commit) { object_double Git::Cop::Commit.new(sha: "1"), author_name: name }
+  let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1"), author_name: name }
   let(:minimum) { 2 }
   let(:settings) { {enabled: true, minimum: minimum} }
   subject { described_class.new commit: commit, settings: settings }

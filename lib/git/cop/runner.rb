@@ -6,7 +6,7 @@ module Git
       def initialize configuration:, reporter: Reporter.new
         @configuration = configuration
         @reporter = reporter
-        @commits = Branch.new.shas.map { |sha| Git::Cop::Commit.new sha: sha }
+        @commits = Kit::Branch.new.shas.map { |sha| Kit::Commit.new sha: sha }
       end
 
       def run

@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Reporter, :git_repo do
   let(:sha) { Dir.chdir(git_repo_dir) { `git log --pretty=format:%H -1` } }
-  let(:commit) { Dir.chdir(git_repo_dir) { Git::Cop::Commit.new sha: sha } }
+  let(:commit) { Dir.chdir(git_repo_dir) { Git::Cop::Kit::Commit.new sha: sha } }
   let(:valid) { false }
 
   let :cop do
