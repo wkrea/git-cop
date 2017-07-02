@@ -18,8 +18,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          %(Invalid suffix. Use: #{formatted_whitelist.join ", "}.)
+          return {} if valid?
+
+          {
+            label: "Invalid suffix.",
+            hint: %(Use: #{formatted_whitelist.join ", "}.)
+          }
         end
 
         private

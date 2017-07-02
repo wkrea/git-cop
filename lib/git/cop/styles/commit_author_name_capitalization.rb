@@ -16,8 +16,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          %(Invalid name: "#{full_name}". Capitalize each part of name.)
+          return {} if valid?
+
+          {
+            label: %(Invalid name: "#{full_name}".),
+            hint: "Capitalize each part of name."
+          }
         end
 
         private

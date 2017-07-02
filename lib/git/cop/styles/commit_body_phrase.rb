@@ -27,10 +27,13 @@ module Git
         end
 
         def issue
-          return "" if valid?
+          return {} if valid?
 
-          %(Invalid body. Avoid these phrases: #{formatted_blacklist.join ", "}. ) +
-            %(Affected lines:\n#{affected_lines.join "\n"})
+          {
+            label: "Invalid body.",
+            hint: %(Avoid these phrases: #{formatted_blacklist.join ", "}.),
+            lines: affected_lines
+          }
         end
 
         private
@@ -49,7 +52,7 @@ module Git
 
         def affected_lines
           commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
-            lines << "    Line #{index + 1}: #{line}" unless valid_line?(line)
+            lines << {number: index + 1, content: line} unless valid_line?(line)
           end
         end
       end

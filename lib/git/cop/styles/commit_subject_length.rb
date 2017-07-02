@@ -17,8 +17,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          "Invalid length. Use #{length} characters or less."
+          return {} if valid?
+
+          {
+            label: "Invalid length.",
+            hint: "Use #{length} characters or less."
+          }
         end
 
         private

@@ -18,8 +18,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          %(Invalid name: "#{full_name}". Detected #{parts.size} out of #{minimum} parts required.)
+          return {} if valid?
+
+          {
+            label: "Invalid name.",
+            hint: %(Detected #{parts.size} out of #{minimum} parts required.)
+          }
         end
 
         private

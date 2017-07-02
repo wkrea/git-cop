@@ -57,29 +57,22 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresent do
 
   describe "#issue" do
     context "when valid" do
-      it "answers empty string" do
-        expect(subject.issue).to eq("")
+      it "answers empty hash" do
+        expect(subject.issue).to eq({})
       end
     end
 
-    context "when invalid (minimum 1 line)" do
-      let(:body_lines) { [""] }
-
-      it "answers issue message" do
-        expect(subject.issue).to eq(
-          "Write at least 1 non-empty line in your commit body."
-        )
-      end
-    end
-
-    context "when invalid (minimum 3 lines)" do
+    context "when invalid" do
       let(:minimum) { 3 }
       let(:body_lines) { ["First line.", "\r", " ", "\t", "Second one here."] }
+      let(:issue) { subject.issue }
 
-      it "answers issue message" do
-        expect(subject.issue).to eq(
-          "Write at least 3 non-empty lines in your commit body."
-        )
+      it "answers issue label" do
+        expect(issue[:label]).to eq("Invalid commit body.")
+      end
+
+      it "answers issue hint" do
+        expect(issue[:hint]).to eq("Use at least 3 non-empty lines.")
       end
     end
   end

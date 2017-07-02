@@ -55,16 +55,21 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
 
   describe "#issue" do
     context "when valid" do
-      it "answers empty string" do
-        expect(subject.issue).to eq("")
+      it "answers empty hash" do
+        expect(subject.issue).to eq({})
       end
     end
 
     context "when invalid" do
       let(:email) { "bogus" }
+      let(:issue) { subject.issue }
 
-      it "answers issue" do
-        expect(subject.issue).to match(/Invalid\semail\:\s\"bogus\"\..+/)
+      it "answers issue label" do
+        expect(issue[:label]).to eq(%(Invalid email: "bogus".))
+      end
+
+      it "answers issue hint" do
+        expect(issue[:hint]).to eq("Use format: <name>@<server>.<domain>.")
       end
     end
   end

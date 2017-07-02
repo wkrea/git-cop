@@ -17,10 +17,13 @@ module Git
         end
 
         def issue
-          return "" if valid?
+          return {} if valid?
 
-          "Invalid line length. Use #{length} characters or less per line. " +
-            %(Affected lines:\n#{affected_lines.join "\n"})
+          {
+            label: "Invalid line length.",
+            hint: "Use #{length} characters or less per line.",
+            lines: affected_lines
+          }
         end
 
         private
@@ -35,7 +38,7 @@ module Git
 
         def affected_lines
           commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
-            lines << "    Line #{index + 1}: #{line}" unless valid_line?(line)
+            lines << {number: index + 1, content: line} unless valid_line?(line)
           end
         end
       end

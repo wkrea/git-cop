@@ -47,15 +47,20 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
   describe "#issue" do
     context "when valid" do
       it "answers empty string" do
-        expect(subject.issue).to eq("")
+        expect(subject.issue).to eq({})
       end
     end
 
     context "when invalid" do
       let(:content) { "Bogus subject line." }
+      let(:issue) { subject.issue }
 
-      it "answers issue" do
-        expect(subject.issue).to eq(%(Invalid prefix. Use: "Added", "Removed", "Fixed".))
+      it "answers issue label" do
+        expect(issue[:label]).to eq("Invalid prefix.")
+      end
+
+      it "answres issue hint" do
+        expect(issue[:hint]).to eq(%(Use: "Added", "Removed", "Fixed".))
       end
     end
   end

@@ -47,16 +47,21 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
 
   describe "#issue" do
     context "when valid" do
-      it "answers empty string" do
-        expect(subject.issue).to eq("")
+      it "answers empty hash" do
+        expect(subject.issue).to eq({})
       end
     end
 
     context "when invalid" do
       let(:length) { 10 }
+      let(:issue) { subject.issue }
 
-      it "answers issue" do
-        expect(subject.issue).to eq("Invalid length. Use 10 characters or less.")
+      it "answers issue label" do
+        expect(issue[:label]).to eq("Invalid length.")
+      end
+
+      it "answers issue hint" do
+        expect(issue[:hint]).to eq("Use 10 characters or less.")
       end
     end
   end

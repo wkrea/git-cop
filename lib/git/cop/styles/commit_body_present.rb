@@ -22,10 +22,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
+          return {} if valid?
 
-          "Write at least #{minimum} non-empty line#{"s" if minimum > 1} in" \
-          " your commit body."
+          {
+            label: "Invalid commit body.",
+            hint: "Use at least #{minimum} non-empty line#{"s" if minimum > 1}."
+          }
         end
       end
     end

@@ -73,17 +73,21 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
 
   describe "#issue" do
     context "when valid" do
-      it "answers empty string" do
-        expect(subject.issue).to eq("")
+      it "answers empty hash" do
+        expect(subject.issue).to eq({})
       end
     end
 
     context "when invalid" do
       let(:name) { "example" }
+      let(:issue) { subject.issue }
 
-      it "answers issue" do
-        message = %(Invalid name: "example". Capitalize each part of name.)
-        expect(subject.issue).to eq(message)
+      it "answers issue label" do
+        expect(issue[:label]).to eq(%(Invalid name: "example".))
+      end
+
+      it "answers issue hint" do
+        expect(issue[:hint]).to eq("Capitalize each part of name.")
       end
     end
   end

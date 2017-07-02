@@ -17,8 +17,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          %(Invalid email: "#{email}". Use format: <name>@<server>.<domain>.)
+          return {} if valid?
+
+          {
+            label: %(Invalid email: "#{email}".),
+            hint: "Use format: <name>@<server>.<domain>."
+          }
         end
 
         private

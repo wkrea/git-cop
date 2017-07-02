@@ -18,8 +18,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          %(Invalid prefix. Use: #{formatted_whitelist.join ", "}.)
+          return {} if valid?
+
+          {
+            label: "Invalid prefix.",
+            hint: %(Use: #{formatted_whitelist.join ", "}.)
+          }
         end
 
         private

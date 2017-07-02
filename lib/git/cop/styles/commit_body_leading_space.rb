@@ -20,8 +20,12 @@ module Git
         end
 
         def issue
-          return "" if valid?
-          "Invalid leading space. Use space between subject and body."
+          return {} if valid?
+
+          {
+            label: "Invalid leading space.",
+            hint: "Use space between subject and body."
+          }
         end
       end
     end
