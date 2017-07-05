@@ -50,12 +50,12 @@ module Git
       def police
         say "Running #{Identity.label}...\n\n"
         report = runner.run
+        number_commits = "#{runner.number_commits} commit/s inspected."
 
         if report.empty?
-          say "No issues detected."
+          say "#{number_commits} No issues detected."
         else
-          say report
-          abort "#{report.total} issues detected."
+          report_error(report, number_commits)
         end
       end
 
@@ -74,6 +74,11 @@ module Git
       private
 
       attr_reader :runner
+
+      def report_error report, number_commits
+        say report
+        abort "#{number_commits} #{report.total} issues detected."
+      end
     end
   end
 end

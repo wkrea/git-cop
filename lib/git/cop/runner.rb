@@ -14,6 +14,10 @@ module Git
         reporter
       end
 
+      def number_commits
+        commits.count
+      end
+
       private
 
       attr_reader :configuration, :reporter, :commits
