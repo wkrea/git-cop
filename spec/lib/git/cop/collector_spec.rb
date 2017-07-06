@@ -14,13 +14,6 @@ RSpec.describe Git::Cop::Collector, :git_repo do
                  valid?: valid
   end
 
-  describe ".label" do
-    it "answers formatted label" do
-      pattern = /\A[0-9a-f]{40}\s\(Testy\sTester\,\s\d{1}\ssecond.+\)\:\sAdded\sdummy\sfiles\.\Z/
-      expect(described_class.label(commit)).to match(pattern)
-    end
-  end
-
   describe "#add" do
     context "cop is valid" do
       let(:valid) { true }
@@ -108,22 +101,6 @@ RSpec.describe Git::Cop::Collector, :git_repo do
     it "answers hash of invalid cops" do
       subject.add cop
       expect(subject.to_h).to eq(commit => [cop])
-    end
-  end
-
-  describe "#to_s" do
-    it "answers empty string with no issues" do
-      expect(subject.to_s).to eq("")
-    end
-
-    it "answers summary with detected issues" do
-      allow(cop).to receive(:issue).and_return("This is an error.")
-      subject.add cop
-
-      expect(subject.to_s).to eq(
-        "#{described_class.label commit}\n" \
-        "  Commit Subject Prefix: This is an error.\n\n"
-      )
     end
   end
 end
