@@ -17,7 +17,42 @@ RSpec.describe Git::Cop::CLI do
   end
 
   shared_examples_for "a police command", :git_repo do
-    context "with issues" do
+    context "with warnings" do
+      before do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test`
+          `printf "%s\n" "Test content." > one.txt`
+          `git add --all .`
+          `git commit --no-verify --message "Added test file."`
+        end
+      end
+
+      it "prints commit warning" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          pattern = /
+            Running\sGit\sCop.+\n
+            \n
+            [0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile\.\n
+            \s{2}WARN\:\sCommit\sBody\sPresent.+\n
+            \n
+            1\scommit\(s\)\sinspected\.\s
+            \d\sissue\(s\)\sdetected\s\(1\swarning\(s\)\,\s0\serror\(s\)\)\.\n
+          /xm
+
+          expect(&result).to output(pattern).to_stdout
+        end
+      end
+
+      it "does not abort program" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
+        end
+      end
+    end
+
+    context "with errors" do
       before do
         Dir.chdir git_repo_dir do
           `git checkout -b test`
@@ -27,21 +62,29 @@ RSpec.describe Git::Cop::CLI do
         end
       end
 
-      it "aborts with total number of issues" do
+      it "aborts program" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to raise_error(SystemExit, "1 commit/s inspected. 2 issues detected.")
+          expect(&result).to raise_error(SystemExit)
         end
       end
     end
 
     context "with no commits" do
-      it "prints no issues detected" do
+      it "prints zero issues for zero commits" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(
-            "Running Git Cop...\n\n0 commit/s inspected. No issues detected.\n"
-          ).to_stdout
+          text = "Running Git Cop...\n" \
+                 "0 commit(s) inspected. 0 issues detected.\n"
+
+          expect(&result).to output(text).to_stdout
+        end
+      end
+
+      it "does not abort program" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
         end
       end
     end
@@ -52,16 +95,24 @@ RSpec.describe Git::Cop::CLI do
           `git checkout -b test`
           `printf "%s\n" "Test content." > one.txt`
           `git add --all .`
-          `git commit --no-verify --message "Added a test commit."`
+          `git commit --no-verify --message "Added a test commit." --message "A test body."`
         end
       end
 
-      it "prints no issues detected" do
+      it "prints zero issues for one commit" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(
-            "Running Git Cop...\n\n1 commit/s inspected. No issues detected.\n"
-          ).to_stdout
+          text = "Running Git Cop...\n" \
+                 "1 commit(s) inspected. 0 issues detected.\n"
+
+          expect(&result).to output(text).to_stdout
+        end
+      end
+
+      it "does not abort program" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
         end
       end
     end
