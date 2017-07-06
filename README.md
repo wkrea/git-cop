@@ -31,6 +31,7 @@ history.
     - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
     - [Commit Body Phrase](#commit-body-phrase)
+    - [Commit Body Present](#commit-body-present)
     - [Commit Subject Length](#commit-subject-length)
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
