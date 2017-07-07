@@ -24,6 +24,34 @@ module Git
         collection.empty?
       end
 
+      def warnings?
+        collection.values.flatten.any?(&:warning?)
+      end
+
+      def errors?
+        collection.values.flatten.any?(&:error?)
+      end
+
+      def issues?
+        collection.values.flatten.any?(&:invalid?)
+      end
+
+      def total_warnings
+        collection.values.flatten.select(&:warning?).size
+      end
+
+      def total_errors
+        collection.values.flatten.select(&:error?).size
+      end
+
+      def total_issues
+        collection.values.flatten.select(&:invalid?).size
+      end
+
+      def total_commits
+        collection.keys.size
+      end
+
       def to_h
         collection
       end
