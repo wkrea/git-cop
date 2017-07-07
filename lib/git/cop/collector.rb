@@ -11,9 +11,7 @@ module Git
         @collection = Hash.new { |default, missing_id| default[missing_id] = [] }
       end
 
-      # :reek:FeatureEnvy
       def add cop
-        return if cop.valid?
         collection[cop.commit] << cop
         cop
       end
@@ -24,10 +22,6 @@ module Git
 
       def empty?
         collection.empty?
-      end
-
-      def total
-        collection.values.flatten.size
       end
 
       def to_h
