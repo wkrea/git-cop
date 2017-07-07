@@ -14,10 +14,6 @@ module Git
         collector
       end
 
-      def number_commits
-        commits.count
-      end
-
       private
 
       attr_reader :configuration, :collector, :commits

@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
   let :defaults do
     {
-      commit_body_leading_space: {enabled: true},
-      commit_subject_length: {enabled: true, length: 50},
-      commit_subject_prefix: {enabled: true, whitelist: %w[Fixed Added Updated Removed Refactored]},
-      commit_subject_suffix: {enabled: true, whitelist: ["."]}
+      commit_body_leading_space: {enabled: true, severity: :error},
+      commit_subject_length: {enabled: true, severity: :error, length: 50},
+      commit_subject_prefix: {enabled: true, severity: :error, whitelist: %w[Fixed Added]},
+      commit_subject_suffix: {enabled: true, severity: :error, whitelist: ["."]}
     }
   end
 
@@ -29,23 +29,23 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
 
   describe "#run" do
     context "with valid commits" do
-      it "reports no errors" do
+      it "reports no issues" do
         Dir.chdir git_repo_dir do
-          `git commit --no-verify --message "Updated one.txt." --message "- For testing purposes."`
-          report = subject.run
+          `git commit --no-verify --message "Added one.txt." --message "- For testing purposes."`
+          collector = subject.run
 
-          expect(report.empty?).to eq(true)
+          expect(collector.issues?).to eq(false)
         end
       end
     end
 
     context "with invalid commits" do
-      it "reports errors" do
+      it "reports issues" do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Add one.txt." --message "- For testing purposes only."`
-          report = subject.run
+          collector = subject.run
 
-          expect(report.total).to eq(1)
+          expect(collector.issues?).to eq(true)
         end
       end
     end
@@ -53,12 +53,12 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
     context "with disabled cop" do
       let(:defaults) { {commit_subject_prefix: {enabled: false, prefixes: %w[Added]}} }
 
-      it "reports no errors" do
+      it "reports no issues" do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Bogus commit message"`
-          report = subject.run
+          collector = subject.run
 
-          expect(report.empty?).to eq(true)
+          expect(collector.issues?).to eq(false)
         end
       end
     end
