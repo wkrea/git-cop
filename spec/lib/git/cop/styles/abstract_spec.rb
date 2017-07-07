@@ -99,6 +99,61 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
   end
 
+  describe "#invalid?" do
+    it "answers true when not valid" do
+      allow(subject).to receive(:valid?).and_return(false)
+      expect(subject.invalid?).to eq(true)
+    end
+
+    it "answers false when valid" do
+      allow(subject).to receive(:valid?).and_return(true)
+      expect(subject.invalid?).to eq(false)
+    end
+
+    it "fails with NotImplementedError when not implemented" do
+      result = -> { subject.invalid? }
+      expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
+    end
+  end
+
+  describe "#warning?" do
+    let(:settings) { {enabled: enabled, severity: :warn} }
+
+    it "answers true when invalid" do
+      allow(subject).to receive(:valid?).and_return(false)
+      expect(subject.warning?).to eq(true)
+    end
+
+    it "answers false when valid" do
+      allow(subject).to receive(:valid?).and_return(true)
+      expect(subject.warning?).to eq(false)
+    end
+
+    it "fails with NotImplementedError when not implemented" do
+      result = -> { subject.warning? }
+      expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
+    end
+  end
+
+  describe "#error?" do
+    let(:settings) { {enabled: enabled, severity: :error} }
+
+    it "answers true when invalid" do
+      allow(subject).to receive(:valid?).and_return(false)
+      expect(subject.error?).to eq(true)
+    end
+
+    it "answers false when valid" do
+      allow(subject).to receive(:valid?).and_return(true)
+      expect(subject.error?).to eq(false)
+    end
+
+    it "fails with NotImplementedError when not implemented" do
+      result = -> { subject.error? }
+      expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
+    end
+  end
+
   describe "#issue" do
     it "fails with NotImplementedError" do
       result = -> { subject.issue }

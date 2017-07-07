@@ -52,6 +52,18 @@ module Git
           fail NotImplementedError, "The `#valid?` method has not been implemented."
         end
 
+        def invalid?
+          !valid?
+        end
+
+        def warning?
+          invalid? && severity == :warn
+        end
+
+        def error?
+          invalid? && severity == :error
+        end
+
         def issue
           fail NotImplementedError, "The `#issue` method has not been implemented."
         end
