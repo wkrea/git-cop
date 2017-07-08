@@ -72,7 +72,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresent do
       end
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq("Use at least 3 non-empty lines.")
+        expect(issue[:hint]).to eq("Use a minimum of 3 lines (not empty).")
       end
     end
   end

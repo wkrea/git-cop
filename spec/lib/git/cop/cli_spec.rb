@@ -36,8 +36,8 @@ RSpec.describe Git::Cop::CLI do
             [0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile\.\n
             \s{2}WARN\:\sCommit\sBody\sPresent.+\n
             \n
-            1\scommit\(s\)\sinspected\.\s
-            \d\sissue\(s\)\sdetected\s\(1\swarning\(s\)\,\s0\serror\(s\)\)\.\n
+            1\scommit\sinspected\.\s
+            1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)\.\n
           /xm
 
           expect(&result).to output(pattern).to_stdout
@@ -75,7 +75,7 @@ RSpec.describe Git::Cop::CLI do
         Dir.chdir git_repo_dir do
           result = -> { cli }
           text = "Running Git Cop...\n" \
-                 "0 commit(s) inspected. 0 issues detected.\n"
+                 "0 commits inspected. 0 issues detected.\n"
 
           expect(&result).to output(text).to_stdout
         end
@@ -103,7 +103,7 @@ RSpec.describe Git::Cop::CLI do
         Dir.chdir git_repo_dir do
           result = -> { cli }
           text = "Running Git Cop...\n" \
-                 "1 commit(s) inspected. 0 issues detected.\n"
+                 "1 commit inspected. 0 issues detected.\n"
 
           expect(&result).to output(text).to_stdout
         end

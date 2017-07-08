@@ -41,7 +41,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
           "  ERROR: Commit Author Email. A test label. A test hint.\n" \
           "  ERROR: Commit Author Email. A test label. A test hint.\n" \
           "\n" \
-          "1 commit(s) inspected. 2 issue(s) detected (0 warning(s), 2 error(s)).\n"
+          "1 commit inspected. 2 issues detected (0 warnings, 2 errors).\n"
         )
       end
     end
@@ -50,7 +50,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
       it "answers zero detected issues" do
         expect(subject.to_s).to eq(
           "Running Git Cop...\n" \
-          "0 commit(s) inspected. 0 issues detected.\n"
+          "0 commits inspected. 0 issues detected.\n"
         )
       end
     end

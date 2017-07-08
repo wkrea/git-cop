@@ -26,7 +26,7 @@ module Git
 
           {
             label: "Invalid commit body.",
-            hint: "Use at least #{minimum} non-empty line#{"s" if minimum > 1}."
+            hint: %(Use a minimum of #{Kit::String.pluralize "line", count: minimum} (not empty).)
           }
         end
       end
