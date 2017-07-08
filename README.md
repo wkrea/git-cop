@@ -22,6 +22,7 @@ history.
     - [Rake](#rake)
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
+    - [Git Hooks](#git-hooks)
     - [Continuous Integration (CI)](#continuous-integration-ci)
   - [Cops](#cops)
     - [Commit Author Email](#commit-author-email)
@@ -191,6 +192,46 @@ Here is an example workflow, using the gem defaults where errors would be raised
 
 With this output, you can see the number of issues detected. Each issue shows the commit, cop name,
 and the error with help text.
+
+### Git Hooks
+
+This gem can be wired up as a [Git Hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)
+if desired. For example, you can add *post-commit* hook support by using the following code:
+
+```
+#! /usr/bin/env bash
+
+# DESCRIPTION
+# Defines Git post-commit functionality.
+
+# SETTINGS
+set -o nounset
+set -o errexit
+set -o pipefail
+IFS=$'\n\t'
+
+# EXECUTION
+if ! command -v git-cop > /dev/null; then
+   printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop --trust-policy MediumSecurity."
+   exit 1
+fi
+
+git-cop --police --commits $(git log --pretty=format:%H -1)
+```
+
+TIP: To configure global Git Hooks, add the following to your `.gitconfig`:
+
+```
+[core]
+  hooksPath = ~/.git_template/hooks
+```
+
+Now you can customize Git Hooks for all of your projects.
+[Check out these examples](https://github.com/bkuhlmann/dotfiles/tree/master/home_files/.git_template/hooks).
+
+You can also apply the above Git Hook to your local project by editing your `.git/hooks/post-commit`
+file. *This is not recommend*. Use a global configuration as it'll reduce project maintenance costs
+for you.
 
 ### Continuous Integration (CI)
 
