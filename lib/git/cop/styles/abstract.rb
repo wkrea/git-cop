@@ -36,6 +36,7 @@ module Git
         def initialize commit:, settings: self.class.defaults
           @commit = commit
           @settings = settings
+          @graylist = load_graylist
         end
 
         def enabled?
@@ -70,7 +71,12 @@ module Git
 
         protected
 
-        attr_reader :settings
+        attr_reader :settings, :graylist
+
+        # :reek:UtilityFunction
+        def load_graylist
+          Kit::Graylist.new
+        end
       end
     end
   end
