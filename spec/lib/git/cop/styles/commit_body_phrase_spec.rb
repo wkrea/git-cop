@@ -26,7 +26,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       expect(subject.valid?).to eq(true)
     end
 
-    context "with blacklist word (mixed case)" do
+    context "with blacklisted word (mixed case)" do
       let(:blacklist) { ["BasicaLLy"] }
       let(:body_lines) { ["This will fail, basically."] }
 
@@ -35,8 +35,17 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklist phrase (mixed case)" do
+    context "with blacklisted phrase (mixed case)" do
       let(:blacklist) { ["OF CoursE"] }
+      let(:body_lines) { ["This will fail, of course."] }
+
+      it "answers false" do
+        expect(subject.valid?).to eq(false)
+      end
+    end
+
+    context "with blacklisted phrase (regular expression)" do
+      let(:blacklist) { ["(o|O)f (c|C)ourse"] }
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do

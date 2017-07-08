@@ -31,23 +31,24 @@ module Git
 
           {
             label: "Invalid body.",
-            hint: %(Avoid these phrases: #{formatted_blacklist.join ", "}.),
+            hint: %(Avoid these phrases: #{graylist.to_quote.join ", "}.),
             lines: affected_lines
           }
         end
 
+        protected
+
+        def load_graylist
+          Kit::Graylist.new settings.fetch(:blacklist)
+        end
+
         private
 
-        def blacklist
-          settings.fetch(:blacklist).map(&:downcase)
-        end
-
-        def formatted_blacklist
-          blacklist.map { |word| %("#{word}") }
-        end
-
         def valid_line? line
-          !line.downcase.match? Regexp.union(blacklist)
+          !line.downcase.match? Regexp.new(
+            Regexp.union(graylist.to_regex).source,
+            Regexp::IGNORECASE
+          )
         end
 
         def affected_lines

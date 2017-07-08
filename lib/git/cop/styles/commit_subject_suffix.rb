@@ -8,13 +8,13 @@ module Git
           {
             enabled: true,
             severity: :error,
-            whitelist: ["."]
+            whitelist: ["\\."]
           }
         end
 
         def valid?
-          return true if whitelist.empty?
-          commit.subject.match?(/#{Regexp.union whitelist}\Z/)
+          return true if graylist.empty?
+          commit.subject.match?(/#{Regexp.union graylist.to_regex}\Z/)
         end
 
         def issue
@@ -22,18 +22,14 @@ module Git
 
           {
             label: "Invalid suffix.",
-            hint: %(Use: #{formatted_whitelist.join ", "}.)
+            hint: %(Use: #{graylist.to_quote.join ", "}.)
           }
         end
 
-        private
+        protected
 
-        def whitelist
-          settings.fetch :whitelist
-        end
-
-        def formatted_whitelist
-          whitelist.map { |suffix| %("#{suffix}") }
+        def load_graylist
+          Kit::Graylist.new settings.fetch(:whitelist)
         end
       end
     end

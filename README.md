@@ -56,7 +56,7 @@ history.
 
 - Enforces a [Git Rebase Workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history).
 - Enforces a clean and consistent Git commit history.
-- Provides a suite of cops which can be enabled/disabled or customized for your preference.
+- Provides a suite of cops which can be customized for your preference.
 
 ## Requirements
 
@@ -100,7 +100,7 @@ The default configuration is as follows:
     :commit_body_bullet:
       :enabled: true
       :blacklist:
-        - "*"
+        - "\\*"
         - "•"
     :commit_body_leading_space:
       :enabled: true
@@ -135,7 +135,7 @@ The default configuration is as follows:
     :commit_subject_suffix:
       :enabled: true
       :whitelist:
-        - "."
+        - "\\."
 
 Feel free to take this default configuration, modify, and save as your own custom
 `configuration.yml`.
@@ -212,6 +212,11 @@ done via Circle CI as well.
 The following details the various cops provided by this gem to ensure a high standard of commits for
 your project.
 
+Some cops support *whitelist* or *blacklist* options. These lists can consist of strings, regular
+expressions, or a combination thereof. If you need help constructing complex regular expressions for
+these lists, try launching an IRB session and using `Regexp.new` or `Regexp.escape` to experiment
+with the types of words/phrases you want to turn into regular expressions.
+
 ### Commit Author Email
 
 | Enabled | Defaults |
@@ -259,9 +264,9 @@ Ensures author name consists of, at least, a first and last name. Example:
 
 ### Commit Body Bullet
 
-| Enabled |        Defaults       |
-|---------|-----------------------|
-| true    | blacklist: ["*", "•"] |
+| Enabled |          Defaults         |
+|---------|---------------------------|
+| true    | blacklist: `["\\*", "•"]` |
 
 Ensures commit message bodies use a standard Markdown syntax for bullet points. Markdown supports
 the following syntax for bullets:
@@ -375,9 +380,9 @@ producing consistent project milestones and Git tag histories.
 
 ### Commit Subject Suffix
 
-| Enabled |     Defaults     |
-|---------|------------------|
-| true    | whitelist: ["."] |
+| Enabled |       Defaults       |
+|---------|----------------------|
+| true    | whitelist: `["\\."]` |
 
 Ensures commit subjects are suffixed consistently. The whitelist *is* case sensitive and only allows
 for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git tags,

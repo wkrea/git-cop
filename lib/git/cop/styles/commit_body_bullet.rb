@@ -8,7 +8,7 @@ module Git
           {
             enabled: true,
             severity: :error,
-            blacklist: %w[* •]
+            blacklist: %w[\\* •]
           }
         end
 
@@ -21,25 +21,23 @@ module Git
 
           {
             label: "Invalid bullet.",
-            hint: %(Avoid: #{formatted_blacklist.join ", "}.),
+            hint: %(Avoid: #{graylist.to_quote.join ", "}.),
             lines: affected_lines
           }
         end
 
+        protected
+
+        def load_graylist
+          Kit::Graylist.new settings.fetch :blacklist
+        end
+
         private
-
-        def blacklist
-          settings.fetch :blacklist
-        end
-
-        def formatted_blacklist
-          blacklist.map { |bullet| %("#{bullet}") }
-        end
 
         # :reek:FeatureEnvy
         def valid_line? line
           return true if line.strip.empty?
-          line.match?(/\A(?!\s*#{Regexp.union blacklist}\s+).+\Z/)
+          line.match?(/\A(?!\s*#{Regexp.union graylist.to_regex}\s+).+\Z/)
         end
 
         def affected_lines

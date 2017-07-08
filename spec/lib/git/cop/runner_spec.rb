@@ -51,7 +51,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
     end
 
     context "with disabled cop" do
-      let(:defaults) { {commit_subject_prefix: {enabled: false, prefixes: %w[Added]}} }
+      let(:defaults) { {commit_subject_prefix: {enabled: false, whitelist: %w[Added]}} }
 
       it "reports no issues" do
         Dir.chdir git_repo_dir do
