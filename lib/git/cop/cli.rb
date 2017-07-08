@@ -47,8 +47,13 @@ module Git
 
       desc "-p, [--police]", "Check feature branch for issues."
       map %w[-p --police] => :police
+      method_option :commits,
+                    aliases: "-c",
+                    desc: "Check specific commit SHA(s).",
+                    type: :array,
+                    default: []
       def police
-        collector = runner.run
+        collector = load_collector options.commits
         reporter = Reporters::Branch.new collector: collector
         say reporter.to_s
         abort if collector.errors?
@@ -69,6 +74,10 @@ module Git
       private
 
       attr_reader :runner
+
+      def load_collector shas
+        shas.empty? ? runner.run : runner.run(shas: shas)
+      end
     end
   end
 end
