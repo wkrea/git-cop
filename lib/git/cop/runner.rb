@@ -6,17 +6,16 @@ module Git
       def initialize configuration:, collector: Collector.new
         @configuration = configuration
         @collector = collector
-        @commits = Kit::Branch.new.shas.map { |sha| Kit::Commit.new sha: sha }
       end
 
-      def run
-        commits.each { |commit| check commit }
+      def run shas: Kit::Branch.new.shas
+        Array(shas).map { |sha| check Kit::Commit.new(sha: sha) }
         collector
       end
 
       private
 
-      attr_reader :configuration, :collector, :commits
+      attr_reader :configuration, :collector
 
       def load_cop id, commit, settings
         klass = Styles::Abstract.descendants.find { |descendant| descendant.id == id }

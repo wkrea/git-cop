@@ -75,5 +75,16 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
         end
       end
     end
+
+    context "with single commit" do
+      it "processes commit" do
+        Dir.chdir git_repo_dir do
+          `git commit --no-verify --message "Add one.txt"`
+          collector = subject.run shas: `git log --pretty=format:%H -1`
+
+          expect(collector.issues?).to eq(true)
+        end
+      end
+    end
   end
 end
