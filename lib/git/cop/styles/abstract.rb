@@ -10,6 +10,8 @@ module Git
       class Abstract
         using Refinements::Strings
 
+        LEVELS = %i[warn error].freeze
+
         def self.inherited klass
           @descendants ||= []
           @descendants << klass
@@ -45,7 +47,7 @@ module Git
 
         def severity
           level = settings.fetch :severity
-          fail(Errors::Severity, level: level) unless Errors::Severity::LEVELS.include?(level)
+          fail(Errors::Severity, level: level) unless LEVELS.include?(level)
           level
         end
 
