@@ -53,10 +53,10 @@ module Git
                     type: :array,
                     default: []
       def police
-        collector = load_collector options.commits
-        reporter = Reporters::Branch.new collector: collector
-        say reporter.to_s
+        collector = analyze_commits options.commits
         abort if collector.errors?
+      rescue Errors::Base => exception
+        say_status :error, exception.message, :red
       end
 
       desc "-v, [--version]", "Show gem version."
@@ -77,6 +77,13 @@ module Git
 
       def load_collector shas
         shas.empty? ? runner.run : runner.run(shas: shas)
+      end
+
+      def analyze_commits shas
+        load_collector(shas).tap do |collector|
+          reporter = Reporters::Branch.new collector: collector
+          say reporter.to_s
+        end
       end
     end
   end

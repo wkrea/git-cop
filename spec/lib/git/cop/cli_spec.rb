@@ -115,6 +115,13 @@ RSpec.describe Git::Cop::CLI do
         end
       end
     end
+
+    it "prints error when gem error is rescued" do
+      allow(Git::Cop::Reporters::Branch).to receive(:new).and_raise(Git::Cop::Errors::Base, "Test.")
+      result = -> { cli }
+
+      expect(&result).to output(/error\s+Test\./).to_stdout
+    end
   end
 
   shared_examples_for "a version command" do
