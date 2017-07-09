@@ -19,11 +19,16 @@ history.
   - [Setup](#setup)
     - [Install](#install)
     - [Configuration](#configuration)
+      - [Enablement](#enablement)
+      - [Severity Levels](#severity-levels)
+      - [Regular Expressions](#regular-expressions)
     - [Rake](#rake)
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
     - [Git Hooks](#git-hooks)
     - [Continuous Integration (CI)](#continuous-integration-ci)
+      - [Circle CI](#circle-ci)
+      - [Travis CI](#travis-ci)
   - [Cops](#cops)
     - [Commit Author Email](#commit-author-email)
     - [Commit Author Name Capitalization](#commit-author-name-capitalization)
@@ -58,7 +63,7 @@ history.
 
 - Enforces a [Git Rebase Workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history).
 - Enforces a clean and consistent Git commit history.
-- Provides a suite of cops which can be customized for your preference.
+- Provides a suite of cops which can be customized to your preference.
 
 ## Requirements
 
@@ -94,23 +99,30 @@ The default configuration is as follows:
 
     :commit_author_email:
       :enabled: true
+      :severity: :error
     :commit_author_name_capitalization:
       :enabled: true
+      :severity: :error
     :commit_author_name_parts:
       :enabled: true
+      :severity: :error
       :minimum: 2
     :commit_body_bullet:
       :enabled: true
+      :severity: :error
       :blacklist:
         - "\\*"
         - "•"
     :commit_body_leading_space:
       :enabled: true
+      :severity: :error
     :commit_body_line_length:
       :enabled: true
+      :severity: :error
       :length: 72
     :commit_body_phrase:
       :enabled: true
+      :severity: :error
       :blacklist:
         - obviously
         - basically
@@ -120,14 +132,17 @@ The default configuration is as follows:
         - everyone knows
         - however
         - easy
-    :commit_body_present:
+    :commit_body_presence:
       :enabled: false
+      :severity: :warn
       :minimum: 1
     :commit_subject_length:
       :enabled: true
+      :severity: :error
       :length: 72
     :commit_subject_prefix:
       :enabled: true
+      :severity: :error
       :whitelist:
         - Fixed
         - Added
@@ -136,11 +151,34 @@ The default configuration is as follows:
         - Refactored
     :commit_subject_suffix:
       :enabled: true
+      :severity: :error
       :whitelist:
         - "\\."
 
 Feel free to take this default configuration, modify, and save as your own custom
 `configuration.yml`.
+
+#### Enablement
+
+By default, most cops are enabled. Accepted values are `true` or `false`. If you wish to disable a
+cop, set it to `false`.
+
+#### Severity Levels
+
+By default, most cops are set to `error` severity. If you wish to reduce the severity level of a
+cop, you can set it to `warn` instead. Here are the accepted values and what each means:
+
+- `warn`: Will count as an issue and display a warning but will not cause the program/build to
+  fail. Use this if you want to display issues as reminders or cautionary warnings.
+- `error`: Will count as an issue, display error output, and cause the program/build to fail. Use
+  this setting if you want to ensure bad commits are prevented.
+
+#### Regular Expressions
+
+Some cops support *whitelist* or *blacklist* options. These lists can consist of strings, regular
+expressions, or a combination thereof. If you need help constructing complex regular expressions for
+these lists, try launching an IRB session and using `Regexp.new` or `Regexp.escape` to experiment
+with the types of words/phrases you want to turn into regular expressions.
 
 ### Rake
 
@@ -161,18 +199,17 @@ From the command line, type: `git-cop --help`
 
     git-cop -c, [--config]        # Manage gem configuration.
     git-cop -h, [--help=COMMAND]  # Show this message or get help for a command.
-    git-cop -p, [--police]        # Police current branch for issues.
+    git-cop -p, [--police]        # Check feature branch for issues.
     git-cop -v, [--version]       # Show gem version.
 
-To check if your Git commit history is clean, run: `git-cop --police`. It will exit with a
-failure if at least one issue is detected (handy for CI builds).
+To check if your Git commit history is clean, run: `git-cop --police`. It will exit with a failure
+if at least one issue, with error severity, is detected.
 
-This gem does not check commits on `master`. This is intentional as you would generally not want to
-rewrite or fix commits on `master`. This gem is best used on feature branches as it automatically
-detects all commits made since `master` on the feature branch and will raise errors if any of the
-feature branch commits do not conform to the style guide.
+This gem does not check commits on `master`. This is intentional as you would, generally, not want
+to rewrite or fix commits on `master`. This gem is best used on feature branches as it automatically
+detects all commits made since `master` on the feature branch.
 
-Here is an example workflow, using the gem defaults where errors would be raised:
+Here is an example workflow, using gem defaults with issues detected:
 
     cd example
     git checkout -b test
@@ -184,15 +221,15 @@ Here is an example workflow, using the gem defaults where errors would be raised
     # Output:
     Running Git Cop...
 
-    d0f9bf40a09d10618bcf8a38a5ddd3bcf12fd550 (Brooke Kuhlmann, 3 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
-      Commit Subject Length: Invalid length. Use 72 characters or less.
-      Commit Subject Prefix: Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
-      Commit Subject Suffix: Invalid suffix. Use: ".".
+    ae84620bda4c6c4fbd22f24fecee575319d25546 (Brooke Kuhlmann, 5 days ago): Added Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam.
+      ERROR: Commit Subject Length. Invalid length. Use 72 characters or less.
 
-    3 issues detected.
+    97a9d4bf0cd73f0af2b31f22e0920134bb06575d (Brooke Kuhlmann, 5 days ago): Add one test file
+      WARN: Commit Body Presence. Invalid body. Use a minimum of 1 line (not empty).
+      ERROR: Commit Subject Prefix. Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
+      ERROR: Commit Subject Suffix. Invalid suffix. Use: "\.".
 
-With this output, you can see the number of issues detected. Each issue shows the commit, cop name,
-and the error with help text.
+    2 commits inspected. 4 issues detected (1 warning, 3 errors).
 
 ### Git Hooks
 
@@ -236,34 +273,32 @@ for you.
 
 ### Continuous Integration (CI)
 
-This gem automatically detects when it is running on a CI build server via the `CI=true` environment
-variable. Most CI build servers respect and enable this variable. If your CI server doesn't, you'll
-want to make sure you have `CI=true` set in your environment.
+This gem automatically configures itself for known CI build servers.
 
-Calculation of commits is done by reviewing all commits made on the current feature branch since
-branching from `master`. Some CI servers don't respect this and blow away any branch information,
-most notibly, Travis CI. For that reason, Travis CI is not supported or recommended as they use
-`git clone --depth=<number>` cloning which can't be customized and destroys any knowledge of
-`master` and feature branch information.
+Calculation of commits is done by reviewing all commits made on the feature branch since branching
+from `master`. Below are the build servers which are supported and *tested*. If you have a build
+server that is not listed, please open a pull request with support.
 
-Build servers like [Circle CI](https://circleci.com) are recommended. The builds for this gem are
-done via Circle CI as well.
+#### Circle CI
+
+This gem automatically detects and configures itself for [Circle CI](https://circleci.com) builds by
+checking the `CIRCLECI` environment variable. No additional setup required!
+
+#### Travis CI
+
+This gem automatically detects and configures itself for [Travis CI](https://travis-ci.org) builds
+by checking the `TRAVIS` environment variable. No additional setup required!
 
 ## Cops
 
 The following details the various cops provided by this gem to ensure a high standard of commits for
 your project.
 
-Some cops support *whitelist* or *blacklist* options. These lists can consist of strings, regular
-expressions, or a combination thereof. If you need help constructing complex regular expressions for
-these lists, try launching an IRB session and using `Regexp.new` or `Regexp.escape` to experiment
-with the types of words/phrases you want to turn into regular expressions.
-
 ### Commit Author Email
 
-| Enabled | Defaults |
-|---------|----------|
-| true    | none     |
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| true    | error    | none     |
 
 Ensures author email address exists. Git requires an author email when you use it for the first time
 too. This takes it a step further to ensure the email address loosely resembles an email address.
@@ -276,9 +311,9 @@ too. This takes it a step further to ensure the email address loosely resembles 
 
 ### Commit Author Name Capitalization
 
-| Enabled | Defaults |
-|---------|----------|
-| true    | none     |
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| true    | error    | none     |
 
 Ensures auther name is properly capitalized. Example:
 
@@ -292,9 +327,9 @@ Ensures auther name is properly capitalized. Example:
 
 ### Commit Author Name Parts
 
-| Enabled |  Defaults  |
-|---------|------------|
-| true    | minimum: 2 |
+| Enabled | Severity |  Defaults  |
+|---------|----------|------------|
+| true    | error    | minimum: 2 |
 
 Ensures author name consists of, at least, a first and last name. Example:
 
@@ -306,9 +341,9 @@ Ensures author name consists of, at least, a first and last name. Example:
 
 ### Commit Body Bullet
 
-| Enabled |          Defaults         |
-|---------|---------------------------|
-| true    | blacklist: `["\\*", "•"]` |
+| Enabled | Severity |          Defaults         |
+|---------|----------|---------------------------|
+| true    | error    | blacklist: `["\\*", "•"]` |
 
 Ensures commit message bodies use a standard Markdown syntax for bullet points. Markdown supports
 the following syntax for bullets:
@@ -322,9 +357,9 @@ bullet points and *emphasis* are now, distinctly, unique.
 
 ### Commit Body Leading Space
 
-| Enabled | Defaults |
-|---------|----------|
-| true    | none     |
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| true    | error    | none     |
 
 Ensures there is a leading space between the commit subject and body. Generally, this isn't an issue
 but sometimes the Git CLI can be misued or a misconfigured Git editor will smash the subject line
@@ -349,9 +384,9 @@ and start of the body as one run-on paragraph. Example:
 
 ### Commit Body Line Length
 
-| Enabled |  Defaults  |
-|---------|------------|
-| true    | length: 72 |
+| Enabled | Severity |  Defaults  |
+|---------|----------|------------|
+| true    | error    | length: 72 |
 
 Ensures each line of the commit body is no longer than 72 characters in length for consistent
 readabilty and word-wrap prevention on smaller screen sizes. For further details, read Tim Pope's
@@ -360,9 +395,9 @@ subject.
 
 ### Commit Body Phrase
 
-| Enabled |                       Defaults                       |
-|---------|------------------------------------------------------|
-| true    | blacklist: (see configuration list, mentioned above) |
+| Enabled | Severity |                       Defaults                       |
+|---------|----------|------------------------------------------------------|
+| true    | error    | blacklist: (see configuration list, mentioned above) |
 
 Ensures non-descriptive words/phrases are avoided in order to keep commit message bodies informative
 and specific. The blacklist is case insensitive. Detection of blacklisted words/phrases is case
@@ -381,18 +416,18 @@ insensitve as well. Example:
 
 ### Commit Body Presence
 
-| Enabled |  Defaults  |
-|---------|------------|
-| false   | minimum: 1 |
+| Enabled | Severity |  Defaults  |
+|---------|----------|------------|
+| false   | warn     | minimum: 1 |
 
 Ensures a minimum number of lines are present within the commit body. Lines with empty characters
 (i.e. whitespace, carriage returns, etc.) are considered to be empty.
 
 ### Commit Subject Length
 
-| Enabled |  Defaults  |
-|---------|------------|
-| true    | length: 72 |
+| Enabled | Severity |  Defaults  |
+|---------|----------|------------|
+| true    | error    | length: 72 |
 
 Ensures the commit subject length is no more than 72 characters in length. This default is more
 lenient than Tim Pope's
@@ -402,9 +437,9 @@ word wrapped.
 
 ### Commit Subject Prefix
 
-| Enabled |        Defaults        |
-|---------|------------------------|
-| true    | whitelist: (see below) |
+| Enabled | Severity |        Defaults        |
+|---------|----------|------------------------|
+| true    | error    | whitelist: (see below) |
 
 Ensures the commit subject uses consistent prefixes that help explain *what* is being commited. The
 whitelist *is* case sensitive. The default whitelist consists of the following prefixes:
@@ -423,9 +458,9 @@ producing consistent project milestones and Git tag histories.
 
 ### Commit Subject Suffix
 
-| Enabled |       Defaults       |
-|---------|----------------------|
-| true    | whitelist: `["\\."]` |
+| Enabled | Severity |       Defaults       |
+|---------|----------|----------------------|
+| true    | error    | whitelist: `["\\."]` |
 
 Ensures commit subjects are suffixed consistently. The whitelist *is* case sensitive and only allows
 for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git tags,

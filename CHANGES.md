@@ -1,3 +1,51 @@
+# v1.2.0 (2017-07-09)
+
+- Fixed spec issues with CI environments.
+- Added Circle CI branch environment.
+- Added Commit Body Present cop to table of contents.
+- Added Git Hook documentation.
+- Added GitHub project rebase documentation.
+- Added README Git style guide.
+- Added README cop descriptions.
+- Added Travis CI branch environment.
+- Added Travis CI build support for project.
+- Added `--commits` option to `--police` command.
+- Added base error class.
+- Added branch reporter.
+- Added commit reporter.
+- Added commit_body_present cop
+- Added cop graylist regular expression support.
+- Added cop reporter.
+- Added cop severity support to collector.
+- Added cop severity support.
+- Added graylist hook.
+- Added graylist support.
+- Added invalid, warning, and error support to abstract class.
+- Added line reporter.
+- Added local branch environment.
+- Added minimum for Commit Body Present cop
+- Added number of commit inspected.
+- Added severity error.
+- Added string pluralization support.
+- Updated CLI to rescue gem-related errors.
+- Updated CONTRIBUTING documentation.
+- Updated Commit Body Presence cop name.
+- Updated GitHub templates.
+- Updated collector to collect valid and invalid cops.
+- Updated cop issue to answer a hash.
+- Updated runner to process custom commits.
+- Updated to Climate Control 0.2.0.
+- Removed collector reporting behavior.
+- Refactored CLI to use reporter.
+- Refactored Git utilities to `Kit` module.
+- Refactored branch kit to use branch environments.
+- Refactored calculation of string pluralization.
+- Refactored cop error as issue.
+- Refactored reporter as collector.
+- Refactored runner to fail with gem base error.
+- Refactored runner to use collector modifications.
+- Refactored severity levels to abstract style class.
+
 # v1.1.0 (2017-06-19)
 
 - Updated README headers.
