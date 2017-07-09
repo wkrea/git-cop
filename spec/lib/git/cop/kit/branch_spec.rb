@@ -2,33 +2,39 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Kit::Branch, :git_repo do
-  let(:branch) { "test" }
-  subject { described_class.new }
+RSpec.describe Git::Cop::Kit::Branch do
+  describe ".environment" do
+    it "answers local environment" do
+      ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+        expect(described_class.environment).to be_a(Git::Cop::Kit::Environments::Local)
+      end
+    end
 
-  before do
-    Dir.chdir git_repo_dir do
-      `git checkout -b #{branch}`
-      `printf "%s\n" "Test content." > test.txt`
-      `git add --all .`
-      `git commit --message "Updated test file."`
+    it "answers Circle CI environment" do
+      ClimateControl.modify CIRCLECI: "true", TRAVIS: "false" do
+        expect(described_class.environment).to be_a(Git::Cop::Kit::Environments::CircleCI)
+      end
+    end
+
+    it "answers Travis CI environment" do
+      ClimateControl.modify CIRCLECI: "false", TRAVIS: "true" do
+        expect(described_class.environment).to be_a(Git::Cop::Kit::Environments::TravisCI)
+      end
     end
   end
 
   describe "#name" do
-    context "with default path" do
-      it "answers local branch name" do
+    context "with local environment", :git_repo do
+      before do
         Dir.chdir git_repo_dir do
-          expect(subject.name).to eq(branch)
+          `git checkout -b test`
         end
       end
-    end
 
-    context "with custom path" do
-      it "answers remote branch name" do
-        ClimateControl.modify CI: "true" do
+      it "answers name" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
           Dir.chdir git_repo_dir do
-            expect(subject.name).to eq("origin/test")
+            expect(subject.name).to eq("test")
           end
         end
       end
@@ -36,19 +42,28 @@ RSpec.describe Git::Cop::Kit::Branch, :git_repo do
   end
 
   describe "#shas" do
-    context "with default path" do
-      it "answers feature branch commit SHAs" do
+    context "with local environment", :git_repo do
+      before do
         Dir.chdir git_repo_dir do
-          expect(subject.shas.count).to eq(1)
+          `git checkout -b test`
+          `touch test.txt`
+          `git add --all .`
+          `git commit --message "Added test file."`
         end
       end
-    end
 
-    context "with custom path" do
-      it "answers feature branch commit SHAs" do
-        ClimateControl.modify CI: "true" do
+      it "answers SHA strings" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
           Dir.chdir git_repo_dir do
-            expect(subject.shas.count).to eq(0) # Zero because dummy repo has invalid origin.
+            expect(subject.shas).to all(match(/[0-9a-f]{40}/))
+          end
+        end
+      end
+
+      it "answers SHA count" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            expect(subject.shas.count).to eq(1)
           end
         end
       end

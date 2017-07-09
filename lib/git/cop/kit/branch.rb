@@ -1,30 +1,32 @@
 # frozen_string_literal: true
 
+require "forwardable"
+
 module Git
   module Cop
     module Kit
       class Branch
-        REMOTE_PATH = "origin/"
+        extend Forwardable
+
+        def_delegators :environment, :name, :shas
+
+        def self.environment
+          if ENV["CIRCLECI"] == "true"
+            Environments::CircleCI.new
+          elsif ENV["TRAVIS"] == "true"
+            Environments::TravisCI.new
+          else
+            Environments::Local.new
+          end
+        end
 
         def initialize
-          @path = ENV["CI"] == "true" ? REMOTE_PATH : ""
-        end
-
-        def name
-          "#{path}#{`git rev-parse --abbrev-ref HEAD | tr -d '\n'`}"
-        end
-
-        def shas
-          `git log --pretty=format:"%H" #{master}..#{name}`.split("\n")
+          @environment = self.class.environment
         end
 
         private
 
-        attr_reader :path
-
-        def master
-          "#{path}master"
-        end
+        attr_reader :environment
       end
     end
   end
