@@ -71,7 +71,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
           `git commit --no-verify --message "Updated one.txt." --message "- For testing purposes."`
           result = -> { subject.run }
 
-          expect(&result).to raise_error(StandardError, /Invalid\scop\:\sinvalid_cop_id.+/)
+          expect(&result).to raise_error(Git::Cop::Errors::Base, /Invalid\scop\:\sinvalid_cop_id.+/)
         end
       end
     end
