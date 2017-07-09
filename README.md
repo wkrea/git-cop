@@ -32,7 +32,7 @@ history.
     - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
     - [Commit Body Phrase](#commit-body-phrase)
-    - [Commit Body Present](#commit-body-present)
+    - [Commit Body Presence](#commit-body-presence)
     - [Commit Subject Length](#commit-subject-length)
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
@@ -43,6 +43,7 @@ history.
     - [Tags](#tags)
     - [Rebases](#rebases)
     - [Pull Requests](#pull-requests)
+    - [GitHub](#github)
   - [Tests](#tests)
   - [Versioning](#versioning)
   - [Code of Conduct](#code-of-conduct)
@@ -532,6 +533,17 @@ worth considering:
   - Ensure your feature branch is rebased upon `master`.
   - Ensure all tests and code quality checks are passing.
   - Ensure the feature branch is deleted after being successfully merged.
+
+### GitHub
+
+When using GitHub, make sure to enforce a rebase workflow for all of your GitHub projects (*highly
+recommended*). You can do this via your project options (i.e.
+`https://github.com/<username/organization>/<project>/settings`) and editing your merge options for
+pull requests as follows:
+
+![GitHub Merge Options](doc/github-settings-options.png)
+
+Doing this will help maintain a clean Git history.
 
 ## Tests
 
