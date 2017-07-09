@@ -34,7 +34,7 @@ RSpec.describe Git::Cop::CLI do
             Running\sGit\sCop.+\n
             \n
             [0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile\.\n
-            \s{2}WARN\:\sCommit\sBody\sPresent.+\n
+            \s{2}WARN\:\sCommit\sBody\sPresence.+\n
             \n
             1\scommit\sinspected\.\s1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)\.\n
           /xm

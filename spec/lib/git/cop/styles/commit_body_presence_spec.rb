@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Styles::CommitBodyPresent do
+RSpec.describe Git::Cop::Styles::CommitBodyPresence do
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
   let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1"), body_lines: body_lines }
   let(:minimum) { 1 }
@@ -11,13 +11,13 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresent do
 
   describe ".id" do
     it "answers class ID" do
-      expect(described_class.id).to eq(:commit_body_present)
+      expect(described_class.id).to eq(:commit_body_presence)
     end
   end
 
   describe ".label" do
     it "answers class label" do
-      expect(described_class.label).to eq("Commit Body Present")
+      expect(described_class.label).to eq("Commit Body Presence")
     end
   end
 
@@ -68,7 +68,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresent do
       let(:issue) { subject.issue }
 
       it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid commit body.")
+        expect(issue[:label]).to eq("Invalid body.")
       end
 
       it "answers issue hint" do

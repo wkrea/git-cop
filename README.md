@@ -378,13 +378,14 @@ insensitve as well. Example:
     Necessary to fix due to a bug detected in production. The included implentation fixes the bug
     and provides the missing spec to ensure this doesn't happen again.
 
-### Commit Body Present
+### Commit Body Presence
 
 | Enabled |  Defaults  |
 |---------|------------|
 | false   | minimum: 1 |
 
-Checks that there is at least 1 (or more when changing the default) non empty lines in the commit body. A line with only empty characters (whitespace, carriage returns, etc.) is also considered to be empty.
+Ensures a minimum number of lines are present within the commit body. Lines with empty characters
+(i.e. whitespace, carriage returns, etc.) are considered to be empty.
 
 ### Commit Subject Length
 

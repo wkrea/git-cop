@@ -3,7 +3,7 @@
 module Git
   module Cop
     module Styles
-      class CommitBodyPresent < Abstract
+      class CommitBodyPresence < Abstract
         def self.defaults
           {
             enabled: true,
@@ -25,7 +25,7 @@ module Git
           return {} if valid?
 
           {
-            label: "Invalid commit body.",
+            label: "Invalid body.",
             hint: %(Use a minimum of #{Kit::String.pluralize "line", count: minimum} (not empty).)
           }
         end
