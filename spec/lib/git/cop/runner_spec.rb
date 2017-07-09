@@ -30,22 +30,26 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
   describe "#run" do
     context "with valid commits" do
       it "reports no issues" do
-        Dir.chdir git_repo_dir do
-          `git commit --no-verify --message "Added one.txt." --message "- For testing purposes."`
-          collector = subject.run
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            `git commit --no-verify --message "Added one.txt." --message "- For testing purposes."`
+            collector = subject.run
 
-          expect(collector.issues?).to eq(false)
+            expect(collector.issues?).to eq(false)
+          end
         end
       end
     end
 
     context "with invalid commits" do
       it "reports issues" do
-        Dir.chdir git_repo_dir do
-          `git commit --no-verify --message "Add one.txt." --message "- For testing purposes only."`
-          collector = subject.run
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            `git commit --no-verify --message "Add one.txt." --message "- A test bullet."`
+            collector = subject.run
 
-          expect(collector.issues?).to eq(true)
+            expect(collector.issues?).to eq(true)
+          end
         end
       end
     end
@@ -54,11 +58,13 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
       let(:defaults) { {commit_subject_prefix: {enabled: false, whitelist: %w[Added]}} }
 
       it "reports no issues" do
-        Dir.chdir git_repo_dir do
-          `git commit --no-verify --message "Bogus commit message"`
-          collector = subject.run
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            `git commit --no-verify --message "Bogus commit message"`
+            collector = subject.run
 
-          expect(collector.issues?).to eq(false)
+            expect(collector.issues?).to eq(false)
+          end
         end
       end
     end
@@ -67,22 +73,29 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
       let(:defaults) { {invalid_cop_id: true} }
 
       it "fails with errors" do
-        Dir.chdir git_repo_dir do
-          `git commit --no-verify --message "Updated one.txt." --message "- For testing purposes."`
-          result = -> { subject.run }
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            `git commit --no-verify --message "Updated one.txt." --message "- A test bullet."`
+            result = -> { subject.run }
 
-          expect(&result).to raise_error(Git::Cop::Errors::Base, /Invalid\scop\:\sinvalid_cop_id.+/)
+            expect(&result).to raise_error(
+              Git::Cop::Errors::Base,
+              /Invalid\scop\:\sinvalid_cop_id.+/
+            )
+          end
         end
       end
     end
 
     context "with single commit" do
       it "processes commit" do
-        Dir.chdir git_repo_dir do
-          `git commit --no-verify --message "Add one.txt"`
-          collector = subject.run shas: `git log --pretty=format:%H -1`
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            `git commit --no-verify --message "Add one.txt"`
+            collector = subject.run shas: `git log --pretty=format:%H -1`
 
-          expect(collector.issues?).to eq(true)
+            expect(collector.issues?).to eq(true)
+          end
         end
       end
     end

@@ -28,25 +28,29 @@ RSpec.describe Git::Cop::CLI do
       end
 
       it "prints commit warning" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          pattern = /
-            Running\sGit\sCop.+\n
-            \n
-            [0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile\.\n
-            \s{2}WARN\:\sCommit\sBody\sPresence.+\n
-            \n
-            1\scommit\sinspected\.\s1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)\.\n
-          /xm
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            pattern = /
+              Running\sGit\sCop.+\n
+              \n
+              [0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile\.\n
+              \s{2}WARN\:\sCommit\sBody\sPresence.+\n
+              \n
+              1\scommit\sinspected\.\s1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)\.\n
+            /xm
 
-          expect(&result).to output(pattern).to_stdout
+            expect(&result).to output(pattern).to_stdout
+          end
         end
       end
 
       it "does not abort program" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          expect(&result).to_not raise_error
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            expect(&result).to_not raise_error
+          end
         end
       end
     end
@@ -62,28 +66,34 @@ RSpec.describe Git::Cop::CLI do
       end
 
       it "aborts program" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          expect(&result).to raise_error(SystemExit)
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            expect(&result).to raise_error(SystemExit)
+          end
         end
       end
     end
 
     context "with no commits" do
       it "prints zero issues for zero commits" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          text = "Running Git Cop...\n" \
-                 "0 commits inspected. 0 issues detected.\n"
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            text = "Running Git Cop...\n" \
+                   "0 commits inspected. 0 issues detected.\n"
 
-          expect(&result).to output(text).to_stdout
+            expect(&result).to output(text).to_stdout
+          end
         end
       end
 
       it "does not abort program" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          expect(&result).to_not raise_error
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            expect(&result).to_not raise_error
+          end
         end
       end
     end
@@ -99,25 +109,31 @@ RSpec.describe Git::Cop::CLI do
       end
 
       it "prints zero issues for one commit" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          text = "Running Git Cop...\n" \
-                 "1 commit inspected. 0 issues detected.\n"
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            text = "Running Git Cop...\n" \
+                   "1 commit inspected. 0 issues detected.\n"
 
-          expect(&result).to output(text).to_stdout
+            expect(&result).to output(text).to_stdout
+          end
         end
       end
 
       it "does not abort program" do
-        Dir.chdir git_repo_dir do
-          result = -> { cli }
-          expect(&result).to_not raise_error
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            expect(&result).to_not raise_error
+          end
         end
       end
     end
 
     it "prints error when gem error is rescued" do
-      allow(Git::Cop::Reporters::Branch).to receive(:new).and_raise(Git::Cop::Errors::Base, "Test.")
+      allow(Git::Cop::Reporters::Branch).to receive(:new).and_raise(
+        Git::Cop::Errors::Base, "Test."
+      )
       result = -> { cli }
 
       expect(&result).to output(/error\s+Test\./).to_stdout
