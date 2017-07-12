@@ -28,7 +28,7 @@ RSpec.describe Git::Cop::Reporters::Commit do
       it "answers commit (SHA, author name, relative time, subject) and single cop report" do
         expect(subject.to_s).to eq(
           "abcdef (Test Tester, 1 second ago): An example commit subject.\n" \
-          "  WARN: Commit Author Email. A test label. A test hint.\n" \
+          "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n"
         )
       end
@@ -40,8 +40,8 @@ RSpec.describe Git::Cop::Reporters::Commit do
       it "answers commit (SHA, author name, relative time, subject) and multiple cop report" do
         expect(subject.to_s).to eq(
           "abcdef (Test Tester, 1 second ago): An example commit subject.\n" \
-          "  WARN: Commit Author Email. A test label. A test hint.\n" \
-          "  WARN: Commit Author Email. A test label. A test hint.\n" \
+          "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
+          "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n"
         )
       end

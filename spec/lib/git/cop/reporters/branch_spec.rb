@@ -38,8 +38,8 @@ RSpec.describe Git::Cop::Reporters::Branch do
           "Running Git Cop...\n" \
           "\n" \
           "fa4a269f4fe9 (Test Tester, 1 second ago): A subject.\n" \
-          "  ERROR: Commit Author Email. A test label. A test hint.\n" \
-          "  ERROR: Commit Author Email. A test label. A test hint.\n" \
+          "\e[31m  ERROR: Commit Author Email. A test label. A test hint.\n\e[0m" \
+          "\e[31m  ERROR: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n" \
           "1 commit inspected. 2 issues detected (0 warnings, 2 errors).\n"
         )
