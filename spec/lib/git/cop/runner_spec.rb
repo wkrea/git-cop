@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
   let :defaults do
     {
-      commit_body_leading_space: {enabled: true, severity: :error},
+      commit_body_leading_line: {enabled: true, severity: :error},
       commit_subject_length: {enabled: true, severity: :error, length: 50},
       commit_subject_prefix: {enabled: true, severity: :error, whitelist: %w[Fixed Added]},
       commit_subject_suffix: {enabled: true, severity: :error, whitelist: ["."]}
