@@ -60,7 +60,7 @@ RSpec.describe Git::Cop::CLI do
         ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
           Dir.chdir git_repo_dir do
             result = -> { cli }
-            pattern = /1\scommit\sinspected\.\s1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)/
+            pattern = /1\scommit\sinspected\.\s.+1\sissue.+1\swarning.+0\serrors.+/
 
             expect(&result).to output(pattern).to_stdout
           end
@@ -103,7 +103,7 @@ RSpec.describe Git::Cop::CLI do
           Dir.chdir git_repo_dir do
             result = -> { cli }
             text = "Running Git Cop...\n" \
-                   "0 commits inspected. 0 issues detected.\n"
+                   "0 commits inspected. \e[32m0 issues\e[0m detected.\n"
 
             expect(&result).to output(text).to_stdout
           end
@@ -135,7 +135,7 @@ RSpec.describe Git::Cop::CLI do
           Dir.chdir git_repo_dir do
             result = -> { cli }
             text = "Running Git Cop...\n" \
-                   "1 commit inspected. 0 issues detected.\n"
+                   "1 commit inspected. \e[32m0 issues\e[0m detected.\n"
 
             expect(&result).to output(text).to_stdout
           end
