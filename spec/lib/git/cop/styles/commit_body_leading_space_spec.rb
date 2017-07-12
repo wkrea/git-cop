@@ -3,10 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
-  let(:raw_body) { "Added documentation.\n\n- Necessary for testing purposes.\n" }
-  let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1"), raw_body: raw_body }
-  let(:settings) { {enabled: true} }
-  subject { described_class.new commit: commit, settings: settings }
+  let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1") }
+  subject { described_class.new commit: commit }
 
   describe ".id" do
     it "answers class ID" do
@@ -20,64 +18,27 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
     end
   end
 
+  describe "#severity" do
+    it "answers warn" do
+      expect(subject.severity).to eq(:warn)
+    end
+  end
+
   describe "#valid?" do
-    context "when valid" do
-      it "answers true" do
-        expect(subject.valid?).to eq(true)
-      end
-    end
-
-    context "with subject only" do
-      let(:raw_body) { "A commit message." }
-
-      it "answers true" do
-        expect(subject.valid?).to eq(true)
-      end
-    end
-
-    context "with no space between subject and body" do
-      let(:raw_body) { "Subject\nBody\n" }
-
-      it "answers false" do
-        expect(subject.valid?).to eq(false)
-      end
-    end
-
-    context "with subject and no body" do
-      let(:raw_body) { "A test subject.\n\n" }
-
-      it "answers true" do
-        expect(subject.valid?).to eq(true)
-      end
-    end
-
-    context "with no content" do
-      let(:raw_body) { "" }
-
-      it "answers false" do
-        expect(subject.valid?).to eq(false)
-      end
+    it "answers false" do
+      expect(subject.valid?).to eq(false)
     end
   end
 
   describe "#issue" do
-    context "when valid" do
-      it "answers empty hash" do
-        expect(subject.issue).to eq({})
-      end
+    let(:issue) { subject.issue }
+
+    it "answers issue label" do
+      expect(issue[:label]).to eq("Deprecated (will be removed in next major release).")
     end
 
-    context "when invalid" do
-      let(:raw_body) { "A commit message.\nWithout leading space." }
-      let(:issue) { subject.issue }
-
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid leading space.")
-      end
-
-      it "answers issue hint" do
-        expect(issue[:hint]).to eq("Use space between subject and body.")
-      end
+    it "answers issue hint" do
+      expect(issue[:hint]).to eq("Use Commit Body Leading Line instead.")
     end
   end
 end

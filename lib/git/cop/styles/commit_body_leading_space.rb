@@ -5,26 +5,21 @@ module Git
     module Styles
       class CommitBodyLeadingSpace < Abstract
         def self.defaults
-          {
-            enabled: true,
-            severity: :error
-          }
+          {enabled: false}
+        end
+
+        def severity
+          :warn
         end
 
         def valid?
-          raw_body = commit.raw_body
-          subject, body = raw_body.split "\n", 2
-          return true if !String(subject).empty? && String(body).strip.empty?
-
-          raw_body.match?(/\A.+\n\n.+/)
+          false
         end
 
         def issue
-          return {} if valid?
-
           {
-            label: "Invalid leading space.",
-            hint: "Use space between subject and body."
+            label: "Deprecated (will be removed in next major release).",
+            hint: "Use Commit Body Leading Line instead."
           }
         end
       end
