@@ -27,18 +27,40 @@ RSpec.describe Git::Cop::CLI do
         end
       end
 
-      it "prints commit warning" do
+      it "prints program label" do
         ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
           Dir.chdir git_repo_dir do
             result = -> { cli }
-            pattern = /
-              Running\sGit\sCop.+\n
-              \n
-              [0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile\.\n
-              \s{2}WARN\:\sCommit\sBody\sPresence.+\n
-              \n
-              1\scommit\sinspected\.\s1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)\.\n
-            /xm
+            expect(&result).to output(/Running\sGit\sCop/).to_stdout
+          end
+        end
+      end
+
+      it "prints commit label" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            pattern = /[0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile/
+
+            expect(&result).to output(pattern).to_stdout
+          end
+        end
+      end
+
+      it "prints warning" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            expect(&result).to output(/WARN\:\sCommit\sBody\sPresence.+/).to_stdout
+          end
+        end
+      end
+
+      it "prints stats" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            result = -> { cli }
+            pattern = /1\scommit\sinspected\.\s1\sissue\sdetected\s\(1\swarning\,\s0\serrors\)/
 
             expect(&result).to output(pattern).to_stdout
           end
