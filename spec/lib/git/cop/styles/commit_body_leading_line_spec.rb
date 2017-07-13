@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
   let(:raw_body) { "Added documentation.\n\n- Necessary for testing purposes.\n" }
-  let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1"), raw_body: raw_body }
+  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), raw_body: raw_body }
   let(:settings) { {enabled: true} }
   subject { described_class.new commit: commit, settings: settings }
 

@@ -2,8 +2,9 @@
 
 module Git
   module Cop
-    module Kit
-      class Commit
+    module Commits
+      # Represents an existing commit.
+      class Saved
         FORMATS = {
           sha: "%H",
           author_name: "%an",
@@ -24,7 +25,7 @@ module Git
 
         # :reek:FeatureEnvy
         def == other
-          other.is_a?(Commit) && sha == other.sha
+          other.is_a?(Saved) && sha == other.sha
         end
         alias eql? ==
 

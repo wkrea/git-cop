@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
   let(:body_lines) { ["This is an example of a commit message body."] }
-  let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1"), body_lines: body_lines }
+  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), body_lines: body_lines }
   let(:blacklist) { ["obviously", "of course"] }
   let(:settings) { {enabled: true, blacklist: blacklist} }
   subject { described_class.new commit: commit, settings: settings }

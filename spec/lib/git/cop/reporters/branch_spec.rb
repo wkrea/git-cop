@@ -4,10 +4,10 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Branch do
   let :commit do
-    object_double Git::Cop::Kit::Commit.new(sha: "abcdef"), sha: "fa4a269f4fe9",
-                                                            author_name: "Test Tester",
-                                                            author_date_relative: "1 second ago",
-                                                            subject: "A subject."
+    object_double Git::Cop::Commits::Saved.new(sha: "abcdef"), sha: "fa4a269f4fe9",
+                                                               author_name: "Test Tester",
+                                                               author_date_relative: "1 day ago",
+                                                               subject: "A subject."
   end
 
   let(:issue) { {label: "A test label.", hint: "A test hint."} }
@@ -34,7 +34,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
         expect(subject.to_s).to eq(
           "Running Git Cop...\n" \
           "\n" \
-          "fa4a269f4fe9 (Test Tester, 1 second ago): A subject.\n" \
+          "fa4a269f4fe9 (Test Tester, 1 day ago): A subject.\n" \
           "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n" \
           "1 commit inspected. \e[33m1 issue\e[0m detected " \
@@ -67,7 +67,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
         expect(subject.to_s).to eq(
           "Running Git Cop...\n" \
           "\n" \
-          "fa4a269f4fe9 (Test Tester, 1 second ago): A subject.\n" \
+          "fa4a269f4fe9 (Test Tester, 1 day ago): A subject.\n" \
           "\e[31m  ERROR: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\e[31m  ERROR: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n" \

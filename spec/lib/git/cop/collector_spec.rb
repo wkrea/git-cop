@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Collector, :git_repo do
   let(:sha) { Dir.chdir(git_repo_dir) { `git log --pretty=format:%H -1` } }
-  let(:commit) { Dir.chdir(git_repo_dir) { Git::Cop::Kit::Commit.new sha: sha } }
+  let(:commit) { Dir.chdir(git_repo_dir) { Git::Cop::Commits::Saved.new sha: sha } }
 
   let :valid_cop do
     instance_spy Git::Cop::Styles::CommitSubjectPrefix,
@@ -58,7 +58,7 @@ RSpec.describe Git::Cop::Collector, :git_repo do
     end
 
     it "answers empty array for unknown commit" do
-      unknown = Git::Cop::Kit::Commit.new sha: "abc"
+      unknown = Git::Cop::Commits::Saved.new sha: "abc"
       expect(subject.retrieve(unknown)).to eq([])
     end
   end

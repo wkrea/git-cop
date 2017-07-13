@@ -4,10 +4,10 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Commit do
   let :commit do
-    object_double Git::Cop::Kit::Commit.new(sha: "abcdef"), sha: "abcdef",
-                                                            author_name: "Test Tester",
-                                                            author_date_relative: "1 second ago",
-                                                            subject: "An example commit subject."
+    object_double Git::Cop::Commits::Saved.new(sha: "abcdef"), sha: "abcdef",
+                                                               author_name: "Test Tester",
+                                                               author_date_relative: "1 day ago",
+                                                               subject: "A test subject."
   end
 
   let(:issue) { {label: "A test label.", hint: "A test hint."} }
@@ -27,7 +27,7 @@ RSpec.describe Git::Cop::Reporters::Commit do
 
       it "answers commit (SHA, author name, relative time, subject) and single cop report" do
         expect(subject.to_s).to eq(
-          "abcdef (Test Tester, 1 second ago): An example commit subject.\n" \
+          "abcdef (Test Tester, 1 day ago): A test subject.\n" \
           "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n"
         )
@@ -39,7 +39,7 @@ RSpec.describe Git::Cop::Reporters::Commit do
 
       it "answers commit (SHA, author name, relative time, subject) and multiple cop report" do
         expect(subject.to_s).to eq(
-          "abcdef (Test Tester, 1 second ago): An example commit subject.\n" \
+          "abcdef (Test Tester, 1 day ago): A test subject.\n" \
           "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n"

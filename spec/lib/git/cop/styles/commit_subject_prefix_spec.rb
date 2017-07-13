@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
   let(:content) { "Added test subject." }
-  let(:commit) { object_double Git::Cop::Kit::Commit.new(sha: "1"), subject: content }
+  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), subject: content }
   let(:settings) { {enabled: true, whitelist: %w[Added Removed Fixed]} }
   subject { described_class.new commit: commit, settings: settings }
 

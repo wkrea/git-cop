@@ -9,7 +9,7 @@ module Git
       end
 
       def run shas: Kit::Branch.new.shas
-        Array(shas).map { |sha| check Kit::Commit.new(sha: sha) }
+        Array(shas).map { |sha| check Commits::Saved.new(sha: sha) }
         collector
       end
 
