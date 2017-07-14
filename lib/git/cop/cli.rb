@@ -76,7 +76,8 @@ module Git
       attr_reader :runner
 
       def load_collector shas
-        shas.empty? ? runner.run : runner.run(shas: shas)
+        commits = shas.map { |sha| Commits::Saved.new sha: sha }
+        commits.empty? ? runner.run : runner.run(commits: commits)
       end
 
       def analyze_commits shas

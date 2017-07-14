@@ -92,7 +92,8 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
         ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
           Dir.chdir git_repo_dir do
             `git commit --no-verify --message "Add one.txt"`
-            collector = subject.run shas: `git log --pretty=format:%H -1`
+            commit = Git::Cop::Commits::Saved.new sha: `git log --pretty=format:%H -1`
+            collector = subject.run commits: commit
 
             expect(collector.issues?).to eq(true)
           end
