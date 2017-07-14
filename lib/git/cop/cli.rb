@@ -59,6 +59,22 @@ module Git
         say_status :error, exception.message, :red
       end
 
+      desc "--hook", "Add Git Hook support."
+      map "--hook" => :hook
+      method_option :commit_message,
+                    desc: "Check commit message.",
+                    banner: "PATH",
+                    type: :string
+      def hook
+        if options.commit_message?
+          check_commit_message options.commit_message
+        else
+          help "--hook"
+        end
+      rescue Errors::Base => exception
+        say_status :error, exception.message, :red
+      end
+
       desc "-v, [--version]", "Show gem version."
       map %w[-v --version] => :version
       def version
@@ -85,6 +101,14 @@ module Git
           reporter = Reporters::Branch.new collector: collector
           say reporter.to_s
         end
+      end
+
+      def check_commit_message path
+        commit = Commits::Unsaved.new path: path
+        collector = runner.run commits: commit
+        reporter = Reporters::Branch.new collector: collector
+        say reporter.to_s
+        abort if collector.errors?
       end
     end
   end

@@ -162,6 +162,59 @@ RSpec.describe Git::Cop::CLI do
     end
   end
 
+  shared_examples_for "a hook command", :git_repo do
+    context "with valid commit" do
+      let(:commit) { Bundler.root.join "spec", "support", "fixtures", "commit-valid.txt" }
+      let(:options) { ["--commit-message", commit] }
+
+      it "prints zero issues" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to output(/.+1\scommit\sinspected.+0\sissues.+detected.+/m).to_stdout
+        end
+      end
+
+      it "does not abort program" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
+        end
+      end
+    end
+
+    context "with invalid commit" do
+      let(:commit) { Bundler.root.join "spec", "support", "fixtures", "commit-invalid.txt" }
+      let(:options) { ["--commit-message", commit] }
+
+      it "aborts program" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to raise_error(SystemExit)
+        end
+      end
+    end
+
+    context "with no options" do
+      it "prints help" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to output(/Usage.+Options.+Add Git Hook support/m).to_stdout
+        end
+      end
+    end
+
+    context "with invalid path" do
+      let(:options) { ["--commit-message", "/a/bogus/path"] }
+
+      it "prints error" do
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to output(%r(Invalid.+path.+\/a\/bogus\/path.+)).to_stdout
+        end
+      end
+    end
+  end
+
   shared_examples_for "a version command" do
     it "prints version" do
       result = -> { cli }
@@ -194,6 +247,11 @@ RSpec.describe Git::Cop::CLI do
   describe "-p" do
     let(:command) { "-p" }
     it_behaves_like "a police command"
+  end
+
+  describe "--hook" do
+    let(:command) { "--hook" }
+    it_behaves_like "a hook command"
   end
 
   describe "--version" do
