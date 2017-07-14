@@ -69,4 +69,33 @@ RSpec.describe Git::Cop::Branches::Feature do
       end
     end
   end
+
+  describe "#commits" do
+    context "with local environment", :git_repo do
+      before do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test`
+          `touch test.txt`
+          `git add --all .`
+          `git commit --message "Added test file."`
+        end
+      end
+
+      it "answers saved commits" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            expect(subject.commits).to all(be_a(Git::Cop::Commits::Saved))
+          end
+        end
+      end
+
+      it "answers commit count" do
+        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+          Dir.chdir git_repo_dir do
+            expect(subject.commits.count).to eq(1)
+          end
+        end
+      end
+    end
+  end
 end

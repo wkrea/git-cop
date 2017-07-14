@@ -25,6 +25,10 @@ module Git
           @environment = self.class.environment
         end
 
+        def commits
+          shas.map { |sha| Commits::Saved.new sha: sha }
+        end
+
         private
 
         attr_reader :environment
