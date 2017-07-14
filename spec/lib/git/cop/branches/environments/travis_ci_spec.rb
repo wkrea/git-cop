@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Kit::Environments::TravisCI do
+RSpec.describe Git::Cop::Branches::Environments::TravisCI do
   let(:shell) { class_spy Open3 }
   subject { described_class.new shell: shell }
 

@@ -2,23 +2,23 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Kit::Branch do
+RSpec.describe Git::Cop::Branches::Feature do
   describe ".environment" do
     it "answers local environment" do
       ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-        expect(described_class.environment).to be_a(Git::Cop::Kit::Environments::Local)
+        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::Local)
       end
     end
 
     it "answers Circle CI environment" do
       ClimateControl.modify CIRCLECI: "true", TRAVIS: "false" do
-        expect(described_class.environment).to be_a(Git::Cop::Kit::Environments::CircleCI)
+        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::CircleCI)
       end
     end
 
     it "answers Travis CI environment" do
       ClimateControl.modify CIRCLECI: "false", TRAVIS: "true" do
-        expect(described_class.environment).to be_a(Git::Cop::Kit::Environments::TravisCI)
+        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::TravisCI)
       end
     end
   end

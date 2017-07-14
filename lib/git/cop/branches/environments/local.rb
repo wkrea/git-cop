@@ -4,9 +4,9 @@ require "open3"
 
 module Git
   module Cop
-    module Kit
+    module Branches
       module Environments
-        # Provides branch information for local development environment.
+        # Provides feature branch information for local development environment.
         class Local
           def initialize shell: Open3
             @shell = shell

@@ -4,9 +4,9 @@ require "open3"
 
 module Git
   module Cop
-    module Kit
+    module Branches
       module Environments
-        # Provides branch information for Circle CI build environment.
+        # Provides feature branch information for Circle CI build environment.
         class CircleCI
           def initialize shell: Open3
             @shell = shell

@@ -4,8 +4,9 @@ require "forwardable"
 
 module Git
   module Cop
-    module Kit
-      class Branch
+    module Branches
+      # Represents a feature branch.
+      class Feature
         extend Forwardable
 
         def_delegators :environment, :name, :shas

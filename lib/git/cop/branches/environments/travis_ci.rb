@@ -4,9 +4,9 @@ require "open3"
 
 module Git
   module Cop
-    module Kit
+    module Branches
       module Environments
-        # Provides branch information for Travis CI build environment.
+        # Provides feature branch information for Travis CI build environment.
         class TravisCI
           def self.ci_branch
             ENV["TRAVIS_BRANCH"]

@@ -8,7 +8,7 @@ module Git
         @collector = collector
       end
 
-      def run shas: Kit::Branch.new.shas
+      def run shas: Branches::Feature.new.shas
         Array(shas).map { |sha| check Commits::Saved.new(sha: sha) }
         collector
       end
