@@ -13,7 +13,9 @@ module Git
         end
 
         def valid?
+          return true if fixup_or_squash?
           return true if graylist.empty?
+
           commit.subject.match?(/\A#{Regexp.union graylist.to_regex}/)
         end
 
@@ -30,6 +32,12 @@ module Git
 
         def load_graylist
           Kit::Graylist.new settings.fetch(:whitelist)
+        end
+
+        private
+
+        def fixup_or_squash?
+          commit.is_a?(Git::Cop::Commits::Unsaved) && (commit.fixup? || commit.squash?)
         end
       end
     end

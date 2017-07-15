@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
-  let(:content) { "Added test subject." }
+  let(:content) { "Added test file." }
   let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), subject: content }
   let(:settings) { {enabled: true, whitelist: %w[Added Removed Fixed]} }
   subject { described_class.new commit: commit, settings: settings }
@@ -21,7 +21,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
   end
 
   describe "#valid?" do
-    context "when valid" do
+    context "with no issues" do
       it "answers true" do
         expect(subject.valid?).to eq(true)
       end
@@ -35,8 +35,53 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       end
     end
 
+    context "with unsaved fixup commit" do
+      let(:content) { "fixup! Added test file." }
+
+      before do
+        allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(true)
+        allow(commit).to receive(:fixup?).and_return(true)
+      end
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
+    context "with unsaved squash commit" do
+      let(:content) { "squash! Added test file." }
+
+      before do
+        allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(true)
+        allow(commit).to receive(:fixup?).and_return(false)
+        allow(commit).to receive(:squash?).and_return(true)
+      end
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
     context "with invalid prefix" do
       let(:content) { "Bogus subject line." }
+
+      it "answers false" do
+        expect(subject.valid?).to eq(false)
+      end
+    end
+
+    context "with saved fixup commit" do
+      let(:content) { "fixup! Added test file." }
+      before { allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(false) }
+
+      it "answers false" do
+        expect(subject.valid?).to eq(false)
+      end
+    end
+
+    context "with saved squash commit" do
+      let(:content) { "squash! Added test file." }
+      before { allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(false) }
 
       it "answers false" do
         expect(subject.valid?).to eq(false)
