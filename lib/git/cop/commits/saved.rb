@@ -41,6 +41,14 @@ module Git
           body.split "\n"
         end
 
+        def fixup?
+          subject.match?(/\Afixup\!\s/)
+        end
+
+        def squash?
+          subject.match?(/\Asquash\!\s/)
+        end
+
         private
 
         attr_reader :data

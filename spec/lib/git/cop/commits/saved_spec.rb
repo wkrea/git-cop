@@ -291,6 +291,14 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     end
   end
 
+  describe "#fixup?" do
+    it_behaves_like "a fixup commit"
+  end
+
+  describe "#squash?" do
+    it_behaves_like "a squash commit"
+  end
+
   describe "#raw_body" do
     it "answers raw body" do
       content = "Added test documentation.\n\n- Necessary for testing purposes.\n"
