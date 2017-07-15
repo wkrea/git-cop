@@ -18,8 +18,9 @@ Dir[Bundler.root.join("spec", "support", "shared_examples", "**", "*.rb")].each 
   require file
 end
 
-# Ensure CI environment is disabled for testing purposes since it is used directly.
-ENV["CI"] = "false"
+# Ensure CI environments are disabled for local testing purposes.
+ENV["CIRCLECI"] = "false"
+ENV["TRAVIS"] = "false"
 
 RSpec.configure do |config|
   config.color = true

@@ -28,51 +28,41 @@ RSpec.describe Git::Cop::CLI do
       end
 
       it "prints program label" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            expect(&result).to output(/Running\sGit\sCop/).to_stdout
-          end
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to output(/Running\sGit\sCop/).to_stdout
         end
       end
 
       it "prints commit label" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            pattern = /[0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile/
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          pattern = /[0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile/
 
-            expect(&result).to output(pattern).to_stdout
-          end
+          expect(&result).to output(pattern).to_stdout
         end
       end
 
       it "prints warning" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            expect(&result).to output(/WARN\:\sCommit\sBody\sPresence.+/).to_stdout
-          end
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to output(/WARN\:\sCommit\sBody\sPresence.+/).to_stdout
         end
       end
 
       it "prints stats" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            pattern = /1\scommit\sinspected\.\s.+1\sissue.+1\swarning.+0\serrors.+/
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          pattern = /1\scommit\sinspected\.\s.+1\sissue.+1\swarning.+0\serrors.+/
 
-            expect(&result).to output(pattern).to_stdout
-          end
+          expect(&result).to output(pattern).to_stdout
         end
       end
 
       it "does not abort program" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            expect(&result).to_not raise_error
-          end
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
         end
       end
     end
@@ -88,34 +78,28 @@ RSpec.describe Git::Cop::CLI do
       end
 
       it "aborts program" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            expect(&result).to raise_error(SystemExit)
-          end
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to raise_error(SystemExit)
         end
       end
     end
 
     context "with no commits" do
       it "prints zero issues for zero commits" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            text = "Running Git Cop...\n" \
-                   "0 commits inspected. \e[32m0 issues\e[0m detected.\n"
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          text = "Running Git Cop...\n" \
+                 "0 commits inspected. \e[32m0 issues\e[0m detected.\n"
 
-            expect(&result).to output(text).to_stdout
-          end
+          expect(&result).to output(text).to_stdout
         end
       end
 
       it "does not abort program" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            expect(&result).to_not raise_error
-          end
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
         end
       end
     end
@@ -131,23 +115,19 @@ RSpec.describe Git::Cop::CLI do
       end
 
       it "prints zero issues for one commit" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            text = "Running Git Cop...\n" \
-                   "1 commit inspected. \e[32m0 issues\e[0m detected.\n"
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          text = "Running Git Cop...\n" \
+                 "1 commit inspected. \e[32m0 issues\e[0m detected.\n"
 
-            expect(&result).to output(text).to_stdout
-          end
+          expect(&result).to output(text).to_stdout
         end
       end
 
       it "does not abort program" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            result = -> { cli }
-            expect(&result).to_not raise_error
-          end
+        Dir.chdir git_repo_dir do
+          result = -> { cli }
+          expect(&result).to_not raise_error
         end
       end
     end

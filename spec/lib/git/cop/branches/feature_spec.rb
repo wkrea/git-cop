@@ -32,10 +32,8 @@ RSpec.describe Git::Cop::Branches::Feature do
       end
 
       it "answers name" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            expect(subject.name).to eq("test")
-          end
+        Dir.chdir git_repo_dir do
+          expect(subject.name).to eq("test")
         end
       end
     end
@@ -53,18 +51,14 @@ RSpec.describe Git::Cop::Branches::Feature do
       end
 
       it "answers SHA strings" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            expect(subject.shas).to all(match(/[0-9a-f]{40}/))
-          end
+        Dir.chdir git_repo_dir do
+          expect(subject.shas).to all(match(/[0-9a-f]{40}/))
         end
       end
 
       it "answers SHA count" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            expect(subject.shas.count).to eq(1)
-          end
+        Dir.chdir git_repo_dir do
+          expect(subject.shas.count).to eq(1)
         end
       end
     end
@@ -82,18 +76,14 @@ RSpec.describe Git::Cop::Branches::Feature do
       end
 
       it "answers saved commits" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            expect(subject.commits).to all(be_a(Git::Cop::Commits::Saved))
-          end
+        Dir.chdir git_repo_dir do
+          expect(subject.commits).to all(be_a(Git::Cop::Commits::Saved))
         end
       end
 
       it "answers commit count" do
-        ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
-          Dir.chdir git_repo_dir do
-            expect(subject.commits.count).to eq(1)
-          end
+        Dir.chdir git_repo_dir do
+          expect(subject.commits.count).to eq(1)
         end
       end
     end
