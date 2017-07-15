@@ -3,8 +3,14 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyPresence do
+  let(:fixup) { false }
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
-  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), body_lines: body_lines }
+
+  let :commit do
+    object_double Git::Cop::Commits::Saved.new(sha: "1"), body_lines: body_lines,
+                                                          fixup?: fixup
+  end
+
   let(:minimum) { 1 }
   let(:settings) { {enabled: true, minimum: minimum} }
   subject { described_class.new commit: commit, settings: settings }
@@ -31,6 +37,15 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresence do
     context "when valid (custom minimum)" do
       let(:minimum) { 3 }
       let(:body_lines) { ["First line.", "Second line", "", "Third line."] }
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
+    context "when valid (fixup!)" do
+      let(:body_lines) { [] }
+      let(:fixup) { true }
 
       it "answers true" do
         expect(subject.valid?).to eq(true)

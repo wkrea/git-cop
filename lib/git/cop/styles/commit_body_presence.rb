@@ -13,6 +13,7 @@ module Git
         end
 
         def valid?
+          return true if commit.fixup?
           valid_lines = commit.body_lines.reject { |line| line.match?(/^\s*$/) }
           valid_lines.size >= minimum
         end
