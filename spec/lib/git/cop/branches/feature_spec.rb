@@ -23,6 +23,15 @@ RSpec.describe Git::Cop::Branches::Feature do
     end
   end
 
+  describe ".initialize", :temp_dir do
+    it "fails with base error without valid Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { described_class.new }
+        expect(&result).to raise_error(Git::Cop::Errors::Base, "Invalid Git repository.")
+      end
+    end
+  end
+
   describe "#name" do
     context "with local environment", :git_repo do
       before do

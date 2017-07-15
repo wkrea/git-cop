@@ -22,6 +22,7 @@ module Git
         end
 
         def initialize
+          fail(Errors::Base, "Invalid Git repository.") unless File.exist?(".git")
           @environment = self.class.environment
         end
 
