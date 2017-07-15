@@ -5,6 +5,8 @@ module Git
     module Commits
       # Represents an existing commit.
       class Saved
+        using Refinements::Strings
+
         FORMATS = {
           sha: "%H",
           author_name: "%an",
@@ -42,11 +44,11 @@ module Git
         end
 
         def fixup?
-          subject.match?(/\Afixup\!\s/)
+          subject.fixup?
         end
 
         def squash?
-          subject.match?(/\Asquash\!\s/)
+          subject.squash?
         end
 
         private

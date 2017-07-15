@@ -4,6 +4,8 @@ module Git
   module Cop
     module Styles
       class CommitBodyPresence < Abstract
+        using Refinements::Strings
+
         def self.defaults
           {
             enabled: true,
@@ -27,7 +29,7 @@ module Git
 
           {
             label: "Invalid body.",
-            hint: %(Use a minimum of #{Kit::String.pluralize "line", count: minimum} (not empty).)
+            hint: %(Use a minimum of #{"line".pluralize count: minimum} (not empty).)
           }
         end
       end

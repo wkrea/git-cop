@@ -9,6 +9,8 @@ module Git
     module Commits
       # Represents a partially formed, unsaved commit.
       class Unsaved
+        using Refinements::Strings
+
         attr_reader :raw_body
 
         def initialize path:, shell: Open3
@@ -69,11 +71,11 @@ module Git
         end
 
         def fixup?
-          Kit::String.fixup? subject
+          subject.fixup?
         end
 
         def squash?
-          Kit::String.squash? subject
+          subject.squash?
         end
 
         private

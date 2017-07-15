@@ -7,6 +7,8 @@ module Git
     module Reporters
       # Reports issues related to a single feature branch.
       class Branch
+        using Refinements::Strings
+
         def initialize collector: Collector.new, colorizer: Pastel.new
           @collector = collector
           @colorizer = colorizer
@@ -33,23 +35,22 @@ module Git
         end
 
         def commit_total
-          %(#{Kit::String.pluralize "commit", count: collector.total_commits} inspected)
+          %(#{"commit".pluralize count: collector.total_commits} inspected)
         end
 
         def issue_total
           color = collector.errors? ? :red : :yellow
-          colorizer.public_send color, Kit::String.pluralize("issue", count: collector.total_issues)
+          colorizer.public_send color, "issue".pluralize(count: collector.total_issues)
         end
 
         def warning_total
           color = collector.warnings? ? :yellow : :green
-          colorizer.public_send color,
-                                Kit::String.pluralize("warning", count: collector.total_warnings)
+          colorizer.public_send color, "warning".pluralize(count: collector.total_warnings)
         end
 
         def error_total
           color = collector.errors? ? :red : :green
-          colorizer.public_send color, Kit::String.pluralize("error", count: collector.total_errors)
+          colorizer.public_send color, "error".pluralize(count: collector.total_errors)
         end
 
         def issue_totals

@@ -8,7 +8,7 @@ module Git
       # An abstract class which provides basic functionality from which all style cops inherit from.
       # Not meant for direct use.
       class Abstract
-        using Refinements::Strings
+        using ::Refinements::Strings
 
         LEVELS = %i[warn error].freeze
 
