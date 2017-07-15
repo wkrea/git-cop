@@ -3,6 +3,7 @@
 require "thor"
 require "thor/actions"
 require "runcom"
+require "pastel"
 
 module Git
   module Cop
@@ -23,6 +24,7 @@ module Git
       def initialize args = [], options = {}, config = {}
         super args, options, config
         @runner = Runner.new configuration: self.class.configuration.to_h
+        @colorizer = Pastel.new
       end
 
       desc "-c, [--config]", "Manage gem configuration."
@@ -56,7 +58,7 @@ module Git
         collector = analyze_commits options.commits
         abort if collector.errors?
       rescue Errors::Base => exception
-        say_status :error, exception.message, :red
+        abort colorizer.red("#{Identity.label}: #{exception.message}")
       end
 
       desc "--hook", "Add Git Hook support."
@@ -72,7 +74,7 @@ module Git
           help "--hook"
         end
       rescue Errors::Base => exception
-        say_status :error, exception.message, :red
+        abort colorizer.red("#{Identity.label}: #{exception.message}")
       end
 
       desc "-v, [--version]", "Show gem version."
@@ -89,7 +91,7 @@ module Git
 
       private
 
-      attr_reader :runner
+      attr_reader :runner, :colorizer
 
       def load_collector shas
         commits = shas.map { |sha| Commits::Saved.new sha: sha }

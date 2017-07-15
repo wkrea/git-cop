@@ -138,7 +138,7 @@ RSpec.describe Git::Cop::CLI do
       )
       result = -> { cli }
 
-      expect(&result).to output(/error\s+Test\./).to_stdout
+      expect(&result).to raise_error(SystemExit, /Git\sCop\:\sTest\./)
     end
   end
 
@@ -189,7 +189,7 @@ RSpec.describe Git::Cop::CLI do
       it "prints error" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(%r(Invalid.+path.+\/a\/bogus\/path.+)).to_stdout
+          expect(&result).to raise_error(SystemExit, %r(Invalid.+path.+\/a\/bogus\/path.+))
         end
       end
     end
