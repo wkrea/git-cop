@@ -51,7 +51,7 @@ module Git
         end
 
         def body_lines
-          body.split "\n"
+          body.split("\n").reject { |line| line.start_with?("#") }
         end
 
         # :reek:FeatureEnvy

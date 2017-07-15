@@ -280,6 +280,24 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       end
     end
 
+    context "without commented lines" do
+      let :commit_message do
+        "Added test file.\n\n" \
+        "- A bullet.\n" \
+        "# A comment.\n" \
+        "A body line.\n"
+      end
+
+      it "ignores commented lines" do
+        Dir.chdir git_repo_dir do
+          expect(subject.body_lines).to contain_exactly(
+            "- A bullet.",
+            "A body line."
+          )
+        end
+      end
+    end
+
     context "without body" do
       let(:commit_message) { "Added test file." }
 

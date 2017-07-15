@@ -98,6 +98,15 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
       )
     end
 
+    it "ignores commented lines" do
+      allow(subject).to receive(:body).and_return("Line A.\n# Comment line.\nLine B.\n")
+
+      expect(subject.body_lines).to contain_exactly(
+        "Line A.",
+        "Line B."
+      )
+    end
+
     it "answers empty array when raw body is a single line" do
       allow(subject).to receive(:raw_body).and_return("A test body.")
       expect(subject.body_lines).to eq([])
