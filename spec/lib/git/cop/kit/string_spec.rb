@@ -32,4 +32,40 @@ RSpec.describe Git::Cop::Kit::String do
       end
     end
   end
+
+  describe "#fixup?" do
+    it "answers true when fixup! prefix is included" do
+      expect(described_class.fixup?("fixup! Added test file.")).to eq(true)
+    end
+
+    it "answers false when fixup! prefix is excluded" do
+      expect(described_class.fixup?("Added test file.")).to eq(false)
+    end
+
+    it "answers false when fixup! prefix is missing trailing space" do
+      expect(described_class.fixup?("fixup!Added test file.")).to eq(false)
+    end
+
+    it "answers false when fixup! is not a prefix" do
+      expect(described_class.fixup?(" fixup! Added test file.")).to eq(false)
+    end
+  end
+
+  describe "#squash?" do
+    it "answers true when squash! prefix is included" do
+      expect(described_class.squash?("squash! Added test file.")).to eq(true)
+    end
+
+    it "answers false when squash! prefix is excluded" do
+      expect(described_class.squash?("Added test file.")).to eq(false)
+    end
+
+    it "answers false when squash! prefix is missing trailing space" do
+      expect(described_class.squash?("squash!Added test file.")).to eq(false)
+    end
+
+    it "answers false when squash! is not a prefix" do
+      expect(described_class.squash?(" squash! Added test file.")).to eq(false)
+    end
+  end
 end
