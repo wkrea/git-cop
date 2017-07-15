@@ -9,7 +9,12 @@ require "pry-byebug"
 require "pry-state"
 require "climate_control"
 require "git/cop"
-Dir[File.join(File.dirname(__FILE__), "support/shared_contexts/**/*.rb")].each do |file|
+
+Dir[Bundler.root.join("spec", "support", "shared_contexts", "**", "*.rb")].each do |file|
+  require file
+end
+
+Dir[Bundler.root.join("spec", "support", "shared_examples", "**", "*.rb")].each do |file|
   require file
 end
 
