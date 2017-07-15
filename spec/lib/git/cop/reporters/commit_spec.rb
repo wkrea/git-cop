@@ -10,19 +10,20 @@ RSpec.describe Git::Cop::Reporters::Commit do
                                                                subject: "A test subject."
   end
 
-  let(:issue) { {label: "A test label.", hint: "A test hint."} }
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }
+  let(:issue) { {label: "A test label.", hint: "A test hint."} }
 
   let :cop_instance do
     instance_spy Git::Cop::Styles::CommitAuthorEmail,
                  class: cop_class,
                  severity: :warn,
-                 invalid?: true,
+                 invalid?: invalid,
                  issue: issue
   end
 
   describe "#to_s" do
-    context "with single cop" do
+    context "with invalid cop" do
+      let(:invalid) { true }
       subject { described_class.new commit: commit, cops: [cop_instance] }
 
       it "answers commit (SHA, author name, relative time, subject) and single cop report" do
@@ -34,7 +35,8 @@ RSpec.describe Git::Cop::Reporters::Commit do
       end
     end
 
-    context "with multiple cops" do
+    context "with invalid cops" do
+      let(:invalid) { true }
       subject { described_class.new commit: commit, cops: [cop_instance, cop_instance] }
 
       it "answers commit (SHA, author name, relative time, subject) and multiple cop report" do
@@ -44,6 +46,15 @@ RSpec.describe Git::Cop::Reporters::Commit do
           "\e[33m  WARN: Commit Author Email. A test label. A test hint.\n\e[0m" \
           "\n"
         )
+      end
+    end
+
+    context "with valid cops" do
+      let(:invalid) { false }
+      subject { described_class.new commit: commit, cops: [cop_instance, cop_instance] }
+
+      it "empty string" do
+        expect(subject.to_s).to eq("")
       end
     end
   end

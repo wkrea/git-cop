@@ -7,10 +7,11 @@ module Git
       class Commit
         def initialize commit:, cops: []
           @commit = commit
-          @cops = cops
+          @cops = cops.select(&:invalid?)
         end
 
         def to_s
+          return "" if cops.empty?
           "#{commit.sha} (#{commit.author_name}, #{commit.author_date_relative}): " \
           "#{commit.subject}\n#{cop_report}\n"
         end
@@ -20,7 +21,7 @@ module Git
         attr_reader :commit, :cops
 
         def cop_report
-          cops.select(&:invalid?).reduce("") { |report, cop| report + Cop.new(cop).to_s }
+          cops.reduce("") { |report, cop| report + Cop.new(cop).to_s }
         end
       end
     end
