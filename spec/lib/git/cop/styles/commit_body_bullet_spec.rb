@@ -87,7 +87,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       end
 
       it "answers issue hint" do
-        expect(subject.issue[:hint]).to eq(%(Avoid: "\\*", "•".))
+        expect(subject.issue[:hint]).to eq(%(Avoid: "*", "•".))
       end
 
       it "answers issue lines" do

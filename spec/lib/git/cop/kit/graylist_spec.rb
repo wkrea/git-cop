@@ -19,7 +19,8 @@ RSpec.describe Git::Cop::Kit::Graylist do
 
   describe "#to_hint" do
     it "answers graylist as a string" do
-      expect(subject.to_hint).to eq(%("one", "two", "three"))
+      subject = described_class.new ["one", "\\.", "three"]
+      expect(subject.to_hint).to eq(%("one", ".", "three"))
     end
   end
 

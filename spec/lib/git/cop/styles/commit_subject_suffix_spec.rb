@@ -61,7 +61,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
       end
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq(%(Use: "\\.", "\[\✓\]", "\#skip".))
+        expect(issue[:hint]).to eq(%(Use: ".", "[✓]", "#skip".))
       end
     end
   end

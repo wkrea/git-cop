@@ -14,7 +14,7 @@ module Git
         end
 
         def to_hint
-          to_quote.join ", "
+          to_quote.join(", ").delete "\\"
         end
 
         def to_regex
