@@ -13,6 +13,10 @@ module Git
           list.map { |item| %("#{item}") }
         end
 
+        def to_hint
+          to_quote.join ", "
+        end
+
         def to_regex
           list.map { |item| Regexp.new item }
         end

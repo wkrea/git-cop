@@ -24,7 +24,7 @@ module Git
 
           {
             label: "Invalid prefix.",
-            hint: %(Use: #{graylist.to_quote.join ", "}.)
+            hint: %(Use: #{graylist.to_hint}.)
           }
         end
 

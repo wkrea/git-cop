@@ -31,7 +31,7 @@ module Git
 
           {
             label: "Invalid body.",
-            hint: %(Avoid these phrases: #{graylist.to_quote.join ", "}.),
+            hint: %(Avoid: #{graylist.to_hint}.),
             lines: affected_lines
           }
         end

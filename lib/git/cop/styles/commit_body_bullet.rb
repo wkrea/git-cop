@@ -21,7 +21,7 @@ module Git
 
           {
             label: "Invalid bullet.",
-            hint: %(Avoid: #{graylist.to_quote.join ", "}.),
+            hint: %(Avoid: #{graylist.to_hint}.),
             lines: affected_lines
           }
         end

@@ -22,7 +22,7 @@ module Git
 
           {
             label: "Invalid suffix.",
-            hint: %(Use: #{graylist.to_quote.join ", "}.)
+            hint: %(Use: #{graylist.to_hint}.)
           }
         end
 

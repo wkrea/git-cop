@@ -17,6 +17,12 @@ RSpec.describe Git::Cop::Kit::Graylist do
     end
   end
 
+  describe "#to_hint" do
+    it "answers graylist as a string" do
+      expect(subject.to_hint).to eq(%("one", "two", "three"))
+    end
+  end
+
   describe "#empty?" do
     it "answers true when empty" do
       expect(described_class.new.empty?).to eq(true)
