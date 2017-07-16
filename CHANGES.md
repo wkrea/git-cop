@@ -1,3 +1,32 @@
+# v1.3.0 (2017-07-16)
+
+- Fixed CLI errors to always abort program.
+- Fixed Commit Body Presence cop fixup commit issues.
+- Fixed Commit Subject Prefix cop fixup and squash commit issues.
+- Fixed issues with commented body lines in commits.
+- Fixed issues with reporting valid cops.
+- Fixed issues with running against a non-Git repository.
+- Fixed printing of regular expression escape characters in cop hints.
+- Added Commit Body Leading Line cop.
+- Added Commit Body Leading Space deprecation warnings.
+- Added Pastel gem.
+- Added ability to answer commits on feature branch.
+- Added colorized strings to branch reporter.
+- Added colorized strings to cop reporter.
+- Added commit fixup and squash detection.
+- Added commit message Git Hook.
+- Added shared examples for fixup and squash commits.
+- Added string fixup and squash prefix detection.
+- Added string refinements.
+- Added unsaved commit.
+- Updated graylist to answer hint text.
+- Refactored CLI warning spec.
+- Refactored branch objects.
+- Refactored commit as saved commit.
+- Refactored runner to run with commits instead of SHAs.
+- Refactored use of build environment variables.
+- Refactored use of gem-specific string methods.
+
 # v1.2.0 (2017-07-09)
 
 - Fixed spec issues with CI environments.

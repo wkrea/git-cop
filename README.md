@@ -15,6 +15,7 @@ history.
 ## Table of Contents
 
   - [Features](#features)
+  - [Screencasts](#screencasts)
   - [Requirements](#requirements)
   - [Setup](#setup)
     - [Install](#install)
@@ -26,6 +27,8 @@ history.
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
     - [Git Hooks](#git-hooks)
+      - [Commit Message](#commit-message)
+      - [Post Commit](#post-commit)
     - [Continuous Integration (CI)](#continuous-integration-ci)
       - [Circle CI](#circle-ci)
       - [Travis CI](#travis-ci)
@@ -34,6 +37,7 @@ history.
     - [Commit Author Name Capitalization](#commit-author-name-capitalization)
     - [Commit Author Name Parts](#commit-author-name-parts)
     - [Commit Body Bullet](#commit-body-bullet)
+    - [Commit Body Leading Line](#commit-body-leading-line)
     - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
     - [Commit Body Phrase](#commit-body-phrase)
@@ -63,7 +67,13 @@ history.
 
 - Enforces a [Git Rebase Workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history).
 - Enforces a clean and consistent Git commit history.
-- Provides a suite of cops which can be customized to your preference.
+- Provides Continuous Integration (CI) build server support.
+- Provides Git Hook support for local use.
+- Provides a customizable suite of style cops.
+
+## Screencasts
+
+[![asciicast](https://asciinema.org/a/129174.png)](https://asciinema.org/a/129174)
 
 ## Requirements
 
@@ -95,7 +105,7 @@ This gem can be configured via a global configuration:
 It can also be configured via [XDG environment variables](https://github.com/bkuhlmann/runcom#xdg)
 as provided by the [Runcom](https://github.com/bkuhlmann/runcom) gem.
 
-The default configuration is as follows:
+The default configuration is:
 
     :commit_author_email:
       :enabled: true
@@ -113,6 +123,9 @@ The default configuration is as follows:
       :blacklist:
         - "\\*"
         - "•"
+    :commit_body_leading_line:
+      :enabled: false
+      :severity: :warn
     :commit_body_leading_space:
       :enabled: true
       :severity: :error
@@ -197,6 +210,7 @@ If you need a concrete example, check out the [Rakefile](Rakefile) of this proje
 
 From the command line, type: `git-cop --help`
 
+    git-cop --hook                # Add Git Hook support.
     git-cop -c, [--config]        # Manage gem configuration.
     git-cop -h, [--help=COMMAND]  # Show this message or get help for a command.
     git-cop -p, [--police]        # Check feature branch for issues.
@@ -213,7 +227,7 @@ Here is an example workflow, using gem defaults with issues detected:
 
     cd example
     git checkout -b test
-    printf "%s\n" "Test content." > test.txt
+    touch text.txt
     git add --all .
     git commit --message "This is a bogus commit message that is also terribly long and will word wrap"
     git-cop --police
@@ -221,55 +235,94 @@ Here is an example workflow, using gem defaults with issues detected:
     # Output:
     Running Git Cop...
 
-    ae84620bda4c6c4fbd22f24fecee575319d25546 (Brooke Kuhlmann, 5 days ago): Added Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam.
-      ERROR: Commit Subject Length. Invalid length. Use 72 characters or less.
-
-    97a9d4bf0cd73f0af2b31f22e0920134bb06575d (Brooke Kuhlmann, 5 days ago): Add one test file
+    5416d89db2dabbcf35b459b835ce789062a01341 (Brooke Kuhlmann, 7 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
       WARN: Commit Body Presence. Invalid body. Use a minimum of 1 line (not empty).
+      ERROR: Commit Subject Length. Invalid length. Use 72 characters or less.
       ERROR: Commit Subject Prefix. Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
-      ERROR: Commit Subject Suffix. Invalid suffix. Use: "\.".
+      ERROR: Commit Subject Suffix. Invalid suffix. Use: ".".
 
-    2 commits inspected. 4 issues detected (1 warning, 3 errors).
+    1 commit inspected. 4 issues detected (1 warning, 3 errors).
 
 ### Git Hooks
 
-This gem can be wired up as a [Git Hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)
-if desired. For example, you can add *post-commit* hook support by using the following code:
+This gem supports being used as a
+[Git Hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks).
 
-```
-#! /usr/bin/env bash
+It is *highly recommended* that you manage Git Hooks as global scripts as it'll reduce project
+maintenance costs for you. To configure global Git Hooks, add the following to your `~/.gitconfig`:
 
-# DESCRIPTION
-# Defines Git post-commit functionality.
+    [core]
+      hooksPath = ~/.git_template/hooks
 
-# SETTINGS
-set -o nounset
-set -o errexit
-set -o pipefail
-IFS=$'\n\t'
-
-# EXECUTION
-if ! command -v git-cop > /dev/null; then
-   printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop --trust-policy MediumSecurity."
-   exit 1
-fi
-
-git-cop --police --commits $(git log --pretty=format:%H -1)
-```
-
-TIP: To configure global Git Hooks, add the following to your `.gitconfig`:
-
-```
-[core]
-  hooksPath = ~/.git_template/hooks
-```
-
-Now you can customize Git Hooks for all of your projects.
+Then you can customize Git Hooks for all of your projects.
 [Check out these examples](https://github.com/bkuhlmann/dotfiles/tree/master/home_files/.git_template/hooks).
 
-You can also apply the above Git Hook to your local project by editing your `.git/hooks/post-commit`
-file. *This is not recommend*. Use a global configuration as it'll reduce project maintenance costs
-for you.
+If using a global configuration is not desired, you can add Git Hooks at a per project level by
+editing any of the scripts within the `.git/hooks` directory of the repository.
+
+#### Commit Message
+
+The *commit-msg* hook, which is the best way to use this gem as a Git Hook, is provided as a
+`--hook` option. Run `git-cop --help --hook` for usage:
+
+    Usage:
+      git-cop --hook
+
+    Options:
+      [--commit-message=PATH]  # Check commit message.
+
+    Add Git Hook support.
+
+As shown above, the `--commit-message` option accepts a file path (i.e. `.git/COMMIT_EDITMSG`) which
+is provided to you by Git within the `.git/hooks/commit-msg` script. Here is a working example of
+what that script might look like:
+
+    #! /usr/bin/env bash
+
+    set -o nounset
+    set -o errexit
+    set -o pipefail
+    IFS=$'\n\t'
+
+    if ! command -v git-cop > /dev/null; then
+       printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop --trust-policy MediumSecurity."
+       exit 1
+    fi
+
+    git-cop --hook --commit-message "${BASH_ARGV[0]}"
+
+Whenever you attempt to add a commit, Git Cop will check your commit for issues prior to saving it.
+
+#### Post Commit
+
+The *post-commit* hook is possible via the `--police --commits` option. Usage:
+
+    Usage:
+      git-cop -p, [--police]
+
+    Options:
+      -c, [--commits=one two three]  # Check specific commit SHA(s).
+
+    Check feature branch for issues.
+
+The *post-commit* hook can be used multiple ways but, if you want it to check each commit after it
+has been made, here is a working example which can be used as a `.git/hooks/post-commit` script:
+
+    #! /usr/bin/env bash
+
+    set -o nounset
+    set -o errexit
+    set -o pipefail
+    IFS=$'\n\t'
+
+    if ! command -v git-cop > /dev/null; then
+       printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop --trust-policy MediumSecurity."
+       exit 1
+    fi
+
+    git-cop --police --commits $(git log --pretty=format:%H -1)
+
+Whenever a commit has been saved, this script will run Git Cop to check for issues.
 
 ### Continuous Integration (CI)
 
@@ -355,15 +408,15 @@ It's best to use `-` for bullet point syntax as `*` are easier to read when used
 This makes parsing the Markdown syntax easier when reviewing a Git commit as the syntax used for
 bullet points and *emphasis* are now, distinctly, unique.
 
-### Commit Body Leading Space
+### Commit Body Leading Line
 
 | Enabled | Severity | Defaults |
 |---------|----------|----------|
 | true    | error    | none     |
 
-Ensures there is a leading space between the commit subject and body. Generally, this isn't an issue
-but sometimes the Git CLI can be misued or a misconfigured Git editor will smash the subject line
-and start of the body as one run-on paragraph. Example:
+Ensures there is a leading, empty line, between the commit subject and body. Generally, this isn't
+an issue but sometimes the Git CLI can be misued or a misconfigured Git editor will smash the
+subject line and start of the body as one run-on paragraph. Example:
 
     # Disallowed
 
@@ -381,6 +434,18 @@ and start of the body as one run-on paragraph. Example:
     quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu_libero sit amet quam
     egestas semper. Aenean ultricies mi vitae est. Mauris placerat's eleifend leo. Quisque et sapien
     ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, orn si amt wit.
+
+### Commit Body Leading Space
+
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| false   | warn     | none     |
+
+This cop has been deprecated and is a duplicate of the *Commit Body Leading Line* cop mentioned
+above. If enabled, this cop will print deprecation warnings and recommend using the *Commit Body
+Leading Line* cop instead.
+
+This cop will be permantently removed in the 2.0.0 version release.
 
 ### Commit Body Line Length
 
@@ -423,6 +488,8 @@ insensitve as well. Example:
 Ensures a minimum number of lines are present within the commit body. Lines with empty characters
 (i.e. whitespace, carriage returns, etc.) are considered to be empty.
 
+Automatically ignores *fixup!* commits as they are not meant to have bodies.
+
 ### Commit Subject Length
 
 | Enabled | Severity |  Defaults  |
@@ -430,10 +497,9 @@ Ensures a minimum number of lines are present within the commit body. Lines with
 | true    | error    | length: 72 |
 
 Ensures the commit subject length is no more than 72 characters in length. This default is more
-lenient than Tim Pope's
-[50/72 rule](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) as it gives one
-the ability to formulate a more descriptive subject line without being too wordy or suffer being
-word wrapped.
+lenient than the [50/72 rule](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+as it gives one the ability to formulate a more descriptive subject line without being too wordy or
+suffer being word wrapped.
 
 ### Commit Subject Prefix
 
@@ -455,6 +521,9 @@ committed is never needed. This whitelist is not only short and easy to remember
 added benefit of categorizing the commits for building release notes, change logs, etc. This becomes
 handy when coupled with another tool, [Milestoner](https://github.com/bkuhlmann/milestoner), for
 producing consistent project milestones and Git tag histories.
+
+Automatically ignores detection of *fixup!* and *squash!* commit prefixes when used as a Git Hook in
+order to not disturb interactive rebase workflows.
 
 ### Commit Subject Suffix
 
