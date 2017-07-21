@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "git/cop/identity"
+require "git/kit/repo"
 require "git/cop/refinements/strings"
 require "git/cop/errors/base"
 require "git/cop/errors/severity"
