@@ -21,8 +21,10 @@ module Git
           end
         end
 
-        def initialize
-          fail(Errors::Base, "Invalid Git repository.") unless File.exist?(".git")
+        def initialize git_repo: Git::Kit::Repo
+          message = "Invalid repository. Are you within a Git-enabled project?"
+          fail(Errors::Base, message) unless git_repo.exist?
+
           @environment = self.class.environment
         end
 

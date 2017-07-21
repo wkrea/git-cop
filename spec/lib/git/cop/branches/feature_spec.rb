@@ -24,10 +24,26 @@ RSpec.describe Git::Cop::Branches::Feature do
   end
 
   describe ".initialize", :temp_dir do
-    it "fails with base error without valid Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { described_class.new }
-        expect(&result).to raise_error(Git::Cop::Errors::Base, "Invalid Git repository.")
+    let(:git_repo) { class_spy Git::Kit::Repo, exist?: exist }
+
+    context "when Git repository exists" do
+      let(:exist) { true }
+
+      it "does not fail with error" do
+        result = -> { described_class.new git_repo: git_repo }
+        expect(&result).to_not raise_error
+      end
+    end
+
+    context "when Git repository doesn't exist" do
+      let(:exist) { false }
+
+      it "fails with base error" do
+        result = -> { described_class.new git_repo: git_repo }
+        expect(&result).to raise_error(
+          Git::Cop::Errors::Base,
+          "Invalid repository. Are you within a Git-enabled project?"
+        )
       end
     end
   end
