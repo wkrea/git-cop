@@ -40,6 +40,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitBodyLineLength,
         Git::Cop::Styles::CommitBodyPhrase,
         Git::Cop::Styles::CommitBodyPresence,
+        Git::Cop::Styles::CommitBodySingleBullet,
         Git::Cop::Styles::CommitSubjectLength,
         Git::Cop::Styles::CommitSubjectPrefix,
         Git::Cop::Styles::CommitSubjectSuffix

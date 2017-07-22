@@ -42,6 +42,7 @@ history.
     - [Commit Body Line Length](#commit-body-line-length)
     - [Commit Body Phrase](#commit-body-phrase)
     - [Commit Body Presence](#commit-body-presence)
+    - [Commit Body Single Bullet](#commit-body-single-bullet)
     - [Commit Subject Length](#commit-subject-length)
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
@@ -149,6 +150,10 @@ The default configuration is:
       :enabled: false
       :severity: :warn
       :minimum: 1
+    :commit_body_single_bullet:
+      :enabled: true
+      :severity: :error
+      :whitelist: "\\-"
     :commit_subject_length:
       :enabled: true
       :severity: :error
@@ -495,6 +500,24 @@ Ensures a minimum number of lines are present within the commit body. Lines with
 (i.e. whitespace, carriage returns, etc.) are considered to be empty.
 
 Automatically ignores *fixup!* commits as they are not meant to have bodies.
+
+### Commit Body Single Bullet
+
+| Enabled | Severity |      Defaults      |
+|---------|----------|--------------------|
+| true    | error    | whitelist: `"\\-"` |
+
+Ensures a single bullet is never used when a paragraph could be used instead. Example:
+
+    # Disallowed
+
+    - Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+      quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu_libero sit amet quam.
+
+    # Allowed
+
+    Pellentque morbi-trist sentus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+    quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu_libero sit amet quam.
 
 ### Commit Subject Length
 
