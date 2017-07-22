@@ -37,6 +37,7 @@ history.
     - [Commit Author Name Capitalization](#commit-author-name-capitalization)
     - [Commit Author Name Parts](#commit-author-name-parts)
     - [Commit Body Bullet](#commit-body-bullet)
+    - [Commit Body Bullet Capitalization](#commit-body-bullet-capitalization)
     - [Commit Body Leading Line](#commit-body-leading-line)
     - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
@@ -124,6 +125,10 @@ The default configuration is:
       :blacklist:
         - "\\*"
         - "•"
+    :commit_body_bullet_capitalization:
+      :enabled: true
+      :severity: :error
+      :whitelist: "\\-"
     :commit_body_leading_line:
       :enabled: false
       :severity: :warn
@@ -418,6 +423,22 @@ the following syntax for bullets:
 It's best to use `-` for bullet point syntax as `*` are easier to read when used for *emphasis*.
 This makes parsing the Markdown syntax easier when reviewing a Git commit as the syntax used for
 bullet points and *emphasis* are now, distinctly, unique.
+
+### Commit Body Bullet Capitalization
+
+| Enabled | Severity |       Defaults       |
+|---------|----------|----------------------|
+| true    | error    | whitelist: `["\\-"]` |
+
+Ensures commit body bullet lines are capitalized. Example:
+
+    # Disallowed
+
+    - an example bullet.
+
+    # Allowed
+
+    - An example bullet.
 
 ### Commit Body Leading Line
 
