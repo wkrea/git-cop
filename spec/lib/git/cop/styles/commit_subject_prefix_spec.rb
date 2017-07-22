@@ -105,7 +105,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       end
 
       it "answres issue hint" do
-        expect(issue[:hint]).to eq(%(Use: "Added", "Removed", "Fixed".))
+        expect(issue[:hint]).to eq("Use: /Added/, /Removed/, /Fixed/.")
       end
     end
   end

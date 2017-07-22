@@ -4,20 +4,16 @@ module Git
   module Cop
     module Kit
       class Graylist
-        # Represents a white or black list which may be used as a cop setting.
+        # Represents a white or black regular expression list which may be used as a cop setting.
         def initialize list = []
           @list = list
         end
 
-        def to_quote
-          list.map { |item| %("#{item}") }
-        end
-
         def to_hint
-          to_quote.join(", ").delete "\\"
+          to_regexp.map(&:inspect).join ", "
         end
 
-        def to_regex
+        def to_regexp
           list.map { |item| Regexp.new item }
         end
 

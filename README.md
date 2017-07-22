@@ -189,9 +189,15 @@ cop, you can set it to `warn` instead. Here are the accepted values and what eac
 #### Regular Expressions
 
 Some cops support *whitelist* or *blacklist* options. These lists can consist of strings, regular
-expressions, or a combination thereof. If you need help constructing complex regular expressions for
-these lists, try launching an IRB session and using `Regexp.new` or `Regexp.escape` to experiment
-with the types of words/phrases you want to turn into regular expressions.
+expressions, or a combination thereof. Regardless of your choice, all lists are automatically
+converted to regular expression for use by the cops. This means a string like `"example"` becomes
+`/example/` and a regular expression of `"\\AExample.+"` becomes `/\AExample.+/`.
+
+If you need help constructing complex regular expressions for these lists, try launching an IRB
+session and using `Regexp.new` or `Regexp.escape` to experiment with the types of words/phrases you
+want to turn into regular expressions. *For purposes of the YAML configuration, these need to be
+expressed as strings with special characters escaped properly for internal conversion to a regular
+expression.*
 
 ### Rake
 

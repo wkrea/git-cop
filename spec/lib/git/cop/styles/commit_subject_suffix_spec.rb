@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
   let(:content) { "Added test subject." }
   let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), subject: content }
   let(:enabled) { true }
-  let(:settings) { {enabled: enabled, whitelist: ["\\.", "\[\✓\]", "\#skip"]} }
+  let(:settings) { {enabled: enabled, whitelist: ["\\.", "\\[✓\\]", "\\#skip"]} }
   subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
@@ -61,7 +61,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
       end
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq(%(Use: ".", "[✓]", "#skip".))
+        expect(issue[:hint]).to eq("Use: /\\./, /\\[✓\\]/, /\\#skip/.")
       end
     end
   end

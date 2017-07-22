@@ -107,7 +107,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq(%(Avoid: "obviously", "of course".))
+        expect(issue[:hint]).to eq("Avoid: /obviously/, /of course/.")
       end
 
       it "answers issue lines" do

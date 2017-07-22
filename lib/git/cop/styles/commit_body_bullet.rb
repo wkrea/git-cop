@@ -37,7 +37,7 @@ module Git
         # :reek:FeatureEnvy
         def valid_line? line
           return true if line.strip.empty?
-          line.match?(/\A(?!\s*#{Regexp.union graylist.to_regex}\s+).+\Z/)
+          line.match?(/\A(?!\s*#{Regexp.union graylist.to_regexp}\s+).+\Z/)
         end
 
         def affected_lines

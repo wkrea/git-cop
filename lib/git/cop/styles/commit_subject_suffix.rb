@@ -14,7 +14,7 @@ module Git
 
         def valid?
           return true if graylist.empty?
-          commit.subject.match?(/#{Regexp.union graylist.to_regex}\Z/)
+          commit.subject.match?(/#{Regexp.union graylist.to_regexp}\Z/)
         end
 
         def issue

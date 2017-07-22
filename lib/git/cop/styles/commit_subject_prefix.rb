@@ -16,7 +16,7 @@ module Git
           return true if fixup_or_squash?
           return true if graylist.empty?
 
-          commit.subject.match?(/\A#{Regexp.union graylist.to_regex}/)
+          commit.subject.match?(/\A#{Regexp.union graylist.to_regexp}/)
         end
 
         def issue

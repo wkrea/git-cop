@@ -46,7 +46,7 @@ module Git
 
         def valid_line? line
           !line.downcase.match? Regexp.new(
-            Regexp.union(graylist.to_regex).source,
+            Regexp.union(graylist.to_regexp).source,
             Regexp::IGNORECASE
           )
         end
