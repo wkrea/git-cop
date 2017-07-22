@@ -41,6 +41,7 @@ history.
     - [Commit Body Leading Line](#commit-body-leading-line)
     - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
+    - [Commit Body Paragraph Capitalization](#commit-body-paragraph-capitalization)
     - [Commit Body Phrase](#commit-body-phrase)
     - [Commit Body Presence](#commit-body-presence)
     - [Commit Body Single Bullet](#commit-body-single-bullet)
@@ -139,6 +140,9 @@ The default configuration is:
       :enabled: true
       :severity: :error
       :length: 72
+    :commit_body_paragraph_capitalization:
+      :enabled: true
+      :severity: :error
     :commit_body_phrase:
       :enabled: true
       :severity: :error
@@ -489,6 +493,22 @@ Ensures each line of the commit body is no longer than 72 characters in length f
 readabilty and word-wrap prevention on smaller screen sizes. For further details, read Tim Pope's
 original [article](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) on the
 subject.
+
+### Commit Body Paragraph Capitalization
+
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| true    | error    | none     |
+
+Ensures each paragraph of the commit body is capitalized. Example:
+
+    # Disallowed
+
+    curabitur eleifend wisi iaculis ipsum.
+
+    # Allowed
+
+    Curabitur eleifend wisi iaculis ipsum.
 
 ### Commit Body Phrase
 
