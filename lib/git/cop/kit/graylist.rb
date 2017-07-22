@@ -6,7 +6,7 @@ module Git
       class Graylist
         # Represents a white or black regular expression list which may be used as a cop setting.
         def initialize list = []
-          @list = list
+          @list = Array list
         end
 
         def to_hint
