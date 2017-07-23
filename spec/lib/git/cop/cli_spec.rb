@@ -46,7 +46,7 @@ RSpec.describe Git::Cop::CLI do
       it "prints warning" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(/WARN\:\sCommit\sBody\sPresence.+/).to_stdout
+          expect(&result).to output(/Commit\sBody\sPresence\sWarning\:.+/).to_stdout
         end
       end
 

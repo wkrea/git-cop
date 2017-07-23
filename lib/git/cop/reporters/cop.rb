@@ -21,8 +21,18 @@ module Git
 
         attr_reader :cop, :issue, :colorizer
 
-        def severity_label
-          cop.severity.to_s.upcase
+        def message
+          "  #{cop.class.label}#{severity_suffix}: " \
+          "#{issue.fetch(:label)} #{issue.fetch(:hint)}\n" \
+          "#{affected_lines}"
+        end
+
+        def severity_suffix
+          case cop.severity
+            when :warn then " Warning"
+            when :error then " Error"
+            else ""
+          end
         end
 
         def color
@@ -35,12 +45,6 @@ module Git
 
         def affected_lines
           issue.fetch(:lines, []).reduce("") { |lines, line| lines + Line.new(line).to_s }
-        end
-
-        def message
-          "  #{severity_label}: #{cop.class.label}. " \
-          "#{issue.fetch(:label)} #{issue.fetch(:hint)}\n" \
-          "#{affected_lines}"
         end
       end
     end
