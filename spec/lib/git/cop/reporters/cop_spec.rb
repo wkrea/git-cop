@@ -81,8 +81,8 @@ RSpec.describe Git::Cop::Reporters::Cop do
       it "answers cop label, issue label, issue hint, and issue lines" do
         expect(subject.to_s).to eq(
           "\e[31m  Commit Author Email Error: A test label. A test hint.\n" \
-          "    Line 1: Curabitur eleifend wisi iaculis ipsum.\n" \
-          "    Line 3: Ipsum eleifend wisi iaculis curabitur.\n\e[0m" \
+          "    Line 1: \"Curabitur eleifend wisi iaculis ipsum.\"\n" \
+          "    Line 3: \"Ipsum eleifend wisi iaculis curabitur.\"\n\e[0m" \
         )
       end
     end

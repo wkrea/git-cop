@@ -10,7 +10,7 @@ module Git
         end
 
         def to_s
-          "    Line #{number}: #{content}\n"
+          %(    Line #{number}: "#{content}"\n)
         end
 
         private
