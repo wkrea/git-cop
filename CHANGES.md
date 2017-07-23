@@ -1,3 +1,20 @@
+# v1.4.0 (2017-07-23)
+
+- Fixed feature branch Git repository detection.
+- Added Git Kit with repository detection.
+- Added ability to answer commit body paragraphs.
+- Added commit body bullet capitalization cop.
+- Added commit body issue tracker link cop.
+- Added commit body paragraph capitalization cop.
+- Added commit body single bullet cop.
+- Updated commit body leading line cop to specify quantity.
+- Updated cop warning/error report format.
+- Updated graylist to always be a list of regular expressions.
+- Updated graylist to always cast list to array.
+- Updated line report to quote affected lines.
+- Updated to Gemsmith 10.2.0.
+- Refactored specs to use consistent issue testing.
+
 # v1.3.0 (2017-07-16)
 
 - Fixed CLI errors to always abort program.

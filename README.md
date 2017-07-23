@@ -264,11 +264,11 @@ Here is an example workflow, using gem defaults with issues detected:
     # Output:
     Running Git Cop...
 
-    5416d89db2dabbcf35b459b835ce789062a01341 (Brooke Kuhlmann, 7 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
-      WARN: Commit Body Presence. Invalid body. Use a minimum of 1 line (not empty).
-      ERROR: Commit Subject Length. Invalid length. Use 72 characters or less.
-      ERROR: Commit Subject Prefix. Invalid prefix. Use: "Fixed", "Added", "Updated", "Removed", "Refactored".
-      ERROR: Commit Subject Suffix. Invalid suffix. Use: ".".
+    75387cc9347e43b9449f48f66de8232b69ff485d (Brooke Kuhlmann, 0 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
+      Commit Body Presence Warning: Invalid body. Use a minimum of 1 line (not empty).
+      Commit Subject Length Error: Invalid length. Use 72 characters or less.
+      Commit Subject Prefix Error: Invalid prefix. Use: /Fixed/, /Added/, /Updated/, /Removed/, /Refactored/.
+      Commit Subject Suffix Error: Invalid suffix. Use: /\./.
 
     1 commit inspected. 4 issues detected (1 warning, 3 errors).
 
