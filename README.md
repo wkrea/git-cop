@@ -38,6 +38,7 @@ history.
     - [Commit Author Name Parts](#commit-author-name-parts)
     - [Commit Body Bullet](#commit-body-bullet)
     - [Commit Body Bullet Capitalization](#commit-body-bullet-capitalization)
+    - [Commit Body Issue Tracker Link](#commit-body-issue-tracker-link)
     - [Commit Body Leading Line](#commit-body-leading-line)
     - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
@@ -130,6 +131,14 @@ The default configuration is:
       :enabled: true
       :severity: :error
       :whitelist: "\\-"
+    :commit_body_issue_tracker_link:
+      :enabled: true,
+      :severity: :error,
+      :blacklist:
+        - "(f|F)ix(es|ed)?\\s\\#\\d+",
+        - "(c|C)lose(s|d)?\\s\\#\\d+",
+        - "(r|R)esolve(s|d)?\\s\\#\\d+",
+        - "github\\.com\\/.+\\/issues\\/\\d+"
     :commit_body_leading_line:
       :enabled: false
       :severity: :warn
@@ -443,6 +452,36 @@ Ensures commit body bullet lines are capitalized. Example:
     # Allowed
 
     - An example bullet.
+
+### Commit Body Issue Tracker Link
+
+| Enabled | Severity |                       Defaults                       |
+|---------|----------|------------------------------------------------------|
+| true    | error    | blacklist: (see configuration list, mentioned above) |
+
+Ensures commit body doesn't contain a link to an issue tracker. The blacklist defaults to GitHub
+Issue links but can be customized for any issue tracker.
+
+There are several reasons for exluding issue tracker links from commit bodies:
+
+0. Not all issue trackers preserve issues (meaning they can be deleted). This makes make reading
+   historic commits much harder to understand why the change was made when the link no longer works.
+0. When not connected to the internet or working on a laggy connection, it's hard to understand why
+   a commit was made when all you have is a link to an issue with no other supporting context.
+0. During the course of a repository's life, issue trackers can be replaced (rare but it does
+   happen). If the old issue tracker service is no longer paid for, none of the links within the
+   commit will be of any relevance.
+0. An issue might span several commits in order to resolve it. Including a link in each commit is
+   tedious and can create noise within the issue's history which is distracting.
+
+Instead of linking to issues, take the time to write a short summary as to *why* the commit was
+made. Doing this will make it easier to understand *why* the commit was made, keeps the commit self-
+contained, and makes learning about/debugging the commit faster.
+
+Issue tracker links are best used at the pull request level due to an issue usually spanning
+multiple commits in order to complete the work. When reading a pull request, this is a great
+opportunity to link to an issue in order to provide a high level overview and reason why the pull
+request exists.
 
 ### Commit Body Leading Line
 
