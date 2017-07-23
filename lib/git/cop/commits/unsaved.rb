@@ -46,14 +46,19 @@ module Git
 
         # :reek:FeatureEnvy
         def body
-          lines = raw_body.split "\n"
-          return "" if lines.size <= 1
-
-          lines.drop(1).join("\n") + "\n"
+          lines = raw_body.split("\n").drop(1)
+          computed_body = lines.join("\n")
+          lines.empty? ? computed_body : "#{computed_body}\n"
         end
 
         def body_lines
           body.split("\n").reject { |line| line.start_with?("#") }
+        end
+
+        # :reek:FeatureEnvy
+        def body_paragraphs
+          lines = body.split("\n\n").map { |line| line.sub(/\A\n/, "") }
+          lines.map(&:chomp).reject { |line| line.start_with?("#") }
         end
 
         # :reek:FeatureEnvy

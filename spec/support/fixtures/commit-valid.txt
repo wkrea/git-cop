@@ -1,4 +1,12 @@
-Added test file.
+Added example.
 
-- This is a test file.
-- This is a valid commit example.
+An example paragraph.
+
+A bullet list:
+  - One.
+  - Two.
+
+Another paragraph.
+
+# A comment block.
+# Pellentque morbi-trist sentus et netus et malesuada fames ac turpis.

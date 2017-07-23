@@ -19,8 +19,20 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
 
   describe "#raw_body" do
     it "answers file contents" do
-      contents = "Added test file.\n\n- This is a test file.\n- This is a valid commit example.\n"
-      expect(subject.raw_body).to eq(contents)
+      expect(subject.raw_body).to eq(
+        "Added example.\n" \
+        "\n" \
+        "An example paragraph.\n" \
+        "\n" \
+        "A bullet list:\n" \
+        "  - One.\n" \
+        "  - Two.\n" \
+        "\n" \
+        "Another paragraph.\n" \
+        "\n" \
+        "# A comment block.\n" \
+        "# Pellentque morbi-trist sentus et netus et malesuada fames ac turpis.\n" \
+      )
     end
   end
 
@@ -54,7 +66,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
 
   describe "#subject" do
     it "answers subject from file" do
-      expect(subject.subject).to eq("Added test file.")
+      expect(subject.subject).to eq("Added example.")
     end
 
     it "answers raw body when raw body is a single line" do
@@ -70,7 +82,19 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
 
   describe "#body" do
     it "answers body from file" do
-      expect(subject.body).to eq("\n- This is a test file.\n- This is a valid commit example.\n")
+      expect(subject.body).to eq(
+        "\n" \
+        "An example paragraph.\n" \
+        "\n" \
+        "A bullet list:\n" \
+        "  - One.\n" \
+        "  - Two.\n" \
+        "\n" \
+        "Another paragraph.\n" \
+        "\n" \
+        "# A comment block.\n" \
+        "# Pellentque morbi-trist sentus et netus et malesuada fames ac turpis.\n" \
+      )
     end
 
     it "answers empty string when raw body is a single line" do
@@ -90,21 +114,23 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   end
 
   describe "#body_lines" do
-    it "answers lines" do
+    it "answers body lines with comments ignored" do
       expect(subject.body_lines).to contain_exactly(
         "",
-        "- This is a test file.",
-        "- This is a valid commit example."
+        "An example paragraph.",
+        "",
+        "A bullet list:",
+        "  - One.",
+        "  - Two.",
+        "",
+        "Another paragraph.",
+        ""
       )
     end
 
-    it "ignores commented lines" do
-      allow(subject).to receive(:body).and_return("Line A.\n# Comment line.\nLine B.\n")
-
-      expect(subject.body_lines).to contain_exactly(
-        "Line A.",
-        "Line B."
-      )
+    it "answers body line with no leading line after subject" do
+      allow(subject).to receive(:raw_body).and_return("A test subject.\nA test body.\n")
+      expect(subject.body_lines).to contain_exactly("A test body.")
     end
 
     it "answers empty array when raw body is a single line" do
@@ -112,14 +138,29 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
       expect(subject.body_lines).to eq([])
     end
 
-    it "answers line when raw body has multiple lines" do
-      allow(subject).to receive(:raw_body).and_return("A test subject.\nA test body.\n")
-      expect(subject.body_lines).to contain_exactly("A test body.")
+    it "answers empty array when raw body is empty" do
+      allow(subject).to receive(:raw_body).and_return("")
+      expect(subject.body_lines).to eq([])
+    end
+  end
+
+  describe "#body_paragraphs" do
+    it "answers paragraphs with comments ignored" do
+      expect(subject.body_paragraphs).to contain_exactly(
+        "An example paragraph.",
+        "A bullet list:\n  - One.\n  - Two.",
+        "Another paragraph."
+      )
+    end
+
+    it "answers empty array when raw body is single line" do
+      allow(subject).to receive(:raw_body).and_return("A test body.")
+      expect(subject.body_paragraphs).to eq([])
     end
 
     it "answers empty array when raw body is empty" do
       allow(subject).to receive(:raw_body).and_return("")
-      expect(subject.body_lines).to eq([])
+      expect(subject.body_paragraphs).to eq([])
     end
   end
 

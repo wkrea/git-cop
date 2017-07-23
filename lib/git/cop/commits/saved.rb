@@ -43,6 +43,10 @@ module Git
           body.split("\n").reject { |line| line.start_with?("#") }
         end
 
+        def body_paragraphs
+          body.split("\n\n").map(&:chomp).reject { |line| line.start_with?("#") }
+        end
+
         def fixup?
           subject.fixup?
         end

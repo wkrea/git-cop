@@ -280,7 +280,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       end
     end
 
-    context "without commented lines" do
+    context "with commented lines" do
       let :commit_message do
         "Added test file.\n\n" \
         "- A bullet.\n" \
@@ -304,6 +304,64 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       it "answers empty array" do
         Dir.chdir git_repo_dir do
           expect(subject.body_lines).to be_empty
+        end
+      end
+    end
+  end
+
+  describe "#body_paragraphs" do
+    before do
+      Dir.chdir git_repo_dir do
+        `touch test.txt`
+        `git add --all .`
+        `git commit --message $'#{commit_message}'`
+      end
+    end
+
+    context "with body" do
+      let :commit_message do
+        "Added test.\n\n" \
+        "The opening paragraph.\n" \
+        "A bunch of words.\n\n" \
+        "A bullet list:\n" \
+        "- First bullet.\n" \
+        "- Second bullet.\n\n"
+      end
+
+      it "answers body paragraphs" do
+        Dir.chdir git_repo_dir do
+          expect(subject.body_paragraphs).to contain_exactly(
+            "The opening paragraph.\nA bunch of words.",
+            "A bullet list:\n- First bullet.\n- Second bullet."
+          )
+        end
+      end
+    end
+
+    context "with commented lines" do
+      let :commit_message do
+        "Added test.\n\n" \
+        "A standard paragraph.\n\n" \
+        "# A commented paragraph.\n\n" \
+        "Another paragraph.\n\n"
+      end
+
+      it "ignores commented lines" do
+        Dir.chdir git_repo_dir do
+          expect(subject.body_paragraphs).to contain_exactly(
+            "A standard paragraph.",
+            "Another paragraph."
+          )
+        end
+      end
+    end
+
+    context "without body" do
+      let(:commit_message) { "Added test file." }
+
+      it "answers empty array" do
+        Dir.chdir git_repo_dir do
+          expect(subject.body_paragraphs).to be_empty
         end
       end
     end
