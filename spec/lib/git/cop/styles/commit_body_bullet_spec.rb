@@ -66,9 +66,11 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
   end
 
   describe "#issue" do
+    let(:issue) { subject.issue }
+
     context "when valid" do
       it "answers empty hash" do
-        expect(subject.issue).to eq({})
+        expect(issue).to eq({})
       end
     end
 
@@ -80,18 +82,17 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
           "• Invalid bullet."
         ]
       end
-      let(:issue) { subject.issue }
 
       it "answers issue label" do
-        expect(subject.issue[:label]).to eq("Invalid bullet.")
+        expect(issue[:label]).to eq("Invalid bullet.")
       end
 
       it "answers issue hint" do
-        expect(subject.issue[:hint]).to eq("Avoid: /\\*/, /•/.")
+        expect(issue[:hint]).to eq("Avoid: /\\*/, /•/.")
       end
 
       it "answers issue lines" do
-        expect(subject.issue[:lines]).to eq(
+        expect(issue[:lines]).to eq(
           [
             {number: 1, content: "* Invalid bullet."},
             {number: 3, content: "• Invalid bullet."}

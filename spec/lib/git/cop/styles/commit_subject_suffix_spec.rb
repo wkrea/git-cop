@@ -46,15 +46,16 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
   end
 
   describe "#issue" do
+    let(:issue) { subject.issue }
+
     context "when valid" do
       it "answers empty hash" do
-        expect(subject.issue).to eq({})
+        expect(issue).to eq({})
       end
     end
 
     context "when invalid" do
       let(:content) { "Added bad subject" }
-      let(:issue) { subject.issue }
 
       it "answers issue label" do
         expect(issue[:label]).to eq("Invalid suffix.")

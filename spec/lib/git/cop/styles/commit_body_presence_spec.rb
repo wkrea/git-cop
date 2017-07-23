@@ -71,16 +71,17 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresence do
   end
 
   describe "#issue" do
+    let(:issue) { subject.issue }
+
     context "when valid" do
       it "answers empty hash" do
-        expect(subject.issue).to eq({})
+        expect(issue).to eq({})
       end
     end
 
     context "when invalid" do
       let(:minimum) { 3 }
       let(:body_lines) { ["First line.", "\r", " ", "\t", "Second one here."] }
-      let(:issue) { subject.issue }
 
       it "answers issue label" do
         expect(issue[:label]).to eq("Invalid body.")

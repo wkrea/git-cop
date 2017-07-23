@@ -87,9 +87,11 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
   end
 
   describe "#issue" do
+    let(:issue) { subject.issue }
+
     context "when valid" do
       it "answers empty hash" do
-        expect(subject.issue).to eq({})
+        expect(issue).to eq({})
       end
     end
 
@@ -100,7 +102,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
           "...and, of course, this won't work either."
         ]
       end
-      let(:issue) { subject.issue }
 
       it "answers issue label" do
         expect(issue[:label]).to eq("Invalid body.")

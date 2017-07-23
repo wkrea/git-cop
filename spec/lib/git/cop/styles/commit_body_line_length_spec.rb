@@ -54,9 +54,11 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
   end
 
   describe "#issue" do
+    let(:issue) { subject.issue }
+
     context "when valid" do
       it "answers empty hash" do
-        expect(subject.issue).to eq({})
+        expect(issue).to eq({})
       end
     end
 
@@ -69,7 +71,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
           "- Donec eu_libero sit amet quam egestas semper. Aenean ultr."
         ]
       end
-      let(:issue) { subject.issue }
 
       it "answers issue label" do
         expect(issue[:label]).to eq("Invalid line length.")
