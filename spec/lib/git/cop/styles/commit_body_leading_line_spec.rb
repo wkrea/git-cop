@@ -77,7 +77,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
       end
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq("Use blank line between subject and body.")
+        expect(issue[:hint]).to eq("Use one blank line between subject and body.")
       end
     end
   end

@@ -24,7 +24,7 @@ module Git
 
           {
             label: "Invalid line.",
-            hint: "Use blank line between subject and body."
+            hint: "Use one blank line between subject and body."
           }
         end
       end
