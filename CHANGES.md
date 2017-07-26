@@ -1,3 +1,9 @@
+# v1.4.1 (2017-07-26)
+
+- Fixed Travis CI pull request build hook.
+- Fixed saved commit initialization with invalid SHA.
+- Added Git commit SHA error.
+
 # v1.4.0 (2017-07-23)
 
 - Fixed feature branch Git repository detection.
