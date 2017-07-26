@@ -3,11 +3,15 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Commit do
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+
   let :commit do
-    object_double Git::Cop::Commits::Saved.new(sha: "abcdef"), sha: "abcdef",
-                                                               author_name: "Test Tester",
-                                                               author_date_relative: "1 day ago",
-                                                               subject: "A test subject."
+    object_double Git::Cop::Commits::Saved.new(sha: "abcdef", shell: shell),
+                  sha: "abcdef",
+                  author_name: "Test Tester",
+                  author_date_relative: "1 day ago",
+                  subject: "A test subject."
   end
 
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }

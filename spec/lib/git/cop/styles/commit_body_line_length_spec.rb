@@ -4,7 +4,13 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
-  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), body_lines: body_lines }
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+
+  let :commit do
+    object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell), body_lines: body_lines
+  end
+
   let(:length) { 72 }
   let(:settings) { {enabled: true, length: length} }
   subject { described_class.new commit: commit, settings: settings }

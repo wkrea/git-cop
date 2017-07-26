@@ -29,21 +29,22 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
   end
 
   describe "#initialize" do
-    context "with invalid SHA" do
-      let(:sha) { "bogus" }
+    it "fails with SHA error for invalid SHA" do
+      result = -> { described_class.new sha: "bogus" }
 
-      before do
-        Dir.chdir git_repo_dir do
-          FileUtils.rm_f ".git"
-          `git init`
-        end
-      end
+      expect(&result).to raise_error(
+        Git::Cop::Errors::SHA,
+        %(Invalid commit SHA: "bogus". Unable to obtain commit details.)
+      )
+    end
 
-      it "answers empty string for all data methods" do
-        described_class::FORMATS.keys.each do |key|
-          expect(subject.public_send(key)).to eq("")
-        end
-      end
+    it "fails with SHA error for unknown SHA" do
+      result = -> { described_class.new sha: "abcdef123" }
+
+      expect(&result).to raise_error(
+        Git::Cop::Errors::SHA,
+        %(Invalid commit SHA: "abcdef123". Unable to obtain commit details.)
+      )
     end
   end
 

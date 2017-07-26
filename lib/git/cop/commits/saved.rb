@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "open3"
+
 module Git
   module Cop
     module Commits
@@ -21,8 +23,10 @@ module Git
           FORMATS.reduce("") { |pattern, (key, value)| pattern + "<#{key}>#{value}</#{key}>%n" }
         end
 
-        def initialize sha:
-          @data = `git show --stat --pretty=format:"#{self.class.pattern}" #{sha} 2> /dev/null`
+        def initialize sha:, shell: Open3
+          data, status = shell.capture2e show_command(sha)
+          fail(Errors::SHA, sha) unless status.success?
+          @data = data
         end
 
         # :reek:FeatureEnvy
@@ -58,6 +62,10 @@ module Git
         private
 
         attr_reader :data
+
+        def show_command sha
+          %(git show --stat --pretty=format:"#{self.class.pattern}" #{sha})
+        end
 
         def method_missing name, *arguments, &block
           return super unless FORMATS.keys.include?(name.to_sym)

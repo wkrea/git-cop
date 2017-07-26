@@ -3,7 +3,13 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
-  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1") }
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+
+  let :commit do
+    object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell)
+  end
+
   subject { described_class.new commit: commit }
 
   describe ".id" do

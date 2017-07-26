@@ -5,10 +5,13 @@ require "spec_helper"
 RSpec.describe Git::Cop::Styles::CommitBodyPresence do
   let(:fixup) { false }
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do
-    object_double Git::Cop::Commits::Saved.new(sha: "1"), body_lines: body_lines,
-                                                          fixup?: fixup
+    object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell),
+                  body_lines: body_lines,
+                  fixup?: fixup
   end
 
   let(:minimum) { 1 }

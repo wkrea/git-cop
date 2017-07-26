@@ -3,8 +3,12 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyParagraphCapitalization do
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+
   let :commit do
-    object_double Git::Cop::Commits::Saved.new(sha: "1"), body_paragraphs: body_paragraphs
+    object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell),
+                  body_paragraphs: body_paragraphs
   end
 
   subject { described_class.new commit: commit }

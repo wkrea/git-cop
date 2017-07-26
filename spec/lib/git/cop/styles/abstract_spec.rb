@@ -4,7 +4,9 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::Abstract do
   let(:sha) { "123" }
-  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: sha), sha: sha }
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: sha, shell: shell), sha: sha }
   let(:enabled) { true }
   let(:settings) { {enabled: enabled} }
   subject { described_class.new commit: commit, settings: settings }

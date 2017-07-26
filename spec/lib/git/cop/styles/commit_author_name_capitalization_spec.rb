@@ -4,7 +4,13 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
   let(:name) { "Example Tester" }
-  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), author_name: name }
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+
+  let :commit do
+    object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell), author_name: name
+  end
+
   let(:minimum) { 2 }
   let(:settings) { {enabled: true, minimum: minimum} }
   subject { described_class.new commit: commit, settings: settings }

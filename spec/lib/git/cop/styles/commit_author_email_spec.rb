@@ -4,7 +4,13 @@ require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
   let(:email) { "test@example.com" }
-  let(:commit) { object_double Git::Cop::Commits::Saved.new(sha: "1"), author_email: email }
+  let(:status) { double "status", success?: true }
+  let(:shell) { class_spy Open3, capture2e: ["", status] }
+
+  let :commit do
+    object_double Git::Cop::Commits::Saved.new(sha: "abc", shell: shell), author_email: email
+  end
+
   subject { described_class.new commit: commit }
 
   describe ".id" do

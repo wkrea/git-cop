@@ -56,11 +56,6 @@ RSpec.describe Git::Cop::Collector, :git_repo do
 
       expect(subject.retrieve(commit)).to contain_exactly(valid_cop, valid_cop)
     end
-
-    it "answers empty array for unknown commit" do
-      unknown = Git::Cop::Commits::Saved.new sha: "abc"
-      expect(subject.retrieve(unknown)).to eq([])
-    end
   end
 
   describe "#empty?" do
