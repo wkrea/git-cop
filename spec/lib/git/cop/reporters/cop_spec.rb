@@ -21,7 +21,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
 
       it "answers cop label and issue hint" do
         expect(subject.to_s).to eq(
-          "\e[33m  Commit Author Email Warning: A test hint.\n\e[0m"
+          "\e[33m  Commit Author Email Warning. A test hint.\n\e[0m"
         )
       end
     end
@@ -32,7 +32,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
 
       it "answers cop label and issue hint" do
         expect(subject.to_s).to eq(
-          "\e[31m  Commit Author Email Error: A test hint.\n\e[0m"
+          "\e[31m  Commit Author Email Error. A test hint.\n\e[0m"
         )
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
 
       it "answers cop label and issue hint" do
         expect(subject.to_s).to eq(
-          "\e[37m  Commit Author Email: A test hint.\n\e[0m"
+          "\e[37m  Commit Author Email. A test hint.\n\e[0m"
         )
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
 
       it "answers cop label, issue label, issue hint, and issue lines" do
         expect(subject.to_s).to eq(
-          "\e[31m  Commit Author Email Error: A test hint.\n" \
+          "\e[31m  Commit Author Email Error. A test hint.\n" \
           "    Line 1: \"Curabitur eleifend wisi iaculis ipsum.\"\n" \
           "    Line 3: \"Ipsum eleifend wisi iaculis curabitur.\"\n\e[0m" \
         )

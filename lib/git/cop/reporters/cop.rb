@@ -22,7 +22,7 @@ module Git
         attr_reader :cop, :issue, :colorizer
 
         def message
-          "  #{cop.class.label}#{severity_suffix}: " \
+          "  #{cop.class.label}#{severity_suffix}. " \
           "#{issue.fetch :hint}\n" \
           "#{affected_lines}"
         end
