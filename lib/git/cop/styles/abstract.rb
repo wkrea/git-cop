@@ -33,6 +33,10 @@ module Git
           @descendants || []
         end
 
+        def self.build_issue_line index, line
+          {number: index + ISSUE_LINE_OFFSET, content: line}
+        end
+
         attr_reader :commit
 
         def initialize commit:, settings: self.class.defaults

@@ -53,6 +53,12 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
   end
 
+  describe ".build_issue_line" do
+    it "answers isuse line" do
+      expect(described_class.build_issue_line(1, "Test.")).to eq(number: 3, content: "Test.")
+    end
+  end
+
   describe "#enabled?" do
     context "when enabled" do
       let(:enabled) { true }
