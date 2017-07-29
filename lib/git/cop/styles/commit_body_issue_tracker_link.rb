@@ -44,7 +44,7 @@ module Git
 
         def affected_lines
           commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
-            lines << {number: index + 1, content: line} if invalid_line?(line)
+            lines << self.class.build_issue_line(index, line) if invalid_line?(line)
           end
         end
       end

@@ -11,6 +11,7 @@ module Git
         using ::Refinements::Strings
 
         LEVELS = %i[warn error].freeze
+        ISSUE_LINE_OFFSET = 2
 
         def self.inherited klass
           @descendants ||= []

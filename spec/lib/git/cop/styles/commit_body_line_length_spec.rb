@@ -85,8 +85,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
       it "answers issue lines" do
         expect(issue[:lines]).to eq(
           [
-            {number: 2, content: "- Vestibulum tortor quam, feugiat vitae, ultricies eget bon."},
-            {number: 3, content: "- Donec eu_libero sit amet quam egestas semper. Aenean ultr."}
+            {number: 3, content: "- Vestibulum tortor quam, feugiat vitae, ultricies eget bon."},
+            {number: 4, content: "- Donec eu_libero sit amet quam egestas semper. Aenean ultr."}
           ]
         )
       end

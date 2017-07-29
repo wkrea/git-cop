@@ -93,7 +93,7 @@ RSpec.describe Git::Cop::Styles::CommitBodySingleBullet do
       end
 
       it "answers issue affected lines" do
-        expect(issue[:lines]).to contain_exactly(number: 1, content: "- A lone bullet.")
+        expect(issue[:lines]).to contain_exactly(number: 2, content: "- A lone bullet.")
       end
     end
   end

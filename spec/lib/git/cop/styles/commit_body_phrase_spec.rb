@@ -116,8 +116,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       it "answers issue lines" do
         expect(issue[:lines]).to eq(
           [
-            {number: 1, content: "Obviously, this can't work."},
-            {number: 2, content: "...and, of course, this won't work either."}
+            {number: 2, content: "Obviously, this can't work."},
+            {number: 3, content: "...and, of course, this won't work either."}
           ]
         )
       end

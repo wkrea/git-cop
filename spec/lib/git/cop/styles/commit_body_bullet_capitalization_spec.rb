@@ -93,7 +93,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       end
 
       it "answers issue affected lines" do
-        expect(issue[:lines]).to contain_exactly(number: 2, content: "- a bullet.")
+        expect(issue[:lines]).to contain_exactly(number: 3, content: "- a bullet.")
       end
     end
   end

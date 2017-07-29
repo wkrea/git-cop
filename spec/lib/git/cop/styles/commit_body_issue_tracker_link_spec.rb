@@ -111,8 +111,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
       it "answers issue affected lines" do
         expect(issue[:lines]).to eq(
           [
-            {number: 2, content: "This work fixes #22 using suggestions from team."},
-            {number: 3, content: "See [Issue 22](https://github.com/test/project/issues/22)."}
+            {number: 3, content: "This work fixes #22 using suggestions from team."},
+            {number: 4, content: "See [Issue 22](https://github.com/test/project/issues/22)."}
           ]
         )
       end

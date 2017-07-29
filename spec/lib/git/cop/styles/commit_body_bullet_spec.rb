@@ -96,8 +96,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       it "answers issue lines" do
         expect(issue[:lines]).to eq(
           [
-            {number: 1, content: "* Invalid bullet."},
-            {number: 3, content: "• Invalid bullet."}
+            {number: 2, content: "* Invalid bullet."},
+            {number: 4, content: "• Invalid bullet."}
           ]
         )
       end
