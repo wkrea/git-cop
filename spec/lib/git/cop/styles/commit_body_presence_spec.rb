@@ -87,7 +87,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPresence do
       let(:body_lines) { ["First line.", "\r", " ", "\t", "Second one here."] }
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq("Use a minimum of 3 lines (not empty).")
+        expect(issue[:hint]).to eq("Use minimum of 3 lines (non-empty).")
       end
     end
   end

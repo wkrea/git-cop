@@ -26,7 +26,7 @@ module Git
 
         def issue
           return {} if valid?
-          {hint: %(Use a minimum of #{"line".pluralize count: minimum} (not empty).)}
+          {hint: %(Use minimum of #{"line".pluralize count: minimum} (non-empty).)}
         end
       end
     end
