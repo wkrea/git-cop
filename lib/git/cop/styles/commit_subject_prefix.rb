@@ -21,11 +21,7 @@ module Git
 
         def issue
           return {} if valid?
-
-          {
-            label: "Invalid prefix.",
-            hint: %(Use: #{graylist.to_hint}.)
-          }
+          {hint: %(Use: #{graylist.to_hint}.)}
         end
 
         protected

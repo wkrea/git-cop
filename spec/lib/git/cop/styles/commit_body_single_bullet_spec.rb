@@ -88,12 +88,8 @@ RSpec.describe Git::Cop::Styles::CommitBodySingleBullet do
     context "when invalid" do
       let(:body_lines) { ["- A lone bullet."] }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid use of single bullet.")
-      end
-
       it "answers issue hint" do
-        expect(issue[:hint]).to eq("Use a paragraph instead.")
+        expect(issue[:hint]).to eq("Use paragraph instead of single bullet.")
       end
 
       it "answers issue affected lines" do

@@ -78,10 +78,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
     context "when invalid" do
       let(:raw_body) { "A commit message.\nWithout leading line." }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid line.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Use one blank line between subject and body.")
       end

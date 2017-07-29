@@ -109,10 +109,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
         ]
       end
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid body.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Avoid: /obviously/, /of course/.")
       end

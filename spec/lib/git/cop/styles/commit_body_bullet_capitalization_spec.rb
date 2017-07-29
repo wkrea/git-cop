@@ -88,10 +88,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
     context "when invalid" do
       let(:body_lines) { ["Examples:", "- a bullet.", "- Another bullet."] }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid capitalization.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Capitalize first word.")
       end

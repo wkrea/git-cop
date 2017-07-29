@@ -19,7 +19,6 @@ module Git
           return {} if valid?
 
           {
-            label: "Invalid capitalization.",
             hint: "Capitalize first word.",
             lines: affected_lines
           }

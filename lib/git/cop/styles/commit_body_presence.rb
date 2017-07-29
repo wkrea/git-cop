@@ -26,11 +26,7 @@ module Git
 
         def issue
           return {} if valid?
-
-          {
-            label: "Invalid body.",
-            hint: %(Use a minimum of #{"line".pluralize count: minimum} (not empty).)
-          }
+          {hint: %(Use a minimum of #{"line".pluralize count: minimum} (not empty).)}
         end
       end
     end

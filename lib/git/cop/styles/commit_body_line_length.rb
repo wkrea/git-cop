@@ -20,7 +20,6 @@ module Git
           return {} if valid?
 
           {
-            label: "Invalid line length.",
             hint: "Use #{length} characters or less per line.",
             lines: affected_lines
           }

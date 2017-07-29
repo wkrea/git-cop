@@ -20,7 +20,6 @@ module Git
           return {} if valid?
 
           {
-            label: "Invalid bullet.",
             hint: %(Avoid: #{graylist.to_hint}.),
             lines: affected_lines
           }

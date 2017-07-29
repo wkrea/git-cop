@@ -89,12 +89,8 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
     context "when invalid" do
       let(:name) { "example" }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq(%(Invalid name: "example".))
-      end
-
       it "answers issue hint" do
-        expect(issue[:hint]).to eq("Capitalize each part of name.")
+        expect(issue[:hint]).to eq(%(Capitalize each part of name: "example".))
       end
     end
   end

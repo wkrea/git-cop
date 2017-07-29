@@ -17,11 +17,7 @@ module Git
 
         def issue
           return {} if valid?
-
-          {
-            label: %(Invalid name: "#{full_name}".),
-            hint: "Capitalize each part of name."
-          }
+          {hint: %(Capitalize each part of name: "#{full_name}".)}
         end
 
         private

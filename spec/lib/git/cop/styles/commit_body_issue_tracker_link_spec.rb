@@ -99,13 +99,9 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
         ]
       end
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid use of link (explain issue instead).")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq(
-          "Avoid: /(f|F)ix(es|ed)?\\s\\#\\d+/, " \
+          "Explain issue instead of using link. Avoid: /(f|F)ix(es|ed)?\\s\\#\\d+/, " \
           "/(c|C)lose(s|d)?\\s\\#\\d+/, " \
           "/(r|R)esolve(s|d)?\\s\\#\\d+/, " \
           "/github\\.com\\/.+\\/issues\\/\\d+/."

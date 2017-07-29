@@ -23,7 +23,7 @@ module Git
 
         def message
           "  #{cop.class.label}#{severity_suffix}: " \
-          "#{issue.fetch(:label)} #{issue.fetch(:hint)}\n" \
+          "#{issue.fetch :hint}\n" \
           "#{affected_lines}"
         end
 

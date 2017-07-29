@@ -89,10 +89,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
         ]
       end
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid bullet.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Avoid: /\\*/, /•/.")
       end

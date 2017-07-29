@@ -63,10 +63,6 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
     context "when invalid" do
       let(:content) { "Added bad subject" }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid suffix.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Use: /\\./, /\\[✓\\]/, /\\#skip/.")
       end

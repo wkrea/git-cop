@@ -25,8 +25,7 @@ module Git
           return {} if valid?
 
           {
-            label: "Invalid use of link (explain issue instead).",
-            hint: "Avoid: #{graylist.to_hint}.",
+            hint: "Explain issue instead of using link. Avoid: #{graylist.to_hint}.",
             lines: affected_lines
           }
         end

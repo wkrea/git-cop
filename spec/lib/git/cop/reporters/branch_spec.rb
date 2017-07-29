@@ -14,7 +14,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
                   subject: "A subject."
   end
 
-  let(:issue) { {label: "A test label.", hint: "A test hint."} }
+  let(:issue) { {hint: "A test hint."} }
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }
 
   describe "#to_s" do
@@ -39,7 +39,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
           "Running Git Cop...\n" \
           "\n" \
           "abcdef (Test Tester, 1 day ago): A subject.\n" \
-          "\e[33m  Commit Author Email Warning: A test label. A test hint.\n\e[0m" \
+          "\e[33m  Commit Author Email Warning: A test hint.\n\e[0m" \
           "\n" \
           "1 commit inspected. \e[33m1 issue\e[0m detected " \
           "(\e[33m1 warning\e[0m, \e[32m0 errors\e[0m).\n"
@@ -72,8 +72,8 @@ RSpec.describe Git::Cop::Reporters::Branch do
           "Running Git Cop...\n" \
           "\n" \
           "abcdef (Test Tester, 1 day ago): A subject.\n" \
-          "\e[31m  Commit Author Email Error: A test label. A test hint.\n\e[0m" \
-          "\e[31m  Commit Author Email Error: A test label. A test hint.\n\e[0m" \
+          "\e[31m  Commit Author Email Error: A test hint.\n\e[0m" \
+          "\e[31m  Commit Author Email Error: A test hint.\n\e[0m" \
           "\n" \
           "1 commit inspected. \e[31m2 issues\e[0m detected " \
           "(\e[32m0 warnings\e[0m, \e[31m2 errors\e[0m).\n"

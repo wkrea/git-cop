@@ -19,11 +19,7 @@ module Git
 
         def issue
           return {} if valid?
-
-          {
-            label: "Invalid suffix.",
-            hint: %(Use: #{graylist.to_hint}.)
-          }
+          {hint: %(Use: #{graylist.to_hint}.)}
         end
 
         protected

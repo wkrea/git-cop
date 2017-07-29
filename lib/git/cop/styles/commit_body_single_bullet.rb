@@ -20,8 +20,7 @@ module Git
           return {} if valid?
 
           {
-            label: "Invalid use of single bullet.",
-            hint: "Use a paragraph instead.",
+            hint: "Use paragraph instead of single bullet.",
             lines: affected_lines
           }
         end

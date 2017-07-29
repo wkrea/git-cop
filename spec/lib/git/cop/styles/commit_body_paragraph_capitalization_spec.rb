@@ -65,10 +65,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyParagraphCapitalization do
     context "when invalid" do
       let(:body_paragraphs) { ["an invalid paragraph.\nwhich has\nmultiple lines."] }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid capitalization.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Capitalize first word.")
       end

@@ -71,12 +71,8 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
     context "when invalid" do
       let(:email) { "bogus" }
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq(%(Invalid email: "bogus".))
-      end
-
       it "answers issue hint" do
-        expect(issue[:hint]).to eq("Use format: <name>@<server>.<domain>.")
+        expect(issue[:hint]).to eq(%(Use "<name>@<server>.<domain>" instead of "bogus".))
       end
     end
   end

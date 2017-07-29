@@ -19,11 +19,7 @@ module Git
 
         def issue
           return {} if valid?
-
-          {
-            label: "Invalid name.",
-            hint: %(Detected #{parts.size} out of #{minimum} parts required.)
-          }
+          {hint: %(Detected #{parts.size} out of #{minimum} parts required.)}
         end
 
         private

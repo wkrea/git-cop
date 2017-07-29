@@ -17,10 +17,7 @@ module Git
         end
 
         def issue
-          {
-            label: "Deprecated (will be removed in next major release).",
-            hint: "Use Commit Body Leading Line instead."
-          }
+          {hint: "Deprecated. Use Commit Body Leading Line instead."}
         end
       end
     end

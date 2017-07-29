@@ -15,7 +15,7 @@ RSpec.describe Git::Cop::Reporters::Commit do
   end
 
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }
-  let(:issue) { {label: "A test label.", hint: "A test hint."} }
+  let(:issue) { {hint: "A test hint."} }
 
   let :cop_instance do
     instance_spy Git::Cop::Styles::CommitAuthorEmail,
@@ -33,7 +33,7 @@ RSpec.describe Git::Cop::Reporters::Commit do
       it "answers commit (SHA, author name, relative time, subject) and single cop report" do
         expect(subject.to_s).to eq(
           "abcdef (Test Tester, 1 day ago): A test subject.\n" \
-          "\e[33m  Commit Author Email Warning: A test label. A test hint.\n\e[0m" \
+          "\e[33m  Commit Author Email Warning: A test hint.\n\e[0m" \
           "\n"
         )
       end
@@ -46,8 +46,8 @@ RSpec.describe Git::Cop::Reporters::Commit do
       it "answers commit (SHA, author name, relative time, subject) and multiple cop report" do
         expect(subject.to_s).to eq(
           "abcdef (Test Tester, 1 day ago): A test subject.\n" \
-          "\e[33m  Commit Author Email Warning: A test label. A test hint.\n\e[0m" \
-          "\e[33m  Commit Author Email Warning: A test label. A test hint.\n\e[0m" \
+          "\e[33m  Commit Author Email Warning: A test hint.\n\e[0m" \
+          "\e[33m  Commit Author Email Warning: A test hint.\n\e[0m" \
           "\n"
         )
       end

@@ -78,10 +78,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
         ]
       end
 
-      it "answers issue label" do
-        expect(issue[:label]).to eq("Invalid line length.")
-      end
-
       it "answers issue hint" do
         expect(issue[:hint]).to eq("Use #{length} characters or less per line.")
       end

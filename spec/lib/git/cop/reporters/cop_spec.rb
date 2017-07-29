@@ -17,51 +17,33 @@ RSpec.describe Git::Cop::Reporters::Cop do
   describe "#to_s" do
     context "with warning" do
       let(:severity) { :warn }
+      let(:issue) { {hint: "A test hint."} }
 
-      let :issue do
-        {
-          label: "A test label.",
-          hint: "A test hint."
-        }
-      end
-
-      it "answers cop label, issue label, and issue hint" do
+      it "answers cop label and issue hint" do
         expect(subject.to_s).to eq(
-          "\e[33m  Commit Author Email Warning: A test label. A test hint.\n\e[0m"
+          "\e[33m  Commit Author Email Warning: A test hint.\n\e[0m"
         )
       end
     end
 
     context "with error" do
       let(:severity) { :error }
+      let(:issue) { {hint: "A test hint."} }
 
-      let :issue do
-        {
-          label: "A test label.",
-          hint: "A test hint."
-        }
-      end
-
-      it "answers cop label, issue label, and issue hint" do
+      it "answers cop label and issue hint" do
         expect(subject.to_s).to eq(
-          "\e[31m  Commit Author Email Error: A test label. A test hint.\n\e[0m"
+          "\e[31m  Commit Author Email Error: A test hint.\n\e[0m"
         )
       end
     end
 
     context "with unknown severity" do
       let(:severity) { :bogus }
+      let(:issue) { {hint: "A test hint."} }
 
-      let :issue do
-        {
-          label: "A test label.",
-          hint: "A test hint."
-        }
-      end
-
-      it "answers cop label, issue label, and issue hint" do
+      it "answers cop label and issue hint" do
         expect(subject.to_s).to eq(
-          "\e[37m  Commit Author Email: A test label. A test hint.\n\e[0m"
+          "\e[37m  Commit Author Email: A test hint.\n\e[0m"
         )
       end
     end
@@ -69,7 +51,6 @@ RSpec.describe Git::Cop::Reporters::Cop do
     context "with issue lines" do
       let :issue do
         {
-          label: "A test label.",
           hint: "A test hint.",
           lines: [
             {number: 1, content: "Curabitur eleifend wisi iaculis ipsum."},
@@ -80,7 +61,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
 
       it "answers cop label, issue label, issue hint, and issue lines" do
         expect(subject.to_s).to eq(
-          "\e[31m  Commit Author Email Error: A test label. A test hint.\n" \
+          "\e[31m  Commit Author Email Error: A test hint.\n" \
           "    Line 1: \"Curabitur eleifend wisi iaculis ipsum.\"\n" \
           "    Line 3: \"Ipsum eleifend wisi iaculis curabitur.\"\n\e[0m" \
         )

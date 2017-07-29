@@ -39,12 +39,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingSpace do
   describe "#issue" do
     let(:issue) { subject.issue }
 
-    it "answers issue label" do
-      expect(issue[:label]).to eq("Deprecated (will be removed in next major release).")
-    end
-
     it "answers issue hint" do
-      expect(issue[:hint]).to eq("Use Commit Body Leading Line instead.")
+      expect(issue[:hint]).to eq("Deprecated. Use Commit Body Leading Line instead.")
     end
   end
 end

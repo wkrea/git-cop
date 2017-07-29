@@ -21,11 +21,7 @@ module Git
 
         def issue
           return {} if valid?
-
-          {
-            label: "Invalid line.",
-            hint: "Use one blank line between subject and body."
-          }
+          {hint: "Use one blank line between subject and body."}
         end
       end
     end
