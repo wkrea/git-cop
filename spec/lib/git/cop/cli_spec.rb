@@ -136,9 +136,11 @@ RSpec.describe Git::Cop::CLI do
       allow(Git::Cop::Reporters::Branch).to receive(:new).and_raise(
         Git::Cop::Errors::Base, "Test."
       )
-      result = -> { cli }
 
-      expect(&result).to raise_error(SystemExit, /Git\sCop\:\sTest\./)
+      Dir.chdir git_repo_dir do
+        result = -> { cli }
+        expect(&result).to raise_error(SystemExit, /Git\sCop\:\sTest\./)
+      end
     end
   end
 
