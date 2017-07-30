@@ -5,8 +5,6 @@ module Git
     module Reporters
       module Lines
         class Paragraph
-          INDENT = "    "
-
           def initialize data = {}
             @data = data
           end
@@ -20,7 +18,7 @@ module Git
           attr_reader :data
 
           def label
-            "#{INDENT}Line #{number}: "
+            "#{Line::DEFAULT_INDENT}Line #{number}: "
           end
 
           def paragraph

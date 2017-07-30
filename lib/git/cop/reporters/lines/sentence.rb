@@ -5,14 +5,12 @@ module Git
     module Reporters
       module Lines
         class Sentence
-          INDENT = "    "
-
           def initialize data = {}
             @data = data
           end
 
           def to_s
-            %(#{INDENT}Line #{number}: "#{content}"\n)
+            %(#{Line::DEFAULT_INDENT}Line #{number}: "#{content}"\n)
           end
 
           private

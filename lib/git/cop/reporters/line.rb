@@ -5,6 +5,8 @@ module Git
     module Reporters
       # Reports issues related to an invalid line within the commit body.
       class Line
+        DEFAULT_INDENT = "    "
+
         def initialize data = {}
           @data = data
         end
