@@ -5,24 +5,24 @@ module Git
     module Reporters
       # Reports issues related to an invalid line within the commit body.
       class Line
-        def initialize line = {}
-          @line = line
+        def initialize data = {}
+          @data = data
         end
 
         def to_s
-          %(    Line #{number}: "#{content}"\n)
+          if content.include?("\n")
+            Lines::Paragraph.new(data).to_s
+          else
+            Lines::Sentence.new(data).to_s
+          end
         end
 
         private
 
-        attr_reader :line
-
-        def number
-          line.fetch :number
-        end
+        attr_reader :data
 
         def content
-          line.fetch :content
+          data.fetch :content
         end
       end
     end

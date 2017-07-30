@@ -3,12 +3,27 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Line do
-  let(:line) { {number: 1, content: "Example content."} }
   subject { described_class.new line }
 
   describe "#to_s" do
-    it "answers line number and content" do
-      expect(subject.to_s).to eq(%(    Line 1: "Example content."\n))
+    context "with sentence" do
+      let(:line) { {number: 1, content: "Example."} }
+
+      it "answers non-indented content" do
+        expect(subject.to_s).to eq(%(    Line 1: "Example."\n))
+      end
+    end
+
+    context "with paragraph" do
+      let(:line) { {number: 1, content: "One.\nTwo.\nThree."} }
+
+      it "answers indented multi-line content" do
+        expect(subject.to_s).to eq(
+          %(    Line 1: "One.\n) +
+          %(             Two.\n) +
+          %(             Three."\n)
+        )
+      end
     end
   end
 end
