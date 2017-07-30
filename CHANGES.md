@@ -1,3 +1,16 @@
+# v1.5.0 (2017-07-30)
+
+- Fixed CLI spec when running on a feature branch.
+- Fixed issue line numbering.
+- Fixed line reporting of multi-line paragraphs.
+- Added issue line builder.
+- Added paragraph reporter.
+- Added sentence reporter.
+- Updated cop reporter to end label with period.
+- Updated hint wording.
+- Removed issue label.
+- Refactored line reporter default indent.
+
 # v1.4.1 (2017-07-26)
 
 - Fixed Travis CI pull request build hook.

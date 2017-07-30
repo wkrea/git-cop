@@ -77,7 +77,7 @@ history.
 
 ## Screencasts
 
-[![asciicast](https://asciinema.org/a/129174.png)](https://asciinema.org/a/129174)
+[![asciicast](https://asciinema.org/a/131420.png)](https://asciinema.org/a/131420)
 
 ## Requirements
 
@@ -264,20 +264,20 @@ Here is an example workflow, using gem defaults with issues detected:
     # Output:
     Running Git Cop...
 
-    75387cc9347e43b9449f48f66de8232b69ff485d (Brooke Kuhlmann, 0 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
-      Commit Body Presence Warning: Invalid body. Use a minimum of 1 line (not empty).
-      Commit Subject Length Error: Invalid length. Use 72 characters or less.
-      Commit Subject Prefix Error: Invalid prefix. Use: /Fixed/, /Added/, /Updated/, /Removed/, /Refactored/.
-      Commit Subject Suffix Error: Invalid suffix. Use: /\./.
+    83dbad531d84a184e55cbb38c5b2a4e5fa5bcaee (Brooke Kuhlmann, 0 seconds ago): This is a bogus commit message that is also terribly long and will word wrap
+      Commit Body Presence Warning. Use minimum of 1 line (non-empty).
+      Commit Subject Length Error. Use 72 characters or less.
+      Commit Subject Prefix Error. Use: /Fixed/, /Added/, /Updated/, /Removed/, /Refactored/.
+      Commit Subject Suffix Error. Use: /\./.
 
     1 commit inspected. 4 issues detected (1 warning, 3 errors).
 
 ### Git Hooks
 
-This gem supports being used as a
-[Git Hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks).
+This gem supports
+[Git Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks).
 
-It is *highly recommended* that you manage Git Hooks as global scripts as it'll reduce project
+It is *highly recommended* you manage Git Hooks as global scripts as it'll reduce project
 maintenance costs for you. To configure global Git Hooks, add the following to your `~/.gitconfig`:
 
     [core]
