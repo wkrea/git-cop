@@ -133,11 +133,11 @@ The default configuration is:
       :whitelist: "\\-"
     :commit_body_issue_tracker_link:
       :enabled: true,
-      :severity: :error,
+      :severity: :error
       :blacklist:
-        - "(f|F)ix(es|ed)?\\s\\#\\d+",
-        - "(c|C)lose(s|d)?\\s\\#\\d+",
-        - "(r|R)esolve(s|d)?\\s\\#\\d+",
+        - "(f|F)ix(es|ed)?\\s\\#\\d+"
+        - "(c|C)lose(s|d)?\\s\\#\\d+"
+        - "(r|R)esolve(s|d)?\\s\\#\\d+"
         - "github\\.com\\/.+\\/issues\\/\\d+"
     :commit_body_leading_line:
       :enabled: false
