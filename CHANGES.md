@@ -1,3 +1,9 @@
+# v1.6.0 (2017-08-20)
+
+- Fixed README default configuration by removing trailing commas.
+- Added dynamic formatting of RSpec output.
+- Updated to Runcom 1.3.0.
+
 # v1.5.0 (2017-07-30)
 
 - Fixed CLI spec when running on a feature branch.
