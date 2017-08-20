@@ -23,8 +23,11 @@ module Git
 
       def initialize args = [], options = {}, config = {}
         super args, options, config
-        @runner = Runner.new configuration: self.class.configuration.to_h
+        @configuration = self.class.configuration
+        @runner = Runner.new configuration: @configuration.to_h
         @colorizer = Pastel.new
+      rescue Runcom::Errors::Base => error
+        abort error.message
       end
 
       desc "-c, [--config]", "Manage gem configuration."
@@ -38,7 +41,7 @@ module Git
                     desc: "Print gem configuration.",
                     type: :boolean, default: false
       def config
-        path = self.class.configuration.path
+        path = configuration.path
 
         if options.edit? then `#{ENV["EDITOR"]} #{path}`
         elsif options.info?
@@ -91,7 +94,7 @@ module Git
 
       private
 
-      attr_reader :runner, :colorizer
+      attr_reader :configuration, :runner, :colorizer
 
       def load_collector shas
         commits = shas.map { |sha| Commits::Saved.new sha: sha }
