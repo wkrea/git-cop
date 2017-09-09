@@ -1,3 +1,8 @@
+# v1.6.1 (2017-09-09)
+
+- Fixed commit subject length calculation with fixup/squash prefixes.
+- Removed Pry State gem.
+
 # v1.6.0 (2017-08-20)
 
 - Fixed README default configuration by removing trailing commas.
