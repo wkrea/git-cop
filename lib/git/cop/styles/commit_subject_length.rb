@@ -13,7 +13,7 @@ module Git
         end
 
         def valid?
-          commit.subject.size <= length
+          commit.subject.sub(/(fixup\!|squash\!)\s{1}/, "").size <= length
         end
 
         def issue

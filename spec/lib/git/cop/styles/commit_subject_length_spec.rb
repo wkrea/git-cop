@@ -42,6 +42,22 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
       end
     end
 
+    context "with fixup prefix and max subject length" do
+      let(:content) { "fixup! Curabitur eleifend wisix." }
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
+    context "with squash prefix and max subject length" do
+      let(:content) { "squash! Curabitur eleifend wisix." }
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
     context "with invalid length" do
       let(:length) { 10 }
 

@@ -610,6 +610,8 @@ lenient than the [50/72 rule](http://tbaggery.com/2008/04/19/a-note-about-git-co
 as it gives one the ability to formulate a more descriptive subject line without being too wordy or
 suffer being word wrapped.
 
+Automatically ignores *fixup!* or *squash!* commit prefixes when calculating subject length.
+
 ### Commit Subject Prefix
 
 | Enabled | Severity |        Defaults        |
@@ -631,8 +633,8 @@ added benefit of categorizing the commits for building release notes, change log
 handy when coupled with another tool, [Milestoner](https://github.com/bkuhlmann/milestoner), for
 producing consistent project milestones and Git tag histories.
 
-Automatically ignores detection of *fixup!* and *squash!* commit prefixes when used as a Git Hook in
-order to not disturb interactive rebase workflows.
+Automatically ignores *fixup!* or *squash!* commit prefixes when used as a Git Hook in order to not
+disturb interactive rebase workflows.
 
 ### Commit Subject Suffix
 
