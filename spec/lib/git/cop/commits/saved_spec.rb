@@ -385,7 +385,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
   describe "#respond_to?" do
     it "answers true for data methods" do
-      described_class::FORMATS.keys.each do |key|
+      described_class::FORMATS.each_key do |key|
         expect(subject.respond_to?(key)).to eq(true)
       end
     end
