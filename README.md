@@ -284,7 +284,7 @@ maintenance costs for you. To configure global Git Hooks, add the following to y
       hooksPath = ~/.git_template/hooks
 
 Then you can customize Git Hooks for all of your projects.
-[Check out these examples](https://github.com/bkuhlmann/dotfiles/tree/master/home_files/.git_template/hooks).
+[Check out these examples](https://github.com/bkuhlmann/dotfiles/tree/master/home_files/.config/git/hooks).
 
 If using a global configuration is not desired, you can add Git Hooks at a per project level by
 editing any of the scripts within the `.git/hooks` directory of the repository.
