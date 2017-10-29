@@ -81,7 +81,7 @@ history.
 
 ## Requirements
 
-0. [Ruby 2.4.1](https://www.ruby-lang.org)
+0. [Ruby 2.4.0](https://www.ruby-lang.org) (or higher)
 
 ## Setup
 

@@ -1,3 +1,10 @@
+# v1.6.2 (2017-10-29)
+
+- Added Bundler Audit gem.
+- Updated to Rubocop 0.50.0.
+- Updated to Rubocop 0.51.0.
+- Updated to Ruby 2.4.2.
+
 # v1.6.1 (2017-09-09)
 
 - Fixed commit subject length calculation with fixup/squash prefixes.
