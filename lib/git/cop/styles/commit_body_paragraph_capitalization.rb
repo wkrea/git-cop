@@ -11,6 +11,10 @@ module Git
           }
         end
 
+        def self.invalid? line
+          line.match?(/\A[[:lower:]].+\Z/m)
+        end
+
         def valid?
           lowercased_lines.empty?
         end
@@ -26,18 +30,15 @@ module Git
 
         private
 
-        # :reek:UtilityFunction
-        def invalid_line? line
-          line.match?(/\A[[:lower:]].+\Z/m)
-        end
-
         def lowercased_lines
-          commit.body_paragraphs.select { |line| invalid_line? line }
+          commit.body_paragraphs.select { |line| self.class.invalid? line }
         end
 
         def affected_lines
+          klass = self.class
+
           commit.body_paragraphs.each.with_object([]).with_index do |(line, lines), index|
-            lines << self.class.build_issue_line(index, line) if invalid_line?(line)
+            lines << klass.build_issue_line(index, line) if klass.invalid?(line)
           end
         end
       end

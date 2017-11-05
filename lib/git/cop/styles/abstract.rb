@@ -80,9 +80,8 @@ module Git
 
         attr_reader :settings, :graylist
 
-        # :reek:UtilityFunction
         def load_graylist
-          Kit::Graylist.new
+          Kit::Graylist.new settings[:graylist]
         end
       end
     end
