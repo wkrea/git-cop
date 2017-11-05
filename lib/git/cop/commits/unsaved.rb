@@ -61,9 +61,8 @@ module Git
           lines.map(&:chomp).reject { |line| line.start_with?("#") }
         end
 
-        # :reek:FeatureEnvy
         def == other
-          other.is_a?(Unsaved) && raw_body == other.raw_body
+          other.is_a?(self.class) && raw_body == other.raw_body
         end
         alias eql? ==
 

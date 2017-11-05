@@ -29,9 +29,8 @@ module Git
           @data = data
         end
 
-        # :reek:FeatureEnvy
         def == other
-          other.is_a?(Saved) && sha == other.sha
+          other.is_a?(self.class) && sha == other.sha
         end
         alias eql? ==
 
