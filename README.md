@@ -160,10 +160,10 @@ The default configuration is:
         - basically
         - simply
         - of course
-        - just
+        - "\\bjust\\b"
         - everyone knows
         - however
-        - easy
+        - "\\beasy\\b"
     :commit_body_presence:
       :enabled: false
       :severity: :warn

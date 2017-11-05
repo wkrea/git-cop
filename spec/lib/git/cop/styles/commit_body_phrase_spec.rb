@@ -50,6 +50,24 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
+    context "with blacklisted boundary word (regular expression)" do
+      let(:blacklist) { ["\\bjust\\b"] }
+      let(:body_lines) { ["Just for test purposes."] }
+
+      it "answers false" do
+        expect(subject.valid?).to eq(false)
+      end
+    end
+
+    context "with blacklisted, embedded boundary word (regular expression)" do
+      let(:blacklist) { ["\\bjust\\b"] }
+      let(:body_lines) { ["Adjusted for testing purposes."] }
+
+      it "answers true" do
+        expect(subject.valid?).to eq(true)
+      end
+    end
+
     context "with blacklisted phrase (regular expression)" do
       let(:blacklist) { ["(o|O)f (c|C)ourse"] }
       let(:body_lines) { ["This will fail, of course."] }

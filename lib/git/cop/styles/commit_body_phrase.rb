@@ -14,10 +14,10 @@ module Git
               "basically",
               "simply",
               "of course",
-              "just",
+              /\bjust\b/,
               "everyone knows",
               "however",
-              "easy"
+              /\beasy\b/
             ]
           }
         end
