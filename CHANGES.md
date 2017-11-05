@@ -1,3 +1,13 @@
+# v1.7.0 (2017-11-05)
+
+- Fixed 'Git Hooks' URL.
+- Fixed Reek issues.
+- Fixed false positive when checking unsaved, verbose commits.
+- Fixed false positives with commit body phrases.
+- Updated Fury URL to use HTTPS.
+- Updated commit body phrases to be alpha-sorted.
+- Refactored commit object equality methods.
+
 # v1.6.2 (2017-10-29)
 
 - Added Bundler Audit gem.
