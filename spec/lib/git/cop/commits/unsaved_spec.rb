@@ -111,6 +111,19 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
       allow(subject).to receive(:raw_body).and_return("")
       expect(subject.body).to eq("")
     end
+
+    context "with scissor content" do
+      let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
+
+      it "answers body, ignoring scissor content" do
+        expect(subject.body).to eq(
+          "\n" \
+          "A fixture for commits made via `git commit --verbose` which include\n" \
+          "scissor-related content.\n\n" \
+          "# A test comment.\n"
+        )
+      end
+    end
   end
 
   describe "#body_lines" do

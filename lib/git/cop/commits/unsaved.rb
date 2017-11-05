@@ -11,6 +11,8 @@ module Git
       class Unsaved
         using Refinements::Strings
 
+        SCISSOR_PATTERN = /\#\s\-+\s\>8\s\-+\n.+/m
+
         attr_reader :raw_body
 
         def initialize path:, shell: Open3
@@ -46,7 +48,7 @@ module Git
 
         # :reek:FeatureEnvy
         def body
-          lines = raw_body.split("\n").drop(1)
+          lines = raw_body.sub(SCISSOR_PATTERN, "").split("\n").drop(1)
           computed_body = lines.join("\n")
           lines.empty? ? computed_body : "#{computed_body}\n"
         end
