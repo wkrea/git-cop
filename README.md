@@ -156,14 +156,15 @@ The default configuration is:
       :enabled: true
       :severity: :error
       :blacklist:
-        - obviously
+      basically
         - basically
-        - simply
-        - of course
-        - "\\bjust\\b"
+        - "\\beasy\\b"
         - everyone knows
         - however
-        - "\\beasy\\b"
+        - "\\bjust\\b"
+        - obviously
+        - of course
+        - simply
     :commit_body_presence:
       :enabled: false
       :severity: :warn

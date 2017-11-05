@@ -10,14 +10,14 @@ module Git
             enabled: true,
             severity: :error,
             blacklist: [
-              "obviously",
               "basically",
-              "simply",
-              "of course",
-              /\bjust\b/,
+              /\beasy\b/,
               "everyone knows",
               "however",
-              /\beasy\b/
+              /\bjust\b/,
+              "obviously",
+              "of course",
+              "simply"
             ]
           }
         end
