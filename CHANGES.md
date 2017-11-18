@@ -1,3 +1,8 @@
+# v1.7.1 (2017-11-18)
+
+- Fixed issue with mismatched gem certificate public key.
+- Updated to Rake 12.3.0.
+
 # v1.7.0 (2017-11-05)
 
 - Fixed 'Git Hooks' URL.
