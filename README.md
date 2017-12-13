@@ -156,7 +156,6 @@ The default configuration is:
       :enabled: true
       :severity: :error
       :blacklist:
-      basically
         - basically
         - "\\beasy\\b"
         - everyone knows
