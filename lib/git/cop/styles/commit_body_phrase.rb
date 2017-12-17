@@ -21,6 +21,7 @@ module Git
             ]
           }
         end
+        # rubocop:enable Metrics/MethodLength
 
         def valid?
           commit.body_lines.all? { |line| valid_line? line }

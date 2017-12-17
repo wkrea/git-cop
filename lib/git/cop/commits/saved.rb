@@ -9,6 +9,7 @@ module Git
       class Saved
         using Refinements::Strings
 
+        # rubocop:disable Style/FormatStringToken
         FORMATS = {
           sha: "%H",
           author_name: "%an",
@@ -18,6 +19,7 @@ module Git
           body: "%b",
           raw_body: "%B"
         }.freeze
+        # rubocop:enable Style/FormatStringToken
 
         def self.pattern
           FORMATS.reduce("") { |pattern, (key, value)| pattern + "<#{key}>#{value}</#{key}>%n" }
