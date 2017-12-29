@@ -15,7 +15,6 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
   end
 
   describe ".pattern" do
-    # rubocop:disable Style/FormatStringToken
     it "answers pretty format pattern for all known formats" do
       expect(described_class.pattern).to eq(
         "<sha>%H</sha>%n" \
@@ -27,7 +26,6 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         "<raw_body>%B</raw_body>%n"
       )
     end
-    # rubocop:enable Style/FormatStringToken
   end
 
   describe "#initialize" do
