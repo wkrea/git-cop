@@ -40,7 +40,6 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitBodyIssueTrackerLink,
         Git::Cop::Styles::CommitBodyBullet,
         Git::Cop::Styles::CommitBodyLeadingLine,
-        Git::Cop::Styles::CommitBodyLeadingSpace,
         Git::Cop::Styles::CommitBodyLineLength,
         Git::Cop::Styles::CommitBodyParagraphCapitalization,
         Git::Cop::Styles::CommitBodyPhrase,

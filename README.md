@@ -40,7 +40,6 @@ history.
     - [Commit Body Bullet Capitalization](#commit-body-bullet-capitalization)
     - [Commit Body Issue Tracker Link](#commit-body-issue-tracker-link)
     - [Commit Body Leading Line](#commit-body-leading-line)
-    - [Commit Body Leading Space](#commit-body-leading-space)
     - [Commit Body Line Length](#commit-body-line-length)
     - [Commit Body Paragraph Capitalization](#commit-body-paragraph-capitalization)
     - [Commit Body Phrase](#commit-body-phrase)
@@ -133,9 +132,6 @@ The default configuration is:
     :commit_body_leading_line:
       :enabled: false
       :severity: :warn
-    :commit_body_leading_space:
-      :enabled: true
-      :severity: :error
     :commit_body_line_length:
       :enabled: true
       :severity: :error
@@ -500,18 +496,6 @@ subject line and start of the body as one run-on paragraph. Example:
     quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu_libero sit amet quam
     egestas semper. Aenean ultricies mi vitae est. Mauris placerat's eleifend leo. Quisque et sapien
     ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, orn si amt wit.
-
-### Commit Body Leading Space
-
-| Enabled | Severity | Defaults |
-|---------|----------|----------|
-| false   | warn     | none     |
-
-This cop has been deprecated and is a duplicate of the *Commit Body Leading Line* cop mentioned
-above. If enabled, this cop will print deprecation warnings and recommend using the *Commit Body
-Leading Line* cop instead.
-
-This cop will be permantently removed in the 2.0.0 version release.
 
 ### Commit Body Line Length
 
