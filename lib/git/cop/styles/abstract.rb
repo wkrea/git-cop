@@ -43,7 +43,7 @@ module Git
         def initialize commit:, settings: self.class.defaults
           @commit = commit
           @settings = settings
-          @graylist = load_graylist
+          @filter_list = load_filter_list
         end
 
         def enabled?
@@ -78,10 +78,10 @@ module Git
 
         protected
 
-        attr_reader :settings, :graylist
+        attr_reader :settings, :filter_list
 
-        def load_graylist
-          Kit::Graylist.new settings[:graylist]
+        def load_filter_list
+          Kit::FilterList.new settings[:list]
         end
       end
     end

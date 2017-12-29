@@ -31,22 +31,22 @@ module Git
           return {} if valid?
 
           {
-            hint: %(Avoid: #{graylist.to_hint}.),
+            hint: %(Avoid: #{filter_list.to_hint}.),
             lines: affected_lines
           }
         end
 
         protected
 
-        def load_graylist
-          Kit::Graylist.new settings.fetch(:blacklist)
+        def load_filter_list
+          Kit::FilterList.new settings.fetch(:blacklist)
         end
 
         private
 
         def valid_line? line
           !line.downcase.match? Regexp.new(
-            Regexp.union(graylist.to_regexp).source,
+            Regexp.union(filter_list.to_regexp).source,
             Regexp::IGNORECASE
           )
         end

@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-RSpec.describe Git::Cop::Kit::Graylist do
+RSpec.describe Git::Cop::Kit::FilterList do
   subject { described_class.new list }
 
   describe "#to_hint" do
     context "with list" do
       let(:list) { ["one", "\\.", "\\Atest.+"] }
 
-      it "answers graylist as string" do
+      it "answers list as string" do
         expect(subject.to_hint).to eq(%(/one/, /\\./, /\\Atest.+/))
       end
     end
@@ -17,7 +17,7 @@ RSpec.describe Git::Cop::Kit::Graylist do
     context "without list" do
       let(:list) { [] }
 
-      it "answers graylist as empty string" do
+      it "answers list as empty string" do
         expect(subject.to_hint).to eq("")
       end
     end

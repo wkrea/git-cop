@@ -3,8 +3,8 @@
 module Git
   module Cop
     module Kit
-      class Graylist
-        # Represents a white or black regular expression list which may be used as a cop setting.
+      class FilterList
+        # Represents an include/exclude regular expression list which may be used as a cop setting.
         def initialize list = []
           @list = Array list
         end

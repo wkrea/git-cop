@@ -27,14 +27,14 @@ module Git
 
         protected
 
-        def load_graylist
-          Kit::Graylist.new settings.fetch :whitelist
+        def load_filter_list
+          Kit::FilterList.new settings.fetch :whitelist
         end
 
         private
 
         def invalid_line? line
-          line.match?(/\A\s*#{Regexp.union graylist.to_regexp}\s[[:lower:]]+/)
+          line.match?(/\A\s*#{Regexp.union filter_list.to_regexp}\s[[:lower:]]+/)
         end
 
         def lowercased_bullets

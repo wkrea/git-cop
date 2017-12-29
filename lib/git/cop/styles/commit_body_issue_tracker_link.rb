@@ -25,21 +25,21 @@ module Git
           return {} if valid?
 
           {
-            hint: "Explain issue instead of using link. Avoid: #{graylist.to_hint}.",
+            hint: "Explain issue instead of using link. Avoid: #{filter_list.to_hint}.",
             lines: affected_lines
           }
         end
 
         protected
 
-        def load_graylist
-          Kit::Graylist.new settings.fetch :blacklist
+        def load_filter_list
+          Kit::FilterList.new settings.fetch :blacklist
         end
 
         private
 
         def invalid_line? line
-          line.match?(/.*#{Regexp.union graylist.to_regexp}.*/)
+          line.match?(/.*#{Regexp.union filter_list.to_regexp}.*/)
         end
 
         def affected_lines

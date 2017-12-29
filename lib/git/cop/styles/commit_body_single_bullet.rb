@@ -27,14 +27,14 @@ module Git
 
         protected
 
-        def load_graylist
-          Kit::Graylist.new settings.fetch :whitelist
+        def load_filter_list
+          Kit::FilterList.new settings.fetch :whitelist
         end
 
         private
 
         def bullet? line
-          line.match?(/\A#{Regexp.union graylist.to_regexp}\s+/)
+          line.match?(/\A#{Regexp.union filter_list.to_regexp}\s+/)
         end
 
         def bullet_lines

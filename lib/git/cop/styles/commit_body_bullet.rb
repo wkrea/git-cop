@@ -20,15 +20,15 @@ module Git
           return {} if valid?
 
           {
-            hint: %(Avoid: #{graylist.to_hint}.),
+            hint: %(Avoid: #{filter_list.to_hint}.),
             lines: affected_lines
           }
         end
 
         protected
 
-        def load_graylist
-          Kit::Graylist.new settings.fetch :blacklist
+        def load_filter_list
+          Kit::FilterList.new settings.fetch :blacklist
         end
 
         private
@@ -36,7 +36,7 @@ module Git
         # :reek:FeatureEnvy
         def valid_line? line
           return true if line.strip.empty?
-          line.match?(/\A(?!\s*#{Regexp.union graylist.to_regexp}\s+).+\Z/)
+          line.match?(/\A(?!\s*#{Regexp.union filter_list.to_regexp}\s+).+\Z/)
         end
 
         def affected_lines

@@ -13,19 +13,19 @@ module Git
         end
 
         def valid?
-          return true if graylist.empty?
-          commit.subject.match?(/#{Regexp.union graylist.to_regexp}\Z/)
+          return true if filter_list.empty?
+          commit.subject.match?(/#{Regexp.union filter_list.to_regexp}\Z/)
         end
 
         def issue
           return {} if valid?
-          {hint: %(Use: #{graylist.to_hint}.)}
+          {hint: %(Use: #{filter_list.to_hint}.)}
         end
 
         protected
 
-        def load_graylist
-          Kit::Graylist.new settings.fetch(:whitelist)
+        def load_filter_list
+          Kit::FilterList.new settings.fetch(:whitelist)
         end
       end
     end
