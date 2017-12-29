@@ -11,7 +11,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
     object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell), subject: content
   end
 
-  let(:settings) { {enabled: true, whitelist: %w[Added Removed Fixed]} }
+  let(:settings) { {enabled: true, includes: %w[Added Removed Fixed]} }
   subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
@@ -33,8 +33,8 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       end
     end
 
-    context "with empty whitelist" do
-      let(:whitelist) { [] }
+    context "with empty include list" do
+      let(:include) { [] }
 
       it "answers true" do
         expect(subject.valid?).to eq(true)

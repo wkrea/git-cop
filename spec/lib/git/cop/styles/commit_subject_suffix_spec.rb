@@ -12,7 +12,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
   end
 
   let(:enabled) { true }
-  let(:settings) { {enabled: enabled, whitelist: ["\\.", "\\[✓\\]", "\\#skip"]} }
+  let(:settings) { {enabled: enabled, includes: ["\\.", "\\[✓\\]", "\\#skip"]} }
   subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
@@ -34,7 +34,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
       end
     end
 
-    context "with empty whitelist" do
+    context "with empty include list" do
       let(:suffixes) { [] }
 
       it "answers true" do

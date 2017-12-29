@@ -9,7 +9,7 @@ module Git
           {
             enabled: true,
             severity: :error,
-            blacklist: [
+            excludes: [
               "basically",
               /\beasy\b/,
               "everyone knows",
@@ -39,7 +39,7 @@ module Git
         protected
 
         def load_filter_list
-          Kit::FilterList.new settings.fetch(:blacklist)
+          Kit::FilterList.new settings.fetch(:excludes)
         end
 
         private

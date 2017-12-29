@@ -11,8 +11,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
     object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell), body_lines: body_lines
   end
 
-  let(:blacklist) { ["obviously", "of course"] }
-  let(:settings) { {enabled: true, blacklist: blacklist} }
+  let(:excludes) { ["obviously", "of course"] }
+  let(:settings) { {enabled: true, excludes: excludes} }
   subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
@@ -32,8 +32,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       expect(subject.valid?).to eq(true)
     end
 
-    context "with blacklisted word (mixed case)" do
-      let(:blacklist) { ["BasicaLLy"] }
+    context "with excluded word (mixed case)" do
+      let(:excludes) { ["BasicaLLy"] }
       let(:body_lines) { ["This will fail, basically."] }
 
       it "answers false" do
@@ -41,8 +41,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted phrase (mixed case)" do
-      let(:blacklist) { ["OF CoursE"] }
+    context "with excluded phrase (mixed case)" do
+      let(:excludes) { ["OF CoursE"] }
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do
@@ -50,8 +50,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted boundary word (regular expression)" do
-      let(:blacklist) { ["\\bjust\\b"] }
+    context "with excluded boundary word (regular expression)" do
+      let(:excludes) { ["\\bjust\\b"] }
       let(:body_lines) { ["Just for test purposes."] }
 
       it "answers false" do
@@ -59,8 +59,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted, embedded boundary word (regular expression)" do
-      let(:blacklist) { ["\\bjust\\b"] }
+    context "with excluded, embedded boundary word (regular expression)" do
+      let(:excludes) { ["\\bjust\\b"] }
       let(:body_lines) { ["Adjusted for testing purposes."] }
 
       it "answers true" do
@@ -68,8 +68,8 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted phrase (regular expression)" do
-      let(:blacklist) { ["(o|O)f (c|C)ourse"] }
+    context "with excluded phrase (regular expression)" do
+      let(:excludes) { ["(o|O)f (c|C)ourse"] }
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do
@@ -77,7 +77,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted word in body" do
+    context "with excluded word in body" do
       let(:body_lines) { ["This will fail, obviously."] }
 
       it "answers false" do
@@ -85,7 +85,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted word in body (mixed case)" do
+    context "with excluded word in body (mixed case)" do
       let(:body_lines) { ["This will fail, Obviously."] }
 
       it "answers false" do
@@ -93,7 +93,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted phrase in body" do
+    context "with excluded phrase in body" do
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do
@@ -101,7 +101,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       end
     end
 
-    context "with blacklisted phrase in body (mixed case)" do
+    context "with excluded phrase in body (mixed case)" do
       let(:body_lines) { ["This will fail, Of Course."] }
 
       it "answers false" do

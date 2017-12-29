@@ -114,17 +114,17 @@ The default configuration is:
     :commit_body_bullet:
       :enabled: true
       :severity: :error
-      :blacklist:
+      :excludes:
         - "\\*"
         - "•"
     :commit_body_bullet_capitalization:
       :enabled: true
       :severity: :error
-      :whitelist: "\\-"
+      :includes: "\\-"
     :commit_body_issue_tracker_link:
       :enabled: true,
       :severity: :error
-      :blacklist:
+      :excludes:
         - "(f|F)ix(es|ed)?\\s\\#\\d+"
         - "(c|C)lose(s|d)?\\s\\#\\d+"
         - "(r|R)esolve(s|d)?\\s\\#\\d+"
@@ -142,7 +142,7 @@ The default configuration is:
     :commit_body_phrase:
       :enabled: true
       :severity: :error
-      :blacklist:
+      :excludes:
         - basically
         - "\\beasy\\b"
         - everyone knows
@@ -158,7 +158,7 @@ The default configuration is:
     :commit_body_single_bullet:
       :enabled: true
       :severity: :error
-      :whitelist: "\\-"
+      :includes: "\\-"
     :commit_subject_length:
       :enabled: true
       :severity: :error
@@ -166,7 +166,7 @@ The default configuration is:
     :commit_subject_prefix:
       :enabled: true
       :severity: :error
-      :whitelist:
+      :includes:
         - Fixed
         - Added
         - Updated
@@ -175,7 +175,7 @@ The default configuration is:
     :commit_subject_suffix:
       :enabled: true
       :severity: :error
-      :whitelist:
+      :includes:
         - "\\."
 
 Feel free to take this default configuration, modify, and save as your own custom
@@ -198,7 +198,7 @@ cop, you can set it to `warn` instead. Here are the accepted values and what eac
 
 #### Regular Expressions
 
-Some cops support *whitelist* or *blacklist* options. These lists can consist of strings, regular
+Some cops support *include* or *exclude* lists. These lists can consist of strings, regular
 expressions, or a combination thereof. Regardless of your choice, all lists are automatically
 converted to regular expression for use by the cops. This means a string like `"example"` becomes
 `/example/` and a regular expression of `"\\AExample.+"` becomes `/\AExample.+/`.
@@ -410,9 +410,9 @@ Ensures author name consists of, at least, a first and last name. Example:
 
 ### Commit Body Bullet
 
-| Enabled | Severity |          Defaults         |
-|---------|----------|---------------------------|
-| true    | error    | blacklist: `["\\*", "•"]` |
+| Enabled | Severity |          Defaults        |
+|---------|----------|--------------------------|
+| true    | error    | excludes: `["\\*", "•"]` |
 
 Ensures commit message bodies use a standard Markdown syntax for bullet points. Markdown supports
 the following syntax for bullets:
@@ -426,9 +426,9 @@ bullet points and *emphasis* are now, distinctly, unique.
 
 ### Commit Body Bullet Capitalization
 
-| Enabled | Severity |       Defaults       |
-|---------|----------|----------------------|
-| true    | error    | whitelist: `["\\-"]` |
+| Enabled | Severity |       Defaults      |
+|---------|----------|---------------------|
+| true    | error    | includes: `["\\-"]` |
 
 Ensures commit body bullet lines are capitalized. Example:
 
@@ -442,11 +442,11 @@ Ensures commit body bullet lines are capitalized. Example:
 
 ### Commit Body Issue Tracker Link
 
-| Enabled | Severity |                       Defaults                       |
-|---------|----------|------------------------------------------------------|
-| true    | error    | blacklist: (see configuration list, mentioned above) |
+| Enabled | Severity |                       Defaults                      |
+|---------|----------|-----------------------------------------------------|
+| true    | error    | excludes: (see configuration list, mentioned above) |
 
-Ensures commit body doesn't contain a link to an issue tracker. The blacklist defaults to GitHub
+Ensures commit body doesn't contain a link to an issue tracker. The exclude list defaults to GitHub
 Issue links but can be customized for any issue tracker.
 
 There are several reasons for exluding issue tracker links from commit bodies:
@@ -526,12 +526,12 @@ Ensures each paragraph of the commit body is capitalized. Example:
 
 ### Commit Body Phrase
 
-| Enabled | Severity |                       Defaults                       |
-|---------|----------|------------------------------------------------------|
-| true    | error    | blacklist: (see configuration list, mentioned above) |
+| Enabled | Severity |                       Defaults                      |
+|---------|----------|-----------------------------------------------------|
+| true    | error    | excludes: (see configuration list, mentioned above) |
 
 Ensures non-descriptive words/phrases are avoided in order to keep commit message bodies informative
-and specific. The blacklist is case insensitive. Detection of blacklisted words/phrases is case
+and specific. The exclude list is case insensitive. Detection of excluded words/phrases is case
 insensitve as well. Example:
 
     # Disallowed
@@ -558,9 +558,9 @@ Automatically ignores *fixup!* commits as they are not meant to have bodies.
 
 ### Commit Body Single Bullet
 
-| Enabled | Severity |      Defaults      |
-|---------|----------|--------------------|
-| true    | error    | whitelist: `"\\-"` |
+| Enabled | Severity |      Defaults    |
+|---------|----------|------------------|
+| true    | error    | includes: `"\\-"` |
 
 Ensures a single bullet is never used when a paragraph could be used instead. Example:
 
@@ -589,12 +589,12 @@ Automatically ignores *fixup!* or *squash!* commit prefixes when calculating sub
 
 ### Commit Subject Prefix
 
-| Enabled | Severity |        Defaults        |
-|---------|----------|------------------------|
-| true    | error    | whitelist: (see below) |
+| Enabled | Severity |        Defaults       |
+|---------|----------|-----------------------|
+| true    | error    | includes: (see below) |
 
 Ensures the commit subject uses consistent prefixes that help explain *what* is being commited. The
-whitelist *is* case sensitive. The default whitelist consists of the following prefixes:
+include list *is* case sensitive. The default include list consists of the following prefixes:
 
 - *Fixed* - Existing code that has been fixed.
 - *Removed* - Code that was once added and is now removed.
@@ -603,7 +603,7 @@ whitelist *is* case sensitive. The default whitelist consists of the following p
 - *Refactored* - Existing code that has been cleaned up and does not change functionality.
 
 In practice, using a prefix other than what has been detailed above to explain *what* is being
-committed is never needed. This whitelist is not only short and easy to remember but also has the
+committed is never needed. This include list is not only short and easy to remember but also has the
 added benefit of categorizing the commits for building release notes, change logs, etc. This becomes
 handy when coupled with another tool, [Milestoner](https://github.com/bkuhlmann/milestoner), for
 producing consistent project milestones and Git tag histories.
@@ -613,14 +613,14 @@ disturb interactive rebase workflows.
 
 ### Commit Subject Suffix
 
-| Enabled | Severity |       Defaults       |
-|---------|----------|----------------------|
-| true    | error    | whitelist: `["\\."]` |
+| Enabled | Severity |       Defaults      |
+|---------|----------|---------------------|
+| true    | error    | includes: `["\\."]` |
 
-Ensures commit subjects are suffixed consistently. The whitelist *is* case sensitive and only allows
-for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git tags,
-change logs, etc. This is handy when coupled with a tool, like
-[Milestoner](https://github.com/bkuhlmann/milestoner), which automate project milestone releases.
+Ensures commit subjects are suffixed consistently. The include list *is* case sensitive and only
+allows for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git
+tags, change logs, etc. This is handy when coupled with a tool, like
+[Milestoner](https://github.com/bkuhlmann/milestoner), which automates project milestone releases.
 
 ## Style Guide
 

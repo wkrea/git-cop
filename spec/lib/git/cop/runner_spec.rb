@@ -7,8 +7,8 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
     {
       commit_body_leading_line: {enabled: true, severity: :error},
       commit_subject_length: {enabled: true, severity: :error, length: 50},
-      commit_subject_prefix: {enabled: true, severity: :error, whitelist: %w[Fixed Added]},
-      commit_subject_suffix: {enabled: true, severity: :error, whitelist: ["."]}
+      commit_subject_prefix: {enabled: true, severity: :error, includes: %w[Fixed Added]},
+      commit_subject_suffix: {enabled: true, severity: :error, includes: ["."]}
     }
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
     end
 
     context "with disabled cop" do
-      let(:defaults) { {commit_subject_prefix: {enabled: false, whitelist: %w[Added]}} }
+      let(:defaults) { {commit_subject_prefix: {enabled: false, includes: %w[Added]}} }
 
       it "reports no issues" do
         Dir.chdir git_repo_dir do

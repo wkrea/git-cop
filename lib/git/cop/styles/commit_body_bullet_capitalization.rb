@@ -8,7 +8,7 @@ module Git
           {
             enabled: true,
             severity: :error,
-            whitelist: %w[\\-]
+            includes: %w[\\-]
           }
         end
 
@@ -28,7 +28,7 @@ module Git
         protected
 
         def load_filter_list
-          Kit::FilterList.new settings.fetch :whitelist
+          Kit::FilterList.new settings.fetch :includes
         end
 
         private

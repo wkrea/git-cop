@@ -8,7 +8,7 @@ module Git
           {
             enabled: true,
             severity: :error,
-            blacklist: [
+            excludes: [
               "(f|F)ix(es|ed)?\\s\\#\\d+",
               "(c|C)lose(s|d)?\\s\\#\\d+",
               "(r|R)esolve(s|d)?\\s\\#\\d+",
@@ -33,7 +33,7 @@ module Git
         protected
 
         def load_filter_list
-          Kit::FilterList.new settings.fetch :blacklist
+          Kit::FilterList.new settings.fetch :excludes
         end
 
         private

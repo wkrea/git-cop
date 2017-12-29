@@ -46,7 +46,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       end
     end
 
-    context "with blacklisted bullet" do
+    context "with excluded bullet" do
       let(:body_lines) { ["* Test message."] }
 
       it "answers false" do
@@ -54,7 +54,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       end
     end
 
-    context "with blacklisted bullet followed by multiple spaces" do
+    context "with excluded bullet followed by multiple spaces" do
       let(:body_lines) { ["•   Test message."] }
 
       it "answers false" do
@@ -62,7 +62,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       end
     end
 
-    context "with blacklisted, indented bullet" do
+    context "with excluded, indented bullet" do
       let(:body_lines) { ["  • Test message."] }
 
       it "answers false" do
