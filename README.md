@@ -143,14 +143,32 @@ The default configuration is:
       :enabled: true
       :severity: :error
       :excludes:
-        - basically
-        - "\\beasy\\b"
-        - everyone knows
-        - however
-        - "\\bjust\\b"
-        - obviously
-        - of course
-        - simply
+        - "absolutely",
+        - "actually",
+        - "all intents and purposes",
+        - "along the lines",
+        - "at this moment in time",
+        - "basically",
+        - "each and every one",
+        - "everyone knows",
+        - "fact of the matter",
+        - "furthermore",
+        - "however",
+        - "in due course",
+        - "in the end",
+        - "last but not least",
+        - "matter of fact",
+        - "obviously",
+        - "of course",
+        - "really",
+        - "simply",
+        - "things being equal",
+        - "would like to",
+        - "/\\beasy\\b/",
+        - "/\\bjust\\b/",
+        - "/\\bquite\\b/",
+        - "/as\\sfar\\sas\\s.+\\sconcerned/",
+        - "/of\\sthe\\s(fact|opinion)\\sthat/"
     :commit_body_presence:
       :enabled: false
       :severity: :warn

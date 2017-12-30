@@ -27,6 +27,43 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error,
+        excludes: [
+          "absolutely",
+          "actually",
+          "all intents and purposes",
+          "along the lines",
+          "at this moment in time",
+          "basically",
+          "each and every one",
+          "everyone knows",
+          "fact of the matter",
+          "furthermore",
+          "however",
+          "in due course",
+          "in the end",
+          "last but not least",
+          "matter of fact",
+          "obviously",
+          "of course",
+          "really",
+          "simply",
+          "things being equal",
+          "would like to",
+          /\beasy\b/,
+          /\bjust\b/,
+          /\bquite\b/,
+          /as\sfar\sas\s.+\sconcerned/,
+          /of\sthe\s(fact|opinion)\sthat/
+        ]
+      )
+    end
+  end
+
   describe "#valid?" do
     it "answers true when valid" do
       expect(subject.valid?).to eq(true)
@@ -106,6 +143,51 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
 
       it "answers false" do
         expect(subject.valid?).to eq(false)
+      end
+    end
+
+    context "with default exclude list" do
+      defaults = [
+        "absolutely",
+        "actually",
+        "all intents and purposes",
+        "along the lines",
+        "at this moment in time",
+        "basically",
+        "each and every one",
+        "everyone knows",
+        "fact of the matter",
+        "furthermore",
+        "however",
+        "in due course",
+        "in the end",
+        "last but not least",
+        "matter of fact",
+        "obviously",
+        "of course",
+        "really",
+        "simply",
+        "things being equal",
+        "would like to",
+        "easy",
+        "just",
+        "quite",
+        "as far as I am concerned",
+        "as far as I'm concerned",
+        "of the fact that",
+        "of the opinion that"
+      ]
+
+      defaults.each do |phrase|
+        it %(it answers false for "#{phrase}") do
+          status = double "status", success?: true
+          shell = class_spy Open3, capture2e: ["", status]
+          commit = object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell),
+                                 body_lines: [phrase]
+          subject = described_class.new commit: commit
+
+          expect(subject.valid?).to eq(false)
+        end
       end
     end
   end

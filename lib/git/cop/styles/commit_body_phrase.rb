@@ -10,14 +10,32 @@ module Git
             enabled: true,
             severity: :error,
             excludes: [
+              "absolutely",
+              "actually",
+              "all intents and purposes",
+              "along the lines",
+              "at this moment in time",
               "basically",
-              /\beasy\b/,
+              "each and every one",
               "everyone knows",
+              "fact of the matter",
+              "furthermore",
               "however",
-              /\bjust\b/,
+              "in due course",
+              "in the end",
+              "last but not least",
+              "matter of fact",
               "obviously",
               "of course",
-              "simply"
+              "really",
+              "simply",
+              "things being equal",
+              "would like to",
+              /\beasy\b/,
+              /\bjust\b/,
+              /\bquite\b/,
+              /as\sfar\sas\s.+\sconcerned/,
+              /of\sthe\s(fact|opinion)\sthat/
             ]
           }
         end
