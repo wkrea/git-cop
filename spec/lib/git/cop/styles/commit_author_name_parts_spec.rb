@@ -27,6 +27,16 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error,
+        minimum: 2
+      )
+    end
+  end
+
   describe "#valid?" do
     context "when exactly minimum" do
       let(:name) { "Example" }

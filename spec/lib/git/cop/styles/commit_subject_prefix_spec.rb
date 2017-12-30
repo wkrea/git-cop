@@ -26,6 +26,16 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error,
+        includes: %w[Fixed Added Updated Removed Refactored]
+      )
+    end
+  end
+
   describe "#valid?" do
     context "with no issues" do
       it "answers true" do

@@ -24,6 +24,16 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error,
+        includes: %w[\\-]
+      )
+    end
+  end
+
   describe "#valid?" do
     context "with uppercase bullet" do
       let(:body_lines) { ["- Test bullet."] }

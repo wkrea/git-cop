@@ -26,6 +26,15 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error
+      )
+    end
+  end
+
   describe "#valid?" do
     context "when valid" do
       it "answers true" do

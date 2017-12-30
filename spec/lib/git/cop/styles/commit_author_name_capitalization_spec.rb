@@ -27,6 +27,15 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error
+      )
+    end
+  end
+
   describe "#valid?" do
     context "with single name, capitalized" do
       let(:name) { "Example" }

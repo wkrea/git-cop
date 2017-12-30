@@ -25,6 +25,16 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error,
+        excludes: %w[\\* •]
+      )
+    end
+  end
+
   describe "#valid?" do
     it "answers true when valid" do
       expect(subject.valid?).to eq(true)

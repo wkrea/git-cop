@@ -24,6 +24,21 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
     end
   end
 
+  describe ".defaults" do
+    it "answers defaults" do
+      expect(described_class.defaults).to eq(
+        enabled: true,
+        severity: :error,
+        excludes: [
+          "(f|F)ix(es|ed)?\\s\\#\\d+",
+          "(c|C)lose(s|d)?\\s\\#\\d+",
+          "(r|R)esolve(s|d)?\\s\\#\\d+",
+          "github\\.com\\/.+\\/issues\\/\\d+"
+        ]
+      )
+    end
+  end
+
   describe "#valid?" do
     context "when no links" do
       let(:body_lines) { ["A body line."] }
