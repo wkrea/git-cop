@@ -37,6 +37,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitAuthorNameCapitalization,
         Git::Cop::Styles::CommitAuthorNameParts,
         Git::Cop::Styles::CommitBodyBulletCapitalization,
+        Git::Cop::Styles::CommitBodyBulletDelimiter,
         Git::Cop::Styles::CommitBodyIssueTrackerLink,
         Git::Cop::Styles::CommitBodyBullet,
         Git::Cop::Styles::CommitBodyLeadingLine,

@@ -38,6 +38,7 @@ history.
     - [Commit Author Name Parts](#commit-author-name-parts)
     - [Commit Body Bullet](#commit-body-bullet)
     - [Commit Body Bullet Capitalization](#commit-body-bullet-capitalization)
+    - [Commit Body Bullet Delimiter](#commit-body-bullet-delimiter)
     - [Commit Body Issue Tracker Link](#commit-body-issue-tracker-link)
     - [Commit Body Leading Line](#commit-body-leading-line)
     - [Commit Body Line Length](#commit-body-line-length)
@@ -118,6 +119,10 @@ The default configuration is:
         - "\\*"
         - "•"
     :commit_body_bullet_capitalization:
+      :enabled: true
+      :severity: :error
+      :includes: "\\-"
+    :commit_body_bullet_delimiter:
       :enabled: true
       :severity: :error
       :includes: "\\-"
@@ -453,6 +458,22 @@ Ensures commit body bullet lines are capitalized. Example:
     # Disallowed
 
     - an example bullet.
+
+    # Allowed
+
+    - An example bullet.
+
+### Commit Body Bullet Delimiter
+
+| Enabled | Severity |       Defaults      |
+|---------|----------|---------------------|
+| true    | error    | includes: `["\\-"]` |
+
+Ensures commit body bullets are delmited by a space. Example:
+
+    # Disallowed
+
+    -An example bullet.
 
     # Allowed
 
