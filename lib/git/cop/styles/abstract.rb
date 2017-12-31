@@ -19,11 +19,11 @@ module Git
         end
 
         def self.id
-          to_s.sub("Git::Cop::Styles", "").snakecase.to_sym
+          to_s.delete_prefix("Git::Cop::Styles").snakecase.to_sym
         end
 
         def self.label
-          to_s.sub("Git::Cop::Styles", "").titleize
+          to_s.delete_prefix("Git::Cop::Styles").titleize
         end
 
         def self.defaults
