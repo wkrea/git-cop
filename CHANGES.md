@@ -1,3 +1,24 @@
+# v2.0.0 (2018-01-01)
+
+- Fixed Rubocop Style/FormatStringToken issues.
+- Fixed typo in default configuration of README.md.
+- Added additional commit body phrases to exclude list.
+- Added Commit Body Bullet Delimiter cop.
+- Added specs for default cop settings.
+- Added upgrade section to README.
+- Updated Code Climate badges.
+- Updated Code Climate configuration to Version 2.0.0.
+- Updated to Apache 2.0 license.
+- Updated to Rubocop 0.52.0.
+- Updated to Ruby 2.4.3.
+- Updated to Ruby 2.5.0.
+- Removed black/white lists (use include/exclude lists instead).
+- Removed deprecated Commit Body Leading Space cop.
+- Removed documentation for secure installs.
+- Refactored `Graylist` as `FilterList` object.
+- Refactored abstract cop prefix deletion.
+- Refactored code to use Ruby 2.5.0 `Array#append` syntax.
+
 # v1.7.1 (2017-11-18)
 
 - Fixed issue with mismatched gem certificate public key.
