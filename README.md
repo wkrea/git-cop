@@ -5,7 +5,6 @@
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/d312f4724004dc691afc/test_coverage)](https://codeclimate.com/github/bkuhlmann/git-cop/test_coverage)
 [![Gemnasium Status](https://gemnasium.com/bkuhlmann/git-cop.svg)](https://gemnasium.com/bkuhlmann/git-cop)
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/git-cop.svg?style=svg)](https://circleci.com/gh/bkuhlmann/git-cop)
-[![Patreon](https://img.shields.io/badge/patreon-donate-brightgreen.svg)](https://www.patreon.com/bkuhlmann)
 
 Enforces Git rebase workflow with consistent Git commits for a clean and easy to read/debug project
 history.
