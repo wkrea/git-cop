@@ -3,7 +3,6 @@
 [![Gem Version](https://badge.fury.io/rb/git-cop.svg)](https://badge.fury.io/rb/git-cop)
 [![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/d312f4724004dc691afc/maintainability)](https://codeclimate.com/github/bkuhlmann/git-cop/maintainability)
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/d312f4724004dc691afc/test_coverage)](https://codeclimate.com/github/bkuhlmann/git-cop/test_coverage)
-[![Gemnasium Status](https://gemnasium.com/bkuhlmann/git-cop.svg)](https://gemnasium.com/bkuhlmann/git-cop)
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/git-cop.svg?style=svg)](https://circleci.com/gh/bkuhlmann/git-cop)
 
 Enforces Git rebase workflow with consistent Git commits for a clean and easy to read/debug project
