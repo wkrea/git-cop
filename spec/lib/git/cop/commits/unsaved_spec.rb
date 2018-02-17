@@ -184,4 +184,14 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   describe "#squash?" do
     it_behaves_like "a squash commit"
   end
+
+  describe "commits with invalid encoding" do
+    it "doesn't fail with argument error" do
+      path = "#{temp_dir}/invalid_commit.txt"
+      File.open(path, "w") { |file| file.write "Added \210\221\332\332\337\341\341." }
+      commit = -> { described_class.new(path: path).body }
+
+      expect(&commit).to_not raise_error
+    end
+  end
 end

@@ -394,4 +394,18 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       expect(subject.respond_to?(:bogus)).to eq(false)
     end
   end
+
+  describe "commits with invalid encoding" do
+    it "doesn't fail with argument error" do
+      Dir.chdir git_repo_dir do
+        `git config i18n.commitEncoding Shift_JIS`
+        `touch example.txt`
+        `git add --all .`
+        `git commit -m "Added \210\221\332\332\337\341\341."`
+        commit = -> { described_class.new(sha: sha).body }
+
+        expect(&commit).to_not raise_error
+      end
+    end
+  end
 end

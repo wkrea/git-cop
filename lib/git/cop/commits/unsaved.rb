@@ -18,7 +18,7 @@ module Git
         def initialize path:, shell: Open3
           @path = Pathname path
           @shell = shell
-          @raw_body = File.read path
+          @raw_body = File.read(path).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
         rescue Errno::ENOENT
           raise Errors::Base, %(Invalid commit message path: "#{path}".)
         end
