@@ -13,19 +13,15 @@ module Git
 
         SCISSOR_PATTERN = /\#\s\-+\s\>8\s\-+\n.+/m
 
-        attr_reader :raw_body
+        attr_reader :sha, :raw_body
 
-        def initialize path:, shell: Open3
+        def initialize path:, sha: SecureRandom.hex(20), shell: Open3
           @path = Pathname path
+          @sha = sha
           @shell = shell
           @raw_body = File.read(path).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
         rescue Errno::ENOENT
           raise Errors::Base, %(Invalid commit message path: "#{path}".)
-        end
-
-        # :reek:UtilityFunction
-        def sha
-          SecureRandom.hex 20
         end
 
         def author_name
