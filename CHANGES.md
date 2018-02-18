@@ -1,3 +1,14 @@
+# v2.1.0 (2018-02-18)
+
+- Fixed Git commit encoding issues.
+- Fixed SHA utility method for unsaved comment.
+- Fixed colorized terminal output for CI builds.
+- Fixed gemspec issues with missing gem signing key/certificate.
+- Updated README license information.
+- Updated to Circle CI 2.0.0 configuration.
+- Removed Gemnasium support.
+- Removed Patreon badge from README.
+
 # v2.0.1 (2018-01-01)
 
 - Updated to Gemsmith 11.0.0.
