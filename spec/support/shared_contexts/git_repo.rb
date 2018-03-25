@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.shared_context "Git Repository", :git_repo do
-  let(:temp_dir) { File.join Bundler.root, "tmp", "rspec" }
+  let(:temp_dir) { Bundler.root.join "tmp", "rspec" }
   let(:git_repo_dir) { File.join temp_dir, "repo" }
-  let(:git_user_name) { "Testy Tester" }
-  let(:git_user_email) { "tester@example.com" }
+  let(:git_user_name) { "Test Example" }
+  let(:git_user_email) { "test@example.com" }
 
   around do |example|
     FileUtils.mkdir_p git_repo_dir
@@ -17,7 +17,7 @@ RSpec.shared_context "Git Repository", :git_repo do
       `git config user.name "#{git_user_name}"`
       `git config user.email "#{git_user_email}"`
       `git config core.hooksPath /dev/null`
-      `git config remote.origin.url https://github.com/example/example.git`
+      `git config remote.origin.url https://github.com/bkuhlmann/test.git`
       `git add --all .`
       `git commit --all --message "Added dummy files."`
     end

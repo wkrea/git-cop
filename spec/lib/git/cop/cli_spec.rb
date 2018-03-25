@@ -37,7 +37,7 @@ RSpec.describe Git::Cop::CLI do
       it "prints commit label" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          pattern = /[0-9a-f]{40}\s\(Testy\sTester\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile/
+          pattern = /[0-9a-f]{40}\s\(Test\sExample\,\s\d\sseconds\sago\)\:\sAdded\stest\sfile/
 
           expect(&result).to output(pattern).to_stdout
         end

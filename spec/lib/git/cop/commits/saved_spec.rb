@@ -204,13 +204,13 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
   describe "#author_name" do
     it "answers author name" do
-      expect(subject.author_name).to eq("Testy Tester")
+      expect(subject.author_name).to eq("Test Example")
     end
   end
 
   describe "#author_email" do
     it "answers author email" do
-      expect(subject.author_email).to eq("tester@example.com")
+      expect(subject.author_email).to eq("test@example.com")
     end
   end
 

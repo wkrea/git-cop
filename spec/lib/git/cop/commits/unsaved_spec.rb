@@ -45,7 +45,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   describe "#author_name" do
     it "answers name" do
       Dir.chdir git_repo_dir do
-        expect(subject.author_name).to eq("Testy Tester")
+        expect(subject.author_name).to eq("Test Example")
       end
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   describe "#author_email" do
     it "answers email address" do
       Dir.chdir git_repo_dir do
-        expect(subject.author_email).to eq("tester@example.com")
+        expect(subject.author_email).to eq("test@example.com")
       end
     end
   end
