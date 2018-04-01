@@ -1,4 +1,4 @@
-# v2.2.0 (2018-04-01)
+# 2.2.0 (2018-04-01)
 
 - Added gemspec metadata for source, changes, and issue tracker URLs.
 - Updated gem dependencies.
@@ -10,7 +10,7 @@
 - Refactored Git repository shared example test data.
 - Refactored temp dir shared context as a pathname.
 
-# v2.1.0 (2018-02-18)
+# 2.1.0 (2018-02-18)
 
 - Fixed Git commit encoding issues.
 - Fixed SHA utility method for unsaved comment.
@@ -21,11 +21,11 @@
 - Removed Gemnasium support.
 - Removed Patreon badge from README.
 
-# v2.0.1 (2018-01-01)
+# 2.0.1 (2018-01-01)
 
 - Updated to Gemsmith 11.0.0.
 
-# v2.0.0 (2018-01-01)
+# 2.0.0 (2018-01-01)
 
 - Fixed Rubocop Style/FormatStringToken issues.
 - Fixed typo in default configuration of README.md.
@@ -46,12 +46,12 @@
 - Refactored abstract cop prefix deletion.
 - Refactored code to use Ruby 2.5.0 `Array#append` syntax.
 
-# v1.7.1 (2017-11-18)
+# 1.7.1 (2017-11-18)
 
 - Fixed issue with mismatched gem certificate public key.
 - Updated to Rake 12.3.0.
 
-# v1.7.0 (2017-11-05)
+# 1.7.0 (2017-11-05)
 
 - Fixed 'Git Hooks' URL.
 - Fixed Reek issues.
@@ -61,25 +61,25 @@
 - Updated commit body phrases to be alpha-sorted.
 - Refactored commit object equality methods.
 
-# v1.6.2 (2017-10-29)
+# 1.6.2 (2017-10-29)
 
 - Added Bundler Audit gem.
 - Updated to Rubocop 0.50.0.
 - Updated to Rubocop 0.51.0.
 - Updated to Ruby 2.4.2.
 
-# v1.6.1 (2017-09-09)
+# 1.6.1 (2017-09-09)
 
 - Fixed commit subject length calculation with fixup/squash prefixes.
 - Removed Pry State gem.
 
-# v1.6.0 (2017-08-20)
+# 1.6.0 (2017-08-20)
 
 - Fixed README default configuration by removing trailing commas.
 - Added dynamic formatting of RSpec output.
 - Updated to Runcom 1.3.0.
 
-# v1.5.0 (2017-07-30)
+# 1.5.0 (2017-07-30)
 
 - Fixed CLI spec when running on a feature branch.
 - Fixed issue line numbering.
@@ -92,13 +92,13 @@
 - Removed issue label.
 - Refactored line reporter default indent.
 
-# v1.4.1 (2017-07-26)
+# 1.4.1 (2017-07-26)
 
 - Fixed Travis CI pull request build hook.
 - Fixed saved commit initialization with invalid SHA.
 - Added Git commit SHA error.
 
-# v1.4.0 (2017-07-23)
+# 1.4.0 (2017-07-23)
 
 - Fixed feature branch Git repository detection.
 - Added Git Kit with repository detection.
@@ -115,7 +115,7 @@
 - Updated to Gemsmith 10.2.0.
 - Refactored specs to use consistent issue testing.
 
-# v1.3.0 (2017-07-16)
+# 1.3.0 (2017-07-16)
 
 - Fixed CLI errors to always abort program.
 - Fixed Commit Body Presence cop fixup commit issues.
@@ -144,7 +144,7 @@
 - Refactored use of build environment variables.
 - Refactored use of gem-specific string methods.
 
-# v1.2.0 (2017-07-09)
+# 1.2.0 (2017-07-09)
 
 - Fixed spec issues with CI environments.
 - Added Circle CI branch environment.
@@ -192,7 +192,7 @@
 - Refactored runner to use collector modifications.
 - Refactored severity levels to abstract style class.
 
-# v1.1.0 (2017-06-19)
+# 1.1.0 (2017-06-19)
 
 - Updated README headers.
 - Updated command line usage in CLI specs.
@@ -200,12 +200,12 @@
 - Removed Thor+ gem.
 - Refactored CLI version/help specs.
 
-# v1.0.0 (2017-06-17)
+# 1.0.0 (2017-06-17)
 
 - Fixed gem configuration CLI options.
 - Updated README usage configuration documenation.
 
-# v0.4.0 (2017-06-11)
+# 0.4.0 (2017-06-11)
 
 - Fixed Reek method missing issue.
 - Fixed commit body bullet cop with blank lines.
@@ -223,7 +223,7 @@
 - Removed extra carriage return from affected line errors.
 - Refactored runner implementation.
 
-# v0.3.0 (2017-06-06)
+# 0.3.0 (2017-06-06)
 
 - Fixed generated report to include gem label.
 - Added Climate Control gem.
@@ -231,7 +231,7 @@
 - Updated Git repo shared context to use HTTPS.
 - Refactored Runner to use Branch object.
 
-# v0.2.0 (2017-06-04)
+# 0.2.0 (2017-06-04)
 
 - Fixed Code Climate Rubocop configuration.
 - Fixed commit body leading space cop false positive with empty body.
@@ -250,6 +250,6 @@
 - Removed `.id` from style subclasses.
 - Removed double colon from gem label.
 
-# v0.1.0 (2017-05-29)
+# 0.1.0 (2017-05-29)
 
 - Initial version.
