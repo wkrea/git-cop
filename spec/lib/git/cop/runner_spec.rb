@@ -12,10 +12,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
     }
   end
 
-  let :configuration do
-    Runcom::Configuration.new project_name: Git::Cop::Identity.name, defaults: defaults
-  end
-
+  let(:configuration) { Runcom::Configuration.new Git::Cop::Identity.name, defaults: defaults }
   let(:branch) { "test" }
   subject { described_class.new configuration: configuration.to_h }
 

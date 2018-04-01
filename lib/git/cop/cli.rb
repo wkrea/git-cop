@@ -18,7 +18,7 @@ module Git
           settings.merge cop.id => cop.defaults
         end
 
-        Runcom::Configuration.new project_name: Identity.name, defaults: defaults
+        Runcom::Configuration.new Identity.name, defaults: defaults
       end
 
       def initialize args = [], options = {}, config = {}
