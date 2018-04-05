@@ -92,7 +92,7 @@ Type the following to install:
 
 ### Upgrade
 
-If upgrading from v1.x.x to v2.x.x, please take note of the following changes:
+If upgrading from 1.x.x to 2.x.x, please take note of the following changes:
 
 - The `whitelist` configuration option has been removed and is no longer supported. Please update
   any custom configurations by replacing `:whitelist:` keys with `:includes:` keys. See the
@@ -335,7 +335,7 @@ what that script might look like:
     IFS=$'\n\t'
 
     if ! command -v git-cop > /dev/null; then
-       printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop --trust-policy MediumSecurity."
+       printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop."
        exit 1
     fi
 
@@ -366,7 +366,7 @@ has been made, here is a working example which can be used as a `.git/hooks/post
     IFS=$'\n\t'
 
     if ! command -v git-cop > /dev/null; then
-       printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop --trust-policy MediumSecurity."
+       printf "%s\n" "[git]: Git Cop not found. To install, run: gem install git-cop."
        exit 1
     fi
 
@@ -743,8 +743,9 @@ worth considering:
   - Provide screenshots/screencasts if possible.
   - Ensure all commits within the pull request are related to the purpose of the pull request.
 - Review and merge pull requests quickly:
-  - Maintain a consistent pace -- Review morning, noon, and night.
-  - Try not to let them linger more than a day.
+  - Maintain a consistent but reasonable pace -- Review morning, noon, and night.
+  - Avoid letting pull request linger more than a day. Otherwise, you risk hampering moral and
+    dimishing the productivity of the team.
 - Use emojis to help identify the types of comments added during the review process:
   - Generally, an emoji should prefix all feedback. Format: `<emoji> <feedback>`.
   - :tea: - Signifies you are reviewing the pull request. This is *non-blocking* and is meant to be
@@ -761,15 +762,16 @@ worth considering:
     *non-blocking* feedback and is left up to the author to decide (generally, it is a good idea to
     address and resolve the feedback).
   - :star: - Signifies code that is liked, favorited, remarkable, etc. This feedback is *non-
-    blocking* and is always meant as positive/uplifting.
+    blocking* and is always meant to be positive/uplifting.
   - :white_check_mark: - Signifies approval of a pull request. The author can merge to `master` and
     delete the feature branch at this point.
 - If the pull request discussion gets noisy, stop typing and switch to face-to-face chat.
-- If during a code review, additional features are discovered, create stories for them and then
-  return to reviewing the pull request.
+- If during a code review, additional features are discovered, create stories for them and return to
+  reviewing the pull request.
 - The author, not the reviewer, should merge the feature branch upon approval.
 - Ensure the following criteria is met before merging your feature branch to master:
-  - Ensure all `fixup!` and `squash!` commits are interactively rebased and merged.
+  - Ensure all `fixup!` and `squash!` commits are interactively rebased and merged. *Avoid letting
+    these get onto the `master` branch!*
   - Ensure your feature branch is rebased upon `master`.
   - Ensure all tests and code quality checks are passing.
   - Ensure the feature branch is deleted after being successfully merged.
