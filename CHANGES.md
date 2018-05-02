@@ -1,3 +1,12 @@
+# 2.3.0 (2018-05-01)
+
+- Added Runcom examples for project specific usage.
+- Updated README documentation.
+- Updated project changes to use semantic versions.
+- Updated to Gemsmith 12.0.0.
+- Updated to Refinements 5.2.0.
+- Updated to Runcom 3.1.0.
+
 # 2.2.0 (2018-04-01)
 
 - Added gemspec metadata for source, changes, and issue tracker URLs.
