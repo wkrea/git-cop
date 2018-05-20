@@ -67,12 +67,12 @@ module Git
         end
 
         def method_missing name, *arguments, &block
-          return super unless FORMATS.keys.include?(name.to_sym)
+          return super unless respond_to_missing?(name)
           String data[%r(\<#{name}\>(?<content>.*?)\<\/#{name}\>)m, :content]
         end
 
         def respond_to_missing? name, include_private = false
-          FORMATS.keys.include?(name.to_sym) || super
+          FORMATS.key?(name.to_sym) || super
         end
       end
     end
