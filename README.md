@@ -80,7 +80,7 @@ history.
 
 ## Requirements
 
-0. [Ruby 2.5.x](https://www.ruby-lang.org) (or higher)
+1. [Ruby 2.5.x](https://www.ruby-lang.org) (or higher)
 
 ## Setup
 
@@ -501,14 +501,14 @@ Issue links but can be customized for any issue tracker.
 
 There are several reasons for exluding issue tracker links from commit bodies:
 
-0. Not all issue trackers preserve issues (meaning they can be deleted). This makes make reading
+1. Not all issue trackers preserve issues (meaning they can be deleted). This makes make reading
    historic commits much harder to understand why the change was made when the link no longer works.
-0. When not connected to the internet or working on a laggy connection, it's hard to understand why
+1. When not connected to the internet or working on a laggy connection, it's hard to understand why
    a commit was made when all you have is a link to an issue with no other supporting context.
-0. During the course of a repository's life, issue trackers can be replaced (rare but it does
+1. During the course of a repository's life, issue trackers can be replaced (rare but it does
    happen). If the old issue tracker service is no longer paid for, none of the links within the
    commit will be of any relevance.
-0. An issue might span several commits in order to resolve it. Including a link in each commit is
+1. An issue might span several commits in order to resolve it. Including a link in each commit is
    tedious and can create noise within the issue's history which is distracting.
 
 Instead of linking to issues, take the time to write a short summary as to *why* the commit was
