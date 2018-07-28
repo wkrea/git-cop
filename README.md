@@ -684,18 +684,27 @@ worth considering:
 - Use `git commit --fixup` when fixing a previous commit, addressing pull request feedback, etc.,
   and don't need to modifiy the original commit message.
 - Use `git commit --squash` when fixing a previous commit, addressing pull request feedback, etc.,
-  and want to combine the original commit message with the squash commit message into a single
-  message.
-- Use `git rebase --interactive` when cleaning up commit history, order, messages, etc. Should be
-  done prior to submitting a pull request or when pull request feedback has been addressed and you
-  are ready to merge to `master`.
+  and want to combine multiple commit messages into a single commit message. *Avoid using squash to
+  blindly combine multiple commit messages without editing them into a single, coherant message.*
+- Use `git rebase --interactive` when cleaning up commit history, order, messages, etc. This should
+  be done prior to submitting a pull request or when pull request feedback has been addressed and
+  you are ready to rebase onto `master`.
 - Use `git push --force-with-lease` instead of `git push --force` when pushing changes after an
   interactive rebasing session.
 - Avoid checking in development-specific configuration files (add to `.gitignore` instead).
 - Avoid checking in sensitive information (i.e. security keys, passphrases, etc).
 - Avoid "WIP" (a.k.a. "Work in Progress") commits and/or pull requests. Be confident with your code
-  and collegues' time. Use branches, stashes, etc. instead -- share a link to a diff if you have
-  questions/concerns during development.
+  and collegues' time. Use branches, stashes, etc. instead -- share a link to a feature branch diff
+  if you have questions/concerns during development.
+- Avoid using [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). This practice
+  leads to complicated project cloning, deployments, maintenance, etc. Use separate repositories to
+  better organize and split out this work. Sophisticated package managers, like
+  [Bundler](https://bundler.io) for example, exist to manage these dependencies better than what
+  multiple Git Submodules can accomplish.
+- Avoid using [Git LFS](https://git-lfs.github.com) for tracking binary artifacts/resources. These
+  files are not meant for version control and lead to large repositories that are time consuming to
+  clone/deploy. Use storage managers, like [Amazon S3](https://aws.amazon.com/s3) for example, that
+  are better suited for binary assets that don't change often.
 
 ### Commits
 
@@ -705,7 +714,7 @@ worth considering:
   - Easier to document with detailed subject messages (especially when grouped together in a pull
     request).
   - Easier to reword, edit, squash, fix, or drop when interactively rebasing.
-  - Easier to merge together versus tearing apart a larger commit into smaller commits.
+  - Easier to combine together versus tearing apart a larger commit into smaller commits.
 - Use commits in a logical order:
   - Each commit should tell a story and be a logical building block to the next commit.
   - Each commit, when reviewed in order, should be able to explain *how* the feature or bug fix was
@@ -736,13 +745,14 @@ worth considering:
 
 ### Pull Requests
 
-- Avoid authoring and reviewing your own pull request.
+- Avoid reviewing your own pull request before rebasing onto `master`. Have another pair of eyes
+  review your code first.
 - Keep pull requests short and easy to review:
   - Provide a high level overview that answers *why* the pull request is necessary.
   - Provide a link to the story/task that prompted the pull request.
   - Provide screenshots/screencasts if possible.
   - Ensure all commits within the pull request are related to the purpose of the pull request.
-- Review and merge pull requests quickly:
+- Review and rebase pull requests quickly:
   - Maintain a consistent but reasonable pace -- Review morning, noon, and night.
   - Avoid letting pull request linger more than a day. Otherwise, you risk hampering moral and
     dimishing the productivity of the team.
@@ -763,23 +773,23 @@ worth considering:
     address and resolve the feedback).
   - :star: - Signifies code that is liked, favorited, remarkable, etc. This feedback is *non-
     blocking* and is always meant to be positive/uplifting.
-  - :white_check_mark: - Signifies approval of a pull request. The author can merge to `master` and
-    delete the feature branch at this point.
+  - :white_check_mark: - Signifies approval of a pull request. The author can rebase onto `master`
+    and delete the feature branch at this point.
 - If the pull request discussion gets noisy, stop typing and switch to face-to-face chat.
 - If during a code review, additional features are discovered, create stories for them and return to
   reviewing the pull request.
-- The author, not the reviewer, should merge the feature branch upon approval.
-- Ensure the following criteria is met before merging your feature branch to master:
-  - Ensure all `fixup!` and `squash!` commits are interactively rebased and merged. *Avoid letting
-    these get onto the `master` branch!*
+- The author, not the reviewer, should rebase the feature branch onto `master` upon approval.
+- Ensure the following criteria is met before rebasing your feature branch to `master`:
+  - Ensure all `fixup!` and `squash!` commits are interactively rebased. *Avoid rebasing these onto
+    the `master` branch!*
   - Ensure your feature branch is rebased upon `master`.
   - Ensure all tests and code quality checks are passing.
-  - Ensure the feature branch is deleted after being successfully merged.
+  - Ensure the feature branch is deleted after being successfully rebased.
 
 ### GitHub
 
-When using GitHub, make sure to enforce a rebase workflow for all of your GitHub projects (*highly
-recommended*). You can do this via your project options (i.e.
+When using GitHub, enforce a rebase workflow for all of your GitHub projects (*highly recommended*).
+You can do this via your project options (i.e.
 `https://github.com/<username/organization>/<project>/settings`) and editing your merge options for
 pull requests as follows:
 
