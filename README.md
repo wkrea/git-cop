@@ -745,17 +745,18 @@ worth considering:
 
 ### Pull Requests
 
-- Avoid reviewing your own pull request before rebasing onto `master`. Have another pair of eyes
-  review your code first.
 - Keep pull requests short and easy to review:
   - Provide a high level overview that answers *why* the pull request is necessary.
-  - Provide a link to the story/task that prompted the pull request.
+  - Provide a link to the issue/task that prompted the pull request (if any).
   - Provide screenshots/screencasts if possible.
   - Ensure all commits within the pull request are related to the purpose of the pull request.
+  - Avoid working on a large issue without getting feedback first in order to not overwhelm/surprise
+    the maintainers. More discussion up front will help ensure your work has a higher chance of
+    acceptance.
 - Review and rebase pull requests quickly:
   - Maintain a consistent but reasonable pace -- Review morning, noon, and night.
   - Avoid letting pull request linger more than a day. Otherwise, you risk hampering moral and
-    dimishing the productivity of the team.
+    diminishing the productivity of the team.
 - Use emojis to help identify the types of comments added during the review process:
   - Generally, an emoji should prefix all feedback. Format: `<emoji> <feedback>`.
   - :tea: - Signifies you are reviewing the pull request. This is *non-blocking* and is meant to be
@@ -775,10 +776,13 @@ worth considering:
     blocking* and is always meant to be positive/uplifting.
   - :white_check_mark: - Signifies approval of a pull request. The author can rebase onto `master`
     and delete the feature branch at this point.
-- If the pull request discussion gets noisy, stop typing and switch to face-to-face chat.
-- If during a code review, additional features are discovered, create stories for them and return to
-  reviewing the pull request.
+- Use face-to-face communication if a pull request's written discussion gets lengthy/noisy.
+- Create new tasks/actions if additional features are discovered during a code review to avoid
+  delaying the finishing of the code review. Return to reviewing the pull request afterwards once
+  the tasks have been logged.
 - The author, not the reviewer, should rebase the feature branch onto `master` upon approval.
+- Avoid reviewing your own pull request before rebasing onto `master`. Have another pair of eyes
+  review your code first.
 - Ensure the following criteria is met before rebasing your feature branch to `master`:
   - Ensure all `fixup!` and `squash!` commits are interactively rebased. *Avoid rebasing these onto
     the `master` branch!*
