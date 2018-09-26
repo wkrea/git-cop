@@ -53,6 +53,7 @@ module Git
         def severity
           level = settings.fetch :severity
           fail(Errors::Severity, level: level) unless LEVELS.include?(level)
+
           level
         end
 

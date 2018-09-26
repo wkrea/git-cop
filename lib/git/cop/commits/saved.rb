@@ -26,6 +26,7 @@ module Git
         def initialize sha:, shell: Open3
           data, status = shell.capture2e show_command(sha)
           fail(Errors::SHA, sha) unless status.success?
+
           @data = data.encode Encoding::UTF_8, invalid: :replace, undef: :replace
         end
 
@@ -68,6 +69,7 @@ module Git
 
         def method_missing name, *arguments, &block
           return super unless respond_to_missing?(name)
+
           String data[%r(\<#{name}\>(?<content>.*?)\<\/#{name}\>)m, :content]
         end
 

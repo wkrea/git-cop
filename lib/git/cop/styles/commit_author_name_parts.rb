@@ -14,11 +14,13 @@ module Git
 
         def valid?
           return false if parts.size < minimum
+
           parts.all? { |name| !String(name).empty? }
         end
 
         def issue
           return {} if valid?
+
           {hint: %(Detected #{parts.size} out of #{minimum} parts required.)}
         end
 

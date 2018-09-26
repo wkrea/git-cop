@@ -31,6 +31,7 @@ module Git
 
         def branch_report
           return "" unless collector.issues?
+
           "\n\n#{commit_report}".chomp "\n"
         end
 

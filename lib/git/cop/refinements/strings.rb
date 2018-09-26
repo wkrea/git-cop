@@ -7,6 +7,7 @@ module Git
         refine String do
           def pluralize count:, suffix: "s"
             return "#{count} #{self}" if count == 1
+
             "#{count} #{self}#{suffix}"
           end
 

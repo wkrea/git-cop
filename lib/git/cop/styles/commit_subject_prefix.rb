@@ -21,6 +21,7 @@ module Git
 
         def issue
           return {} if valid?
+
           {hint: %(Use: #{filter_list.to_hint}.)}
         end
 

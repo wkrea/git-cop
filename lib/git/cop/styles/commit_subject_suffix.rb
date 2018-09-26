@@ -14,11 +14,13 @@ module Git
 
         def valid?
           return true if filter_list.empty?
+
           commit.subject.match?(/#{Regexp.union filter_list.to_regexp}\Z/)
         end
 
         def issue
           return {} if valid?
+
           {hint: %(Use: #{filter_list.to_hint}.)}
         end
 

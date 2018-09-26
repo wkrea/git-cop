@@ -17,6 +17,7 @@ module Git
 
         def issue
           return {} if valid?
+
           {hint: %(Capitalize each part of name: "#{full_name}".)}
         end
 

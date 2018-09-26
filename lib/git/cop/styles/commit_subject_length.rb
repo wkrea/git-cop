@@ -18,6 +18,7 @@ module Git
 
         def issue
           return {} if valid?
+
           {hint: "Use #{length} characters or less."}
         end
 

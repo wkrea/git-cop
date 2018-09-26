@@ -16,6 +16,7 @@ module Git
 
         def valid?
           return true if commit.fixup?
+
           valid_lines = commit.body_lines.reject { |line| line.match?(/^\s*$/) }
           valid_lines.size >= minimum
         end
@@ -26,6 +27,7 @@ module Git
 
         def issue
           return {} if valid?
+
           {hint: %(Use minimum of #{"line".pluralize count: minimum} (non-empty).)}
         end
       end

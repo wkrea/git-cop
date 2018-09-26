@@ -12,6 +12,7 @@ module Git
 
         def to_s
           return "" if cops.empty?
+
           "#{commit.sha} (#{commit.author_name}, #{commit.author_date_relative}): " \
           "#{commit.subject}\n#{cop_report}\n"
         end
