@@ -1,3 +1,19 @@
+# 2.4.0 (2018-10-01)
+
+- Fixed Markdown ordered list numbering.
+- Fixed README numbering markdown.
+- Fixed Rubocop Layout/EmptyLineAfterGuardClause issues.
+- Fixed Rubocop Performance/InefficientHashSearch issue.
+- Fixed default configuration in README.
+- Updated README style guide.
+- Updated Semantic Versioning links to be HTTPS.
+- Updated pull request documentation.
+- Updated to Contributor Covenant Code of Conduct 1.4.1.
+- Updated to RSpec 3.8.0.
+- Updated to Reek 5.0.
+- Updated to Rubocop 0.57.0.
+- Updated to Rubocop 0.58.0.
+
 # 2.3.0 (2018-05-01)
 
 - Added Runcom examples for project specific usage.
