@@ -766,6 +766,8 @@ worth considering:
     to let one know you are done reviewing but haven't approved yet (due to feedback that needs
     addressing), rebasing a pull request and then merging, waiting for a blocking pull request to be
     resolved, status updates to the pull request, etc.
+  - :abc: - Signifies detection of a mispelling with suggested correction. This is *blocking*
+    feedback that is easy to correct.
   - :art: - Signifies an issue with code style and/or code quality. This can be *blocking* or *non-
     blocking* feedback but is feedback generally related to the style/quality of the code,
     implementation details, and/or alternate solutions worth considering.
