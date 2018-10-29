@@ -11,7 +11,7 @@ module Git
       class Unsaved
         using Refinements::Strings
 
-        SCISSOR_PATTERN = /\#\s\-+\s\>8\s\-+\n.+/m
+        SCISSOR_PATTERN = /\#\s\-+\s\>8\s\-+\n.+/m.freeze
 
         attr_reader :sha, :raw_body
 
