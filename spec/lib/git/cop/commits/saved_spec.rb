@@ -73,7 +73,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different values" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not eq(different)
+          expect(subject).not_to eq(different)
         end
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different type" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not eq("A string.")
+          expect(subject).not_to eq("A string.")
         end
       end
     end
@@ -112,7 +112,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different values" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not eql(different)
+          expect(subject).not_to eql(different)
         end
       end
     end
@@ -120,7 +120,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different type" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not eql("A string.")
+          expect(subject).not_to eql("A string.")
         end
       end
     end
@@ -143,7 +143,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same values" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not equal(similar)
+          expect(subject).not_to equal(similar)
         end
       end
     end
@@ -151,7 +151,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different values" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not equal(different)
+          expect(subject).not_to equal(different)
         end
       end
     end
@@ -159,7 +159,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different type" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).to_not equal("A string.")
+          expect(subject).not_to equal("A string.")
         end
       end
     end
@@ -185,13 +185,13 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
     context "with different values" do
       it "is different" do
-        expect(subject.hash).to_not eq(different.hash)
+        expect(subject.hash).not_to eq(different.hash)
       end
     end
 
     context "with different type" do
       it "is different" do
-        expect(subject.hash).to_not eq("not the same".hash)
+        expect(subject.hash).not_to eq("not the same".hash)
       end
     end
   end
@@ -404,7 +404,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         `git commit -m "Added \210\221\332\332\337\341\341."`
         commit = -> { described_class.new(sha: sha).body }
 
-        expect(&commit).to_not raise_error
+        expect(&commit).not_to raise_error
       end
     end
   end

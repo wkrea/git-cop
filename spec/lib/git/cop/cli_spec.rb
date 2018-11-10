@@ -62,7 +62,7 @@ RSpec.describe Git::Cop::CLI do
       it "does not abort program" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to_not raise_error
+          expect(&result).not_to raise_error
         end
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe Git::Cop::CLI do
       it "does not abort program" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to_not raise_error
+          expect(&result).not_to raise_error
         end
       end
     end
@@ -127,7 +127,7 @@ RSpec.describe Git::Cop::CLI do
       it "does not abort program" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to_not raise_error
+          expect(&result).not_to raise_error
         end
       end
     end
@@ -159,7 +159,7 @@ RSpec.describe Git::Cop::CLI do
       it "does not abort program" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to_not raise_error
+          expect(&result).not_to raise_error
         end
       end
     end
@@ -213,51 +213,61 @@ RSpec.describe Git::Cop::CLI do
 
   describe "--config" do
     let(:command) { "--config" }
+
     it_behaves_like "a config command"
   end
 
   describe "-c" do
     let(:command) { "-c" }
+
     it_behaves_like "a config command"
   end
 
   describe "--police" do
     let(:command) { "--police" }
+
     it_behaves_like "a police command"
   end
 
   describe "-p" do
     let(:command) { "-p" }
+
     it_behaves_like "a police command"
   end
 
   describe "--hook" do
     let(:command) { "--hook" }
+
     it_behaves_like "a hook command"
   end
 
   describe "--version" do
     let(:command) { "--version" }
+
     it_behaves_like "a version command"
   end
 
   describe "-v" do
     let(:command) { "-v" }
+
     it_behaves_like "a version command"
   end
 
   describe "--help" do
     let(:command) { "--help" }
+
     it_behaves_like "a help command"
   end
 
   describe "-h" do
     let(:command) { "-h" }
+
     it_behaves_like "a help command"
   end
 
   context "with no command" do
     let(:command) { nil }
+
     it_behaves_like "a help command"
   end
 end

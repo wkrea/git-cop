@@ -191,7 +191,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
       File.open(path, "w") { |file| file.write "Added \210\221\332\332\337\341\341." }
       commit = -> { described_class.new(path: path).body }
 
-      expect(&commit).to_not raise_error
+      expect(&commit).not_to raise_error
     end
   end
 end

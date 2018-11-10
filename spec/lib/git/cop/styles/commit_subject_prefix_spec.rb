@@ -88,6 +88,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
 
     context "with saved fixup commit" do
       let(:content) { "fixup! Added test file." }
+
       before { allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(false) }
 
       it "answers false" do
@@ -97,6 +98,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
 
     context "with saved squash commit" do
       let(:content) { "squash! Added test file." }
+
       before { allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(false) }
 
       it "answers false" do

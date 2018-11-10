@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Refinements::Strings do
-  using Git::Cop::Refinements::Strings
+  using described_class
 
   describe ".pluralize" do
     context "with default suffix" do

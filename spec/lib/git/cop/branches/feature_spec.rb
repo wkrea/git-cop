@@ -31,7 +31,7 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "does not fail with error" do
         result = -> { described_class.new git_repo: git_repo }
-        expect(&result).to_not raise_error
+        expect(&result).not_to raise_error
       end
     end
 

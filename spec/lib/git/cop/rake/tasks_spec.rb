@@ -10,6 +10,7 @@ RSpec.describe Git::Cop::Rake::Tasks do
 
   describe ".setup" do
     let(:tasks) { instance_spy described_class }
+
     before { allow(described_class).to receive(:new).and_return(tasks) }
 
     it "installs rake tasks" do
