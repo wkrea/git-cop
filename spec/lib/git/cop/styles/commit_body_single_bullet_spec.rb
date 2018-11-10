@@ -3,14 +3,14 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodySingleBullet do
+  subject { described_class.new commit: commit }
+
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do
     object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell), body_lines: body_lines
   end
-
-  subject { described_class.new commit: commit }
 
   describe ".id" do
     it "answers class ID" do

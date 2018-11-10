@@ -3,8 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Commits::Saved, :git_repo do
-  let(:sha) { Dir.chdir(git_repo_dir) { `git log --pretty=format:%H -1` } }
   subject { Dir.chdir(git_repo_dir) { described_class.new sha: sha } }
+
+  let(:sha) { Dir.chdir(git_repo_dir) { `git log --pretty=format:%H -1` } }
 
   before do
     Dir.chdir git_repo_dir do

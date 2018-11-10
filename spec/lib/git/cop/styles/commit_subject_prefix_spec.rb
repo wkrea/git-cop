@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
+  subject { described_class.new commit: commit, settings: settings }
+
   let(:content) { "Added test file." }
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -12,7 +14,6 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
   end
 
   let(:settings) { {enabled: true, includes: %w[Added Removed Fixed]} }
-  subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
     it "answers class ID" do

@@ -3,8 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
-  let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-valid.txt" }
   subject { described_class.new path: path }
+
+  let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-valid.txt" }
 
   describe "#initialize" do
     it "raises base error for invalid path" do

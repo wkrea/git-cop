@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
+  subject { described_class.new commit: commit, settings: settings }
+
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -13,7 +15,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
 
   let(:length) { 72 }
   let(:settings) { {enabled: true, length: length} }
-  subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
     it "answers class ID" do

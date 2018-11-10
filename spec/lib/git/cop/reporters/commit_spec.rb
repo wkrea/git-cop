@@ -27,8 +27,9 @@ RSpec.describe Git::Cop::Reporters::Commit do
 
   describe "#to_s" do
     context "with invalid cop" do
-      let(:invalid) { true }
       subject { described_class.new commit: commit, cops: [cop_instance] }
+
+      let(:invalid) { true }
 
       it "answers commit (SHA, author name, relative time, subject) and single cop report" do
         expect(subject.to_s).to eq(
@@ -40,8 +41,9 @@ RSpec.describe Git::Cop::Reporters::Commit do
     end
 
     context "with invalid cops" do
-      let(:invalid) { true }
       subject { described_class.new commit: commit, cops: [cop_instance, cop_instance] }
+
+      let(:invalid) { true }
 
       it "answers commit (SHA, author name, relative time, subject) and multiple cop report" do
         expect(subject.to_s).to eq(
@@ -54,8 +56,9 @@ RSpec.describe Git::Cop::Reporters::Commit do
     end
 
     context "with valid cops" do
-      let(:invalid) { false }
       subject { described_class.new commit: commit, cops: [cop_instance, cop_instance] }
+
+      let(:invalid) { false }
 
       it "empty string" do
         expect(subject.to_s).to eq("")

@@ -19,6 +19,8 @@ RSpec.describe Git::Cop::Reporters::Branch do
 
   describe "#to_s" do
     context "with warnings" do
+      subject { described_class.new collector: collector }
+
       let(:collector) { Git::Cop::Collector.new }
 
       let :cop_instance do
@@ -31,7 +33,6 @@ RSpec.describe Git::Cop::Reporters::Branch do
                                                           issue: issue
       end
 
-      subject { described_class.new collector: collector }
       before { collector.add cop_instance }
 
       it "answers detected issues" do
@@ -48,6 +49,8 @@ RSpec.describe Git::Cop::Reporters::Branch do
     end
 
     context "with errors" do
+      subject { described_class.new collector: collector }
+
       let(:collector) { Git::Cop::Collector.new }
 
       let :cop_instance do
@@ -59,8 +62,6 @@ RSpec.describe Git::Cop::Reporters::Branch do
                                                           error?: true,
                                                           issue: issue
       end
-
-      subject { described_class.new collector: collector }
 
       before do
         collector.add cop_instance

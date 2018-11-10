@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
+  subject { described_class.new commit: commit, settings: settings }
+
   let(:name) { "Example Tester" }
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -13,7 +15,6 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
 
   let(:minimum) { 2 }
   let(:settings) { {enabled: true, minimum: minimum} }
-  subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
     it "answers class ID" do

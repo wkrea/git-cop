@@ -3,8 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Lines::Sentence do
-  let(:data) { {number: 1, content: "Example content."} }
   subject { described_class.new data }
+
+  let(:data) { {number: 1, content: "Example content."} }
 
   describe "#to_s" do
     it "answers label and sentence" do

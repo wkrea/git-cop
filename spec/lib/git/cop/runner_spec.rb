@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
+  subject { described_class.new configuration: configuration.to_h }
+
   let :defaults do
     {
       commit_body_leading_line: {enabled: true, severity: :error},
@@ -14,7 +16,6 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
 
   let(:configuration) { Runcom::Configuration.new Git::Cop::Identity.name, defaults: defaults }
   let(:branch) { "test" }
-  subject { described_class.new configuration: configuration.to_h }
 
   before do
     Dir.chdir git_repo_dir do

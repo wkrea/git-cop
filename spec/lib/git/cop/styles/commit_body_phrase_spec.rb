@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
+  subject { described_class.new commit: commit, settings: settings }
+
   let(:body_lines) { ["This is an example of a commit message body."] }
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -13,7 +15,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
 
   let(:excludes) { ["obviously", "of course"] }
   let(:settings) { {enabled: true, excludes: excludes} }
-  subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
     it "answers class ID" do

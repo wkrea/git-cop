@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
+  subject { described_class.new commit: commit, settings: settings }
+
   let(:raw_body) { "Added documentation.\n\n- Necessary for testing purposes.\n" }
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -12,7 +14,6 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
   end
 
   let(:settings) { {enabled: true} }
-  subject { described_class.new commit: commit, settings: settings }
 
   describe ".id" do
     it "answers class ID" do

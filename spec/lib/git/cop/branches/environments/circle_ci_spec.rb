@@ -3,8 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Environments::CircleCI do
-  let(:shell) { class_spy Open3 }
   subject { described_class.new shell: shell }
+
+  let(:shell) { class_spy Open3 }
 
   describe "#name" do
     it "answers Git branch name" do

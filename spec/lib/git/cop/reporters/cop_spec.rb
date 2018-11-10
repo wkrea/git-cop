@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Cop do
+  subject { described_class.new cop_instance }
+
   let(:severity) { :error }
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }
 
@@ -11,8 +13,6 @@ RSpec.describe Git::Cop::Reporters::Cop do
                                                       severity: severity,
                                                       issue: issue
   end
-
-  subject { described_class.new cop_instance }
 
   describe "#to_s" do
     context "with warning" do
