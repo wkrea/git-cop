@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
-  subject { described_class.new configuration: configuration.to_h }
+  subject(:runner) { described_class.new configuration: configuration.to_h }
 
   let :defaults do
     {
@@ -30,7 +30,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
       it "reports no issues" do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Added one.txt." --message "- For testing purposes."`
-          collector = subject.run
+          collector = runner.run
 
           expect(collector.issues?).to eq(false)
         end
@@ -41,7 +41,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
       it "reports issues" do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Add one.txt." --message "- A test bullet."`
-          collector = subject.run
+          collector = runner.run
 
           expect(collector.issues?).to eq(true)
         end
@@ -54,7 +54,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
       it "reports no issues" do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Bogus commit message"`
-          collector = subject.run
+          collector = runner.run
 
           expect(collector.issues?).to eq(false)
         end
@@ -67,7 +67,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
       it "fails with errors" do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Updated one.txt." --message "- A test bullet."`
-          result = -> { subject.run }
+          result = -> { runner.run }
 
           expect(&result).to raise_error(
             Git::Cop::Errors::Base,
@@ -82,7 +82,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
         Dir.chdir git_repo_dir do
           `git commit --no-verify --message "Add one.txt"`
           commit = Git::Cop::Commits::Saved.new sha: `git log --pretty=format:%H -1`
-          collector = subject.run commits: commit
+          collector = runner.run commits: commit
 
           expect(collector.issues?).to eq(true)
         end

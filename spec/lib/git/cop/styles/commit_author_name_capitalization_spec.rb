@@ -3,7 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
-  subject { described_class.new commit: commit, settings: settings }
+  subject :commit_author_name_capitalization_style do
+    described_class.new commit: commit, settings: settings
+  end
 
   let(:name) { "Example Tester" }
   let(:status) { double "status", success?: true }
@@ -42,7 +44,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "Example" }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_author_name_capitalization_style.valid?).to eq(true)
       end
     end
 
@@ -50,7 +52,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "example" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_author_name_capitalization_style.valid?).to eq(false)
       end
     end
 
@@ -58,7 +60,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "E" }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_author_name_capitalization_style.valid?).to eq(true)
       end
     end
 
@@ -66,7 +68,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "e" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_author_name_capitalization_style.valid?).to eq(false)
       end
     end
 
@@ -74,7 +76,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "Example Tester" }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_author_name_capitalization_style.valid?).to eq(true)
       end
     end
 
@@ -82,13 +84,13 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "Example tester" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_author_name_capitalization_style.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { subject.issue }
+    let(:issue) { commit_author_name_capitalization_style.issue }
 
     context "when valid" do
       it "answers empty hash" do

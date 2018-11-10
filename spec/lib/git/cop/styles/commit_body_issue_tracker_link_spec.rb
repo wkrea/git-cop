@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
-  subject { described_class.new commit: commit }
+  subject(:commit_body_issue_tracker_link_style) { described_class.new commit: commit }
 
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -44,7 +44,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
       let(:body_lines) { ["A body line."] }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_body_issue_tracker_link_style.valid?).to eq(true)
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
         let(:body_lines) { [line] }
 
         it %(answers false with "#{line}") do
-          expect(subject.valid?).to eq(false)
+          expect(commit_body_issue_tracker_link_style.valid?).to eq(false)
         end
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
         let(:body_lines) { [line] }
 
         it %(answers false with "#{line}") do
-          expect(subject.valid?).to eq(false)
+          expect(commit_body_issue_tracker_link_style.valid?).to eq(false)
         end
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
         let(:body_lines) { [line] }
 
         it %(answers false with "#{line}") do
-          expect(subject.valid?).to eq(false)
+          expect(commit_body_issue_tracker_link_style.valid?).to eq(false)
         end
       end
     end
@@ -89,13 +89,13 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
       let(:body_lines) { ["This completes issue [#45](https://github.com/test/test/issues/24)."] }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_body_issue_tracker_link_style.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { subject.issue }
+    let(:issue) { commit_body_issue_tracker_link_style.issue }
 
     context "when valid" do
       let(:body_lines) { [] }

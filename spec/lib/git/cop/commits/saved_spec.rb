@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Commits::Saved, :git_repo do
-  subject { Dir.chdir(git_repo_dir) { described_class.new sha: sha } }
+  subject(:saved_commit) { Dir.chdir(git_repo_dir) { described_class.new sha: sha } }
 
   let(:sha) { Dir.chdir(git_repo_dir) { `git log --pretty=format:%H -1` } }
 
@@ -58,7 +58,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same instances" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).to eq(subject)
+          expect(saved_commit).to eq(saved_commit)
         end
       end
     end
@@ -66,7 +66,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same values" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).to eq(similar)
+          expect(saved_commit).to eq(similar)
         end
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different values" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to eq(different)
+          expect(saved_commit).not_to eq(different)
         end
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different type" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to eq("A string.")
+          expect(saved_commit).not_to eq("A string.")
         end
       end
     end
@@ -97,7 +97,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same instances" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).to eql(subject)
+          expect(saved_commit).to eql(saved_commit)
         end
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same values" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).to eql(similar)
+          expect(saved_commit).to eql(similar)
         end
       end
     end
@@ -113,7 +113,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different values" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to eql(different)
+          expect(saved_commit).not_to eql(different)
         end
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different type" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to eql("A string.")
+          expect(saved_commit).not_to eql("A string.")
         end
       end
     end
@@ -136,7 +136,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same instances" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).to equal(subject)
+          expect(saved_commit).to equal(saved_commit)
         end
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with same values" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to equal(similar)
+          expect(saved_commit).not_to equal(similar)
         end
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different values" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to equal(different)
+          expect(saved_commit).not_to equal(different)
         end
       end
     end
@@ -160,7 +160,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     context "with different type" do
       it "answers false" do
         Dir.chdir git_repo_dir do
-          expect(subject).not_to equal("A string.")
+          expect(saved_commit).not_to equal("A string.")
         end
       end
     end
@@ -174,62 +174,62 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
     context "with same instances" do
       it "is identical" do
-        expect(subject.hash).to eq(subject.hash)
+        expect(saved_commit.hash).to eq(saved_commit.hash)
       end
     end
 
     context "with same values" do
       it "is identical" do
-        expect(subject.hash).to eq(similar.hash)
+        expect(saved_commit.hash).to eq(similar.hash)
       end
     end
 
     context "with different values" do
       it "is different" do
-        expect(subject.hash).not_to eq(different.hash)
+        expect(saved_commit.hash).not_to eq(different.hash)
       end
     end
 
     context "with different type" do
       it "is different" do
-        expect(subject.hash).not_to eq("not the same".hash)
+        expect(saved_commit.hash).not_to eq("not the same".hash)
       end
     end
   end
 
   describe "#sha" do
     it "answers SHA" do
-      expect(subject.sha).to match(/[0-9a-f]{40}/)
+      expect(saved_commit.sha).to match(/[0-9a-f]{40}/)
     end
   end
 
   describe "#author_name" do
     it "answers author name" do
-      expect(subject.author_name).to eq("Test Example")
+      expect(saved_commit.author_name).to eq("Test Example")
     end
   end
 
   describe "#author_email" do
     it "answers author email" do
-      expect(subject.author_email).to eq("test@example.com")
+      expect(saved_commit.author_email).to eq("test@example.com")
     end
   end
 
   describe "#author_date_relative" do
     it "answers author date" do
-      expect(subject.author_date_relative).to match(/\A\d{1}\ssecond.+ago\Z/)
+      expect(saved_commit.author_date_relative).to match(/\A\d{1}\ssecond.+ago\Z/)
     end
   end
 
   describe "#subject" do
     it "answers subject" do
-      expect(subject.subject).to eq("Added test documentation.")
+      expect(saved_commit.subject).to eq("Added test documentation.")
     end
   end
 
   describe "#body" do
     it "answers body with single line" do
-      expect(subject.body).to eq("- Necessary for testing purposes.\n")
+      expect(saved_commit.body).to eq("- Necessary for testing purposes.\n")
     end
 
     context "with multiple lines" do
@@ -249,7 +249,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "answers body with multiple lines" do
         body = "- Necessary for multi-line test.\n- An extra bullet point.\n"
-        expect(subject.body).to eq(body)
+        expect(saved_commit.body).to eq(body)
       end
     end
   end
@@ -273,7 +273,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "answers body lines" do
         Dir.chdir git_repo_dir do
-          expect(subject.body_lines).to contain_exactly(
+          expect(saved_commit.body_lines).to contain_exactly(
             "- First bullet.",
             "- Second bullet.",
             "- Third bullet."
@@ -292,7 +292,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "ignores commented lines" do
         Dir.chdir git_repo_dir do
-          expect(subject.body_lines).to contain_exactly(
+          expect(saved_commit.body_lines).to contain_exactly(
             "- A bullet.",
             "A body line."
           )
@@ -305,7 +305,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "answers empty array" do
         Dir.chdir git_repo_dir do
-          expect(subject.body_lines).to be_empty
+          expect(saved_commit.body_lines).to be_empty
         end
       end
     end
@@ -332,7 +332,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "answers body paragraphs" do
         Dir.chdir git_repo_dir do
-          expect(subject.body_paragraphs).to contain_exactly(
+          expect(saved_commit.body_paragraphs).to contain_exactly(
             "The opening paragraph.\nA bunch of words.",
             "A bullet list:\n- First bullet.\n- Second bullet."
           )
@@ -350,7 +350,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "ignores commented lines" do
         Dir.chdir git_repo_dir do
-          expect(subject.body_paragraphs).to contain_exactly(
+          expect(saved_commit.body_paragraphs).to contain_exactly(
             "A standard paragraph.",
             "Another paragraph."
           )
@@ -363,36 +363,40 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
       it "answers empty array" do
         Dir.chdir git_repo_dir do
-          expect(subject.body_paragraphs).to be_empty
+          expect(saved_commit.body_paragraphs).to be_empty
         end
       end
     end
   end
 
   describe "#fixup?" do
-    it_behaves_like "a fixup commit"
+    it_behaves_like "a fixup commit" do
+      let(:commit) { saved_commit }
+    end
   end
 
   describe "#squash?" do
-    it_behaves_like "a squash commit"
+    it_behaves_like "a squash commit" do
+      let(:commit) { saved_commit }
+    end
   end
 
   describe "#raw_body" do
     it "answers raw body" do
       content = "Added test documentation.\n\n- Necessary for testing purposes.\n"
-      expect(subject.raw_body).to eq(content)
+      expect(saved_commit.raw_body).to eq(content)
     end
   end
 
   describe "#respond_to?" do
     it "answers true for data methods" do
       described_class::FORMATS.each_key do |key|
-        expect(subject.respond_to?(key)).to eq(true)
+        expect(saved_commit.respond_to?(key)).to eq(true)
       end
     end
 
     it "answers false for invalid methods" do
-      expect(subject.respond_to?(:bogus)).to eq(false)
+      expect(saved_commit.respond_to?(:bogus)).to eq(false)
     end
   end
 

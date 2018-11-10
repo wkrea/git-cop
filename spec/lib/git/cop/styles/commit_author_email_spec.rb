@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
-  subject { described_class.new commit: commit }
+  subject(:commit_author_email_style) { described_class.new commit: commit }
 
   let(:email) { "test@example.com" }
   let(:status) { double "status", success?: true }
@@ -39,7 +39,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
       let(:email) { "a@b.c" }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_author_email_style.valid?).to eq(true)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
       let(:email) { "test@test.example.com" }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_author_email_style.valid?).to eq(true)
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
       let(:email) { "example.com" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_author_email_style.valid?).to eq(false)
       end
     end
 
@@ -63,13 +63,13 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
       let(:email) { "test@examplecom" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_author_email_style.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { subject.issue }
+    let(:issue) { commit_author_email_style.issue }
 
     context "when valid" do
       it "answers empty hash" do

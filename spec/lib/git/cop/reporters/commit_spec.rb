@@ -27,12 +27,12 @@ RSpec.describe Git::Cop::Reporters::Commit do
 
   describe "#to_s" do
     context "with invalid cop" do
-      subject { described_class.new commit: commit, cops: [cop_instance] }
+      subject(:commit_reporter) { described_class.new commit: commit, cops: [cop_instance] }
 
       let(:invalid) { true }
 
       it "answers commit (SHA, author name, relative time, subject) and single cop report" do
-        expect(subject.to_s).to eq(
+        expect(commit_reporter.to_s).to eq(
           "abcdef (Test Tester, 1 day ago): A test subject.\n" \
           "\e[33m  Commit Author Email Warning. A test hint.\n\e[0m" \
           "\n"
@@ -41,12 +41,14 @@ RSpec.describe Git::Cop::Reporters::Commit do
     end
 
     context "with invalid cops" do
-      subject { described_class.new commit: commit, cops: [cop_instance, cop_instance] }
+      subject :commit_reporter do
+        described_class.new commit: commit, cops: [cop_instance, cop_instance]
+      end
 
       let(:invalid) { true }
 
       it "answers commit (SHA, author name, relative time, subject) and multiple cop report" do
-        expect(subject.to_s).to eq(
+        expect(commit_reporter.to_s).to eq(
           "abcdef (Test Tester, 1 day ago): A test subject.\n" \
           "\e[33m  Commit Author Email Warning. A test hint.\n\e[0m" \
           "\e[33m  Commit Author Email Warning. A test hint.\n\e[0m" \
@@ -56,12 +58,14 @@ RSpec.describe Git::Cop::Reporters::Commit do
     end
 
     context "with valid cops" do
-      subject { described_class.new commit: commit, cops: [cop_instance, cop_instance] }
+      subject(:commit_reporter) do
+        described_class.new commit: commit, cops: [cop_instance, cop_instance]
+      end
 
       let(:invalid) { false }
 
       it "empty string" do
-        expect(subject.to_s).to eq("")
+        expect(commit_reporter.to_s).to eq("")
       end
     end
   end

@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Branch do
+  subject(:branch_reporter) { described_class.new }
+
   let(:status) { double "status", success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
@@ -19,7 +21,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
 
   describe "#to_s" do
     context "with warnings" do
-      subject { described_class.new collector: collector }
+      subject(:branch_reporter) { described_class.new collector: collector }
 
       let(:collector) { Git::Cop::Collector.new }
 
@@ -36,7 +38,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
       before { collector.add cop_instance }
 
       it "answers detected issues" do
-        expect(subject.to_s).to eq(
+        expect(branch_reporter.to_s).to eq(
           "Running Git Cop...\n" \
           "\n" \
           "abcdef (Test Tester, 1 day ago): A subject.\n" \
@@ -49,7 +51,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
     end
 
     context "with errors" do
-      subject { described_class.new collector: collector }
+      subject(:branch_reporter) { described_class.new collector: collector }
 
       let(:collector) { Git::Cop::Collector.new }
 
@@ -69,7 +71,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
       end
 
       it "answers detected issues" do
-        expect(subject.to_s).to eq(
+        expect(branch_reporter.to_s).to eq(
           "Running Git Cop...\n" \
           "\n" \
           "abcdef (Test Tester, 1 day ago): A subject.\n" \
@@ -84,7 +86,7 @@ RSpec.describe Git::Cop::Reporters::Branch do
 
     context "without issues" do
       it "answers zero detected issues" do
-        expect(subject.to_s).to eq(
+        expect(branch_reporter.to_s).to eq(
           "Running Git Cop...\n" \
           "0 commits inspected. \e[32m0 issues\e[0m detected.\n"
         )

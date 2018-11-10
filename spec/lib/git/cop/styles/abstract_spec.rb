@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::Abstract do
-  subject { described_class.new commit: commit, settings: settings }
+  subject(:abstract_style) { described_class.new commit: commit, settings: settings }
 
   let(:sha) { "123" }
   let(:status) { double "status", success?: true }
@@ -65,7 +65,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:enabled) { true }
 
       it "answers true" do
-        expect(subject.enabled?).to eq(true)
+        expect(abstract_style.enabled?).to eq(true)
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:enabled) { false }
 
       it "answers false" do
-        expect(subject.enabled?).to eq(false)
+        expect(abstract_style.enabled?).to eq(false)
       end
     end
   end
@@ -83,7 +83,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:settings) { {severity: :error} }
 
       it "answers severity" do
-        expect(subject.severity).to eq(:error)
+        expect(abstract_style.severity).to eq(:error)
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:settings) { Hash.new }
 
       it "fails with key error" do
-        result = -> { subject.severity }
+        result = -> { abstract_style.severity }
         expect(&result).to raise_error(KeyError)
       end
     end
@@ -100,7 +100,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:settings) { {severity: :bogus} }
 
       it "fails with invalid severity error" do
-        result = -> { subject.severity }
+        result = -> { abstract_style.severity }
         expect(&result).to raise_error(Git::Cop::Errors::Severity)
       end
     end
@@ -108,24 +108,24 @@ RSpec.describe Git::Cop::Styles::Abstract do
 
   describe "#valid?" do
     it "fails with NotImplementedError" do
-      result = -> { subject.valid? }
+      result = -> { abstract_style.valid? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
 
   describe "#invalid?" do
     it "answers true when not valid" do
-      allow(subject).to receive(:valid?).and_return(false)
-      expect(subject.invalid?).to eq(true)
+      allow(abstract_style).to receive(:valid?).and_return(false)
+      expect(abstract_style.invalid?).to eq(true)
     end
 
     it "answers false when valid" do
-      allow(subject).to receive(:valid?).and_return(true)
-      expect(subject.invalid?).to eq(false)
+      allow(abstract_style).to receive(:valid?).and_return(true)
+      expect(abstract_style.invalid?).to eq(false)
     end
 
     it "fails with NotImplementedError when not implemented" do
-      result = -> { subject.invalid? }
+      result = -> { abstract_style.invalid? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
@@ -134,17 +134,17 @@ RSpec.describe Git::Cop::Styles::Abstract do
     let(:settings) { {enabled: enabled, severity: :warn} }
 
     it "answers true when invalid" do
-      allow(subject).to receive(:valid?).and_return(false)
-      expect(subject.warning?).to eq(true)
+      allow(abstract_style).to receive(:valid?).and_return(false)
+      expect(abstract_style.warning?).to eq(true)
     end
 
     it "answers false when valid" do
-      allow(subject).to receive(:valid?).and_return(true)
-      expect(subject.warning?).to eq(false)
+      allow(abstract_style).to receive(:valid?).and_return(true)
+      expect(abstract_style.warning?).to eq(false)
     end
 
     it "fails with NotImplementedError when not implemented" do
-      result = -> { subject.warning? }
+      result = -> { abstract_style.warning? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
@@ -153,24 +153,24 @@ RSpec.describe Git::Cop::Styles::Abstract do
     let(:settings) { {enabled: enabled, severity: :error} }
 
     it "answers true when invalid" do
-      allow(subject).to receive(:valid?).and_return(false)
-      expect(subject.error?).to eq(true)
+      allow(abstract_style).to receive(:valid?).and_return(false)
+      expect(abstract_style.error?).to eq(true)
     end
 
     it "answers false when valid" do
-      allow(subject).to receive(:valid?).and_return(true)
-      expect(subject.error?).to eq(false)
+      allow(abstract_style).to receive(:valid?).and_return(true)
+      expect(abstract_style.error?).to eq(false)
     end
 
     it "fails with NotImplementedError when not implemented" do
-      result = -> { subject.error? }
+      result = -> { abstract_style.error? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
 
   describe "#issue" do
     it "fails with NotImplementedError" do
-      result = -> { subject.issue }
+      result = -> { abstract_style.issue }
       expect(&result).to raise_error(NotImplementedError, /.+\#issue.+/)
     end
   end

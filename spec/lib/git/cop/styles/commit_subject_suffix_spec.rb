@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
-  subject { described_class.new commit: commit, settings: settings }
+  subject(:commit_subject_suffix_style) { described_class.new commit: commit, settings: settings }
 
   let(:content) { "Added test subject." }
   let(:status) { double "status", success?: true }
@@ -41,7 +41,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
   describe "#valid?" do
     context "when valid" do
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_subject_suffix_style.valid?).to eq(true)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
       let(:suffixes) { [] }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_subject_suffix_style.valid?).to eq(true)
       end
     end
 
@@ -57,13 +57,13 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
       let(:content) { "Added bad subject" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_subject_suffix_style.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { subject.issue }
+    let(:issue) { commit_subject_suffix_style.issue }
 
     context "when valid" do
       it "answers empty hash" do

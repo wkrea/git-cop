@@ -7,34 +7,34 @@ RSpec.describe Git::Cop::Refinements::Strings do
 
   describe ".pluralize" do
     context "with default suffix" do
-      subject { "issue" }
+      subject(:issue) { "issue" }
 
       it "pluralizes zero count" do
-        expect(subject.pluralize(count: 0)).to eq("0 issues")
+        expect(issue.pluralize(count: 0)).to eq("0 issues")
       end
 
       it "pluralizes count greater than one" do
-        expect(subject.pluralize(count: 2)).to eq("2 issues")
+        expect(issue.pluralize(count: 2)).to eq("2 issues")
       end
 
       it "does not pluralize count of one" do
-        expect(subject.pluralize(count: 1)).to eq("1 issue")
+        expect(issue.pluralize(count: 1)).to eq("1 issue")
       end
     end
 
     context "with custom suffix" do
-      subject { "branch" }
+      subject(:branch) { "branch" }
 
       it "pluralizes zero count" do
-        expect(subject.pluralize(count: 0, suffix: "es")).to eq("0 branches")
+        expect(branch.pluralize(count: 0, suffix: "es")).to eq("0 branches")
       end
 
       it "pluralizes count greater than one" do
-        expect(subject.pluralize(count: 2, suffix: "es")).to eq("2 branches")
+        expect(branch.pluralize(count: 2, suffix: "es")).to eq("2 branches")
       end
 
       it "does not pluralize one count" do
-        expect(subject.pluralize(count: 1)).to eq("1 branch")
+        expect(branch.pluralize(count: 1)).to eq("1 branch")
       end
     end
   end

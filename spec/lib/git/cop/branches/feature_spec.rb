@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Feature do
+  subject(:feature_branch) { described_class.new }
+
   describe ".environment" do
     it "answers local environment" do
       ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
@@ -58,7 +60,7 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "answers name" do
         Dir.chdir git_repo_dir do
-          expect(subject.name).to eq("test")
+          expect(feature_branch.name).to eq("test")
         end
       end
     end
@@ -77,13 +79,13 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "answers SHA strings" do
         Dir.chdir git_repo_dir do
-          expect(subject.shas).to all(match(/[0-9a-f]{40}/))
+          expect(feature_branch.shas).to all(match(/[0-9a-f]{40}/))
         end
       end
 
       it "answers SHA count" do
         Dir.chdir git_repo_dir do
-          expect(subject.shas.count).to eq(1)
+          expect(feature_branch.shas.count).to eq(1)
         end
       end
     end
@@ -102,13 +104,13 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "answers saved commits" do
         Dir.chdir git_repo_dir do
-          expect(subject.commits).to all(be_a(Git::Cop::Commits::Saved))
+          expect(feature_branch.commits).to all(be_a(Git::Cop::Commits::Saved))
         end
       end
 
       it "answers commit count" do
         Dir.chdir git_repo_dir do
-          expect(subject.commits.count).to eq(1)
+          expect(feature_branch.commits.count).to eq(1)
         end
       end
     end

@@ -3,9 +3,10 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::CLI do
+  subject(:cli) { described_class.start command_line }
+
   let(:options) { [] }
   let(:command_line) { Array(command).concat options }
-  let(:cli) { described_class.start command_line }
 
   shared_examples_for "a config command", :temp_dir do
     context "with no options" do

@@ -3,7 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
-  subject { described_class.new commit: commit, settings: settings }
+  subject :commit_body_leading_line_style do
+    described_class.new commit: commit, settings: settings
+  end
 
   let(:raw_body) { "Added documentation.\n\n- Necessary for testing purposes.\n" }
   let(:status) { double "status", success?: true }
@@ -39,7 +41,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
   describe "#valid?" do
     context "when valid" do
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_body_leading_line_style.valid?).to eq(true)
       end
     end
 
@@ -47,7 +49,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
       let(:raw_body) { "A commit message." }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_body_leading_line_style.valid?).to eq(true)
       end
     end
 
@@ -55,7 +57,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
       let(:raw_body) { "Subject\nBody\n" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_body_leading_line_style.valid?).to eq(false)
       end
     end
 
@@ -63,7 +65,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
       let(:raw_body) { "A test subject.\n\n" }
 
       it "answers true" do
-        expect(subject.valid?).to eq(true)
+        expect(commit_body_leading_line_style.valid?).to eq(true)
       end
     end
 
@@ -71,13 +73,13 @@ RSpec.describe Git::Cop::Styles::CommitBodyLeadingLine do
       let(:raw_body) { "" }
 
       it "answers false" do
-        expect(subject.valid?).to eq(false)
+        expect(commit_body_leading_line_style.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { subject.issue }
+    let(:issue) { commit_body_leading_line_style.issue }
 
     context "when valid" do
       it "answers empty hash" do

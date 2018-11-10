@@ -4,7 +4,7 @@ require "spec_helper"
 require "git/cop/rake/tasks"
 
 RSpec.describe Git::Cop::Rake::Tasks do
-  subject { described_class.new cli: cli }
+  subject(:tasks) { described_class.new cli: cli }
 
   let(:cli) { class_spy Git::Cop::CLI }
 
@@ -22,7 +22,7 @@ RSpec.describe Git::Cop::Rake::Tasks do
   end
 
   describe "#install" do
-    before { subject.install }
+    before { tasks.install }
 
     context "rake git_cop" do
       it "run Git Cop" do

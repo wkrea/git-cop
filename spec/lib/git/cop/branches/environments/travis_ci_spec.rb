@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Environments::TravisCI do
-  subject { described_class.new shell: shell }
+  subject(:travis_ci) { described_class.new shell: shell }
 
   let(:shell) { class_spy Open3 }
 
@@ -36,14 +36,14 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
       allow(described_class).to receive(:pull_request_branch).and_return("pr_test")
       allow(described_class).to receive(:ci_branch).and_return("ci_test")
 
-      expect(subject.name).to eq("pr_test")
+      expect(travis_ci.name).to eq("pr_test")
     end
 
     it "answers ci branch name when pull request branch is undefined" do
       allow(described_class).to receive(:pull_request_branch).and_return("")
       allow(described_class).to receive(:ci_branch).and_return("ci_test")
 
-      expect(subject.name).to eq("ci_test")
+      expect(travis_ci.name).to eq("ci_test")
     end
   end
 
@@ -55,12 +55,12 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
       allow(shell).to receive(:capture2e).with("git fetch")
       allow(shell).to receive(:capture2e).with(commits_command).and_return(["abc\ndef", true])
 
-      allow(subject).to receive(:name).and_return("test_name")
+      allow(travis_ci).to receive(:name).and_return("test_name")
     end
 
     it "answers Git commit SHAs without pull request slug" do
       allow(described_class).to receive(:pull_request_slug).and_return("")
-      expect(subject.shas).to contain_exactly("abc", "def")
+      expect(travis_ci.shas).to contain_exactly("abc", "def")
     end
 
     it "answers Git commit SHAs with pull request slug" do
@@ -71,7 +71,7 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
       allow(shell).to receive(:capture2e).with(remote_add_command)
       allow(shell).to receive(:capture2e).with(remote_fetch_command)
 
-      expect(subject.shas).to contain_exactly("abc", "def")
+      expect(travis_ci.shas).to contain_exactly("abc", "def")
     end
   end
 end

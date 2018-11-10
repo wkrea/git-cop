@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Reporters::Cop do
-  subject { described_class.new cop_instance }
+  subject(:cop_reporter) { described_class.new cop_instance }
 
   let(:severity) { :error }
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }
@@ -20,7 +20,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
       let(:issue) { {hint: "A test hint."} }
 
       it "answers cop label and issue hint" do
-        expect(subject.to_s).to eq(
+        expect(cop_reporter.to_s).to eq(
           "\e[33m  Commit Author Email Warning. A test hint.\n\e[0m"
         )
       end
@@ -31,7 +31,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
       let(:issue) { {hint: "A test hint."} }
 
       it "answers cop label and issue hint" do
-        expect(subject.to_s).to eq(
+        expect(cop_reporter.to_s).to eq(
           "\e[31m  Commit Author Email Error. A test hint.\n\e[0m"
         )
       end
@@ -42,7 +42,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
       let(:issue) { {hint: "A test hint."} }
 
       it "answers cop label and issue hint" do
-        expect(subject.to_s).to eq(
+        expect(cop_reporter.to_s).to eq(
           "\e[37m  Commit Author Email. A test hint.\n\e[0m"
         )
       end
@@ -60,7 +60,7 @@ RSpec.describe Git::Cop::Reporters::Cop do
       end
 
       it "answers cop label, issue label, issue hint, and issue lines" do
-        expect(subject.to_s).to eq(
+        expect(cop_reporter.to_s).to eq(
           "\e[31m  Commit Author Email Error. A test hint.\n" \
           "    Line 1: \"Curabitur eleifend wisi iaculis ipsum.\"\n" \
           "    Line 3: \"Ipsum eleifend wisi iaculis curabitur.\"\n\e[0m" \
