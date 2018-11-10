@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="git-cop.png" alt="Git Cop Icon"/>
+</p>
+
 # Git Cop
 
 [![Gem Version](https://badge.fury.io/rb/git-cop.svg)](https://badge.fury.io/rb/git-cop)
