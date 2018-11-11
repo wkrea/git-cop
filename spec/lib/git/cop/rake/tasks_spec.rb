@@ -24,11 +24,9 @@ RSpec.describe Git::Cop::Rake::Tasks do
   describe "#install" do
     before { tasks.install }
 
-    context "rake git_cop" do
-      it "run Git Cop" do
-        Rake::Task["git_cop"].invoke
-        expect(cli).to have_received(:start).with(["--police"])
-      end
+    it "executes --police option via git_cop task" do
+      Rake::Task["git_cop"].invoke
+      expect(cli).to have_received(:start).with(["--police"])
     end
   end
 end
