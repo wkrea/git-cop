@@ -29,6 +29,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
   end
 
   describe ".defaults" do
+    # rubocop:disable RSpec/ExampleLength
     it "answers defaults" do
       expect(described_class.defaults).to eq(
         enabled: true,
@@ -63,6 +64,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe "#valid?" do

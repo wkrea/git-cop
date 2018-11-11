@@ -27,12 +27,8 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
         "\n" \
         "A bullet list:\n" \
         "  - One.\n" \
-        "  - Two.\n" \
         "\n" \
-        "Another paragraph.\n" \
-        "\n" \
-        "# A comment block.\n" \
-        "# Pellentque morbi-trist sentus et netus et malesuada fames ac turpis.\n" \
+        "# A comment block.\n"
       )
     end
   end
@@ -89,12 +85,8 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
         "\n" \
         "A bullet list:\n" \
         "  - One.\n" \
-        "  - Two.\n" \
         "\n" \
-        "Another paragraph.\n" \
-        "\n" \
-        "# A comment block.\n" \
-        "# Pellentque morbi-trist sentus et netus et malesuada fames ac turpis.\n" \
+        "# A comment block.\n"
       )
     end
 
@@ -135,9 +127,6 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
         "",
         "A bullet list:",
         "  - One.",
-        "  - Two.",
-        "",
-        "Another paragraph.",
         ""
       )
     end
@@ -162,8 +151,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
     it "answers paragraphs with comments ignored" do
       expect(unsaved_commit.body_paragraphs).to contain_exactly(
         "An example paragraph.",
-        "A bullet list:\n  - One.\n  - Two.",
-        "Another paragraph."
+        "A bullet list:\n  - One."
       )
     end
 
