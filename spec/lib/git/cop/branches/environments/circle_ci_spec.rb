@@ -18,9 +18,10 @@ RSpec.describe Git::Cop::Branches::Environments::CircleCI do
 
   describe "#shas" do
     it "answers Git commit SHAs" do
-      command = %(git log --pretty=format:"%H" origin/master..origin/test)
-      allow(circle_ci).to receive(:name).and_return("origin/test")
-      allow(shell).to receive(:capture2e).with(command).and_return(["abc\ndef", true])
+      shas_command = %(git log --pretty=format:"%H" origin/master..origin/test)
+      name_command = "git rev-parse --abbrev-ref HEAD | tr -d '\n'"
+      allow(shell).to receive(:capture2e).with(name_command).and_return("test")
+      allow(shell).to receive(:capture2e).with(shas_command).and_return(["abc\ndef", true])
 
       expect(circle_ci.shas).to contain_exactly("abc", "def")
     end

@@ -19,7 +19,7 @@ module Git
           @path = Pathname path
           @sha = sha
           @shell = shell
-          @raw_body = File.read(path).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
+          @raw_body = File.read(path).encode Encoding::UTF_8, invalid: :replace, undef: :replace
         rescue Errno::ENOENT
           raise Errors::Base, %(Invalid commit message path: "#{path}".)
         end

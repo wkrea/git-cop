@@ -49,29 +49,34 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
 
   describe "#shas" do
     let(:commits_command) { %(git log --pretty=format:"%H" origin/master..test_name) }
+    let :environment do
+      {
+        TRAVIS_PULL_REQUEST_BRANCH: "test_name",
+        TRAVIS_PULL_REQUEST_SLUG: ""
+      }
+    end
 
     before do
       allow(shell).to receive(:capture2e).with("git remote set-branches --add origin master")
       allow(shell).to receive(:capture2e).with("git fetch")
       allow(shell).to receive(:capture2e).with(commits_command).and_return(["abc\ndef", true])
-
-      allow(travis_ci).to receive(:name).and_return("test_name")
     end
 
     it "answers Git commit SHAs without pull request slug" do
-      allow(described_class).to receive(:pull_request_slug).and_return("")
-      expect(travis_ci.shas).to contain_exactly("abc", "def")
+      ClimateControl.modify environment do
+        expect(travis_ci.shas).to contain_exactly("abc", "def")
+      end
     end
 
     it "answers Git commit SHAs with pull request slug" do
-      remote_add_command = "git remote add -f original_branch https://github.com/test_slug.git"
-      remote_fetch_command = "git fetch original_branch test_name:test_name"
+      ClimateControl.modify environment.merge(TRAVIS_PULL_REQUEST_SLUG: "test_slug") do
+        remote_add_command = "git remote add -f original_branch https://github.com/test_slug.git"
+        remote_fetch_command = "git fetch original_branch test_name:test_name"
+        allow(shell).to receive(:capture2e).with(remote_add_command)
+        allow(shell).to receive(:capture2e).with(remote_fetch_command)
 
-      allow(described_class).to receive(:pull_request_slug).and_return("test_slug")
-      allow(shell).to receive(:capture2e).with(remote_add_command)
-      allow(shell).to receive(:capture2e).with(remote_fetch_command)
-
-      expect(travis_ci.shas).to contain_exactly("abc", "def")
+        expect(travis_ci.shas).to contain_exactly("abc", "def")
+      end
     end
   end
 end

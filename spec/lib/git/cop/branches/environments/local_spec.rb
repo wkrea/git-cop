@@ -18,9 +18,10 @@ RSpec.describe Git::Cop::Branches::Environments::Local do
 
   describe "#shas" do
     it "answers Git commit SHAs" do
-      command = %(git log --pretty=format:"%H" master..test)
-      allow(local).to receive(:name).and_return("test")
-      allow(shell).to receive(:capture2e).with(command).and_return(["abc\ndef", true])
+      name_command = "git rev-parse --abbrev-ref HEAD | tr -d '\n'"
+      shas_command = %(git log --pretty=format:"%H" master..test)
+      allow(shell).to receive(:capture2e).with(name_command).and_return("test")
+      allow(shell).to receive(:capture2e).with(shas_command).and_return(["abc\ndef", true])
 
       expect(local.shas).to contain_exactly("abc", "def")
     end

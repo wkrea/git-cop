@@ -15,7 +15,7 @@ module Git
 
         def self.inherited klass
           @descendants ||= []
-          @descendants << klass
+          @descendants << klass unless klass.to_s.start_with?("#<Class") # Ignore anonymous classes.
         end
 
         def self.id

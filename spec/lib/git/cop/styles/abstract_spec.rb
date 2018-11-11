@@ -12,6 +12,25 @@ RSpec.describe Git::Cop::Styles::Abstract do
   let(:enabled) { true }
   let(:settings) { {enabled: enabled} }
 
+  let :valid_style_class do
+    Class.new(described_class) do
+      def valid?
+        true
+      end
+    end
+  end
+
+  let :invalid_style_class do
+    Class.new(described_class) do
+      def valid?
+        false
+      end
+    end
+  end
+
+  let(:valid_style) { valid_style_class.new commit: commit, settings: settings }
+  let(:invalid_style) { invalid_style_class.new commit: commit, settings: settings }
+
   describe ".id" do
     it "answers class ID" do
       expect(described_class.id).to eq(:abstract)
@@ -115,13 +134,11 @@ RSpec.describe Git::Cop::Styles::Abstract do
 
   describe "#invalid?" do
     it "answers true when not valid" do
-      allow(abstract_style).to receive(:valid?).and_return(false)
-      expect(abstract_style.invalid?).to eq(true)
+      expect(invalid_style.invalid?).to eq(true)
     end
 
     it "answers false when valid" do
-      allow(abstract_style).to receive(:valid?).and_return(true)
-      expect(abstract_style.invalid?).to eq(false)
+      expect(valid_style.invalid?).to eq(false)
     end
 
     it "fails with NotImplementedError when not implemented" do
@@ -134,13 +151,11 @@ RSpec.describe Git::Cop::Styles::Abstract do
     let(:settings) { {enabled: enabled, severity: :warn} }
 
     it "answers true when invalid" do
-      allow(abstract_style).to receive(:valid?).and_return(false)
-      expect(abstract_style.warning?).to eq(true)
+      expect(invalid_style.warning?).to eq(true)
     end
 
     it "answers false when valid" do
-      allow(abstract_style).to receive(:valid?).and_return(true)
-      expect(abstract_style.warning?).to eq(false)
+      expect(valid_style.warning?).to eq(false)
     end
 
     it "fails with NotImplementedError when not implemented" do
@@ -153,13 +168,11 @@ RSpec.describe Git::Cop::Styles::Abstract do
     let(:settings) { {enabled: enabled, severity: :error} }
 
     it "answers true when invalid" do
-      allow(abstract_style).to receive(:valid?).and_return(false)
-      expect(abstract_style.error?).to eq(true)
+      expect(invalid_style.error?).to eq(true)
     end
 
     it "answers false when valid" do
-      allow(abstract_style).to receive(:valid?).and_return(true)
-      expect(abstract_style.error?).to eq(false)
+      expect(valid_style.error?).to eq(false)
     end
 
     it "fails with NotImplementedError when not implemented" do

@@ -4,3 +4,7 @@ inherit_from:
 
 Lint/Void:
   CheckForMethodsWithNoSideEffects: false
+
+RSpec/SubjectStub:
+  Exclude:
+    - "spec/lib/git/cop/commits/unsaved_spec.rb"
