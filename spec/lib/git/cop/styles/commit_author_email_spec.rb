@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
   subject(:commit_author_email_style) { described_class.new commit: commit }
 
   let(:email) { "test@example.com" }
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do

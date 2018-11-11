@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectSuffix do
   subject(:commit_subject_suffix_style) { described_class.new commit: commit, settings: settings }
 
   let(:content) { "Added test subject." }
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do

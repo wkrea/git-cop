@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Git::Cop::Styles::CommitBodySingleBullet do
   subject(:commit_body_single_bullet_style) { described_class.new commit: commit }
 
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do

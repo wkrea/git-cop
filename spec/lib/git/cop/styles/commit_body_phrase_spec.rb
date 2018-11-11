@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
   subject(:commit_body_phrase_style) { described_class.new commit: commit, settings: settings }
 
   let(:body_lines) { ["This is an example of a commit message body."] }
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do
@@ -181,7 +181,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
 
       defaults.each do |phrase|
         it %(it answers false for "#{phrase}") do
-          status = double "status", success?: true
+          status = instance_double Process::Status, success?: true
           shell = class_spy Open3, capture2e: ["", status]
           commit = object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell),
                                  body_lines: [phrase]

@@ -8,7 +8,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
   end
 
   let(:name) { "Example Tester" }
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do

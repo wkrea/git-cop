@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
   subject(:commit_body_bullet_style) { described_class.new commit: commit }
 
   let(:body_lines) { ["- Test message."] }
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do

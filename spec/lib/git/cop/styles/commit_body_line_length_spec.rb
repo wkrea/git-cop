@@ -6,7 +6,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
   subject(:commit_body_line_length_style) { described_class.new commit: commit, settings: settings }
 
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
-  let(:status) { double "status", success?: true }
+  let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
 
   let :commit do
