@@ -29,7 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor", "~> 0.20"
   spec.add_development_dependency "bundler-audit", "~> 0.6"
   spec.add_development_dependency "climate_control", "0.2"
-  spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0"
   spec.add_development_dependency "gemsmith", "~> 12.0"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "pry", "~> 0.10"
@@ -39,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.8"
   spec.add_development_dependency "rubocop", "~> 0.61"
   spec.add_development_dependency "rubocop-rspec", "~> 1.30"
+  spec.add_development_dependency "simplecov", "~> 0.13"
 
   spec.files = Dir["lib/**/*"]
   spec.extra_rdoc_files = Dir["README*", "LICENSE*"]

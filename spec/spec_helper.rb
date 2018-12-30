@@ -2,12 +2,12 @@
 
 require "bundler/setup"
 require "simplecov"
-SimpleCov.start
-
 require "pry"
 require "pry-byebug"
 require "climate_control"
 require "git/cop"
+
+SimpleCov.start
 
 Dir[Bundler.root.join("spec", "support", "shared_contexts", "**", "*.rb")].each do |file|
   require file
