@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor", "~> 0.20"
   spec.add_development_dependency "bundler-audit", "~> 0.6"
   spec.add_development_dependency "climate_control", "0.2"
-  # spec.add_development_dependency "gemsmith", "~> 12.0"
+  spec.add_development_dependency "gemsmith", "~> 13.0"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "pry", "~> 0.10"
   spec.add_development_dependency "pry-byebug", "~> 3.5"
