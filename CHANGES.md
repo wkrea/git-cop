@@ -1,3 +1,24 @@
+# 3.0.0 (2019-01-01)
+
+- Fixed Circle CI cache for Ruby version.
+- Fixed Rubocop RSpec auto-correctable issues.
+- Fixed Rubocop RSpec/ContextWording issue.
+- Fixed Rubocop RSpec/ExampleLength issues.
+- Fixed Rubocop RSpec/LeadingSubject issues.
+- Fixed Rubocop RSpec/NamedSubject issues.
+- Fixed Rubocop RSpec/SubjectStub issues.
+- Fixed Rubocop RSpec/VerifiedDoubles issues.
+- Added Circle CI Bundler cache.
+- Added Rubocop RSpec gem.
+- Added project logo.
+- Added spelling mistakes to style guide.
+- Updated Circle CI Code Climate test reporting.
+- Updated to Refinements 6.0.0.
+- Updated to Rubocop 0.62.0.
+- Updated to Ruby 2.6.0.
+- Updated to Runcom 4.0.0.
+- Removed Rubocop Lint/Void CheckForMethodsWithNoSideEffects check.
+
 # 2.4.0 (2018-10-01)
 
 - Fixed Markdown ordered list numbering.
