@@ -21,7 +21,6 @@ history.
   - [Requirements](#requirements)
   - [Setup](#setup)
     - [Install](#install)
-    - [Upgrade](#upgrade)
     - [Configuration](#configuration)
       - [Enablement](#enablement)
       - [Severity Levels](#severity-levels)
@@ -93,17 +92,6 @@ history.
 Type the following to install:
 
     gem install git-cop
-
-### Upgrade
-
-If upgrading from 1.x.x to 2.x.x, please take note of the following changes:
-
-- The `whitelist` configuration option has been removed and is no longer supported. Please update
-  any custom configurations by replacing `:whitelist:` keys with `:includes:` keys. See the
-  *Configuration* section, below, for further details.
-- The `blacklist` configuration option has been removed and is no longer supported. Please update
-  any custom configurations by replacing `:blacklist:` keys with `:excludes:` keys. See the
-  *Configuration* section, below, for further details.
 
 ### Configuration
 
