@@ -69,7 +69,8 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitBodySingleBullet,
         Git::Cop::Styles::CommitSubjectLength,
         Git::Cop::Styles::CommitSubjectPrefix,
-        Git::Cop::Styles::CommitSubjectSuffix
+        Git::Cop::Styles::CommitSubjectSuffix,
+        Git::Cop::Styles::CommitTrailerCollaboratorEmail
       )
     end
     # rubocop:enable RSpec/ExampleLength

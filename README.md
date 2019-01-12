@@ -51,6 +51,7 @@ history.
     - [Commit Subject Length](#commit-subject-length)
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
+    - [Commit Trailer Collaborator Email](#commit-trailer-collaborator-email)
   - [Style Guide](#style-guide)
     - [General](#general)
     - [Commits](#commits)
@@ -203,6 +204,9 @@ The default configuration is:
       :severity: :error
       :includes:
         - "\\."
+    :commit_trailer_collaborator_email:
+      :enabled: false
+      :severity: :error
 
 Feel free to take this default configuration, modify, and save as your own custom
 `configuration.yml`.
@@ -663,6 +667,20 @@ Ensures commit subjects are suffixed consistently. The include list *is* case se
 allows for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git
 tags, change logs, etc. This is handy when coupled with a tool, like
 [Milestoner](https://github.com/bkuhlmann/milestoner), which automates project milestone releases.
+
+### Commit Trailer Collaborator Email
+
+| Enabled | Severity |       Defaults      |
+|---------|----------|---------------------|
+| false   | error    | none                |
+
+Ensures collaborator email address is valid for commit trailer.
+
+    # Disallowed
+    Co-Authored-By: River Tam <invalid>
+
+    # Allowed
+    Co-Authored-By: River Tam <river@firefly.com>
 
 ## Style Guide
 
