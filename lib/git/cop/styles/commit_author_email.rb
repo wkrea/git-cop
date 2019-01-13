@@ -11,22 +11,24 @@ module Git
           }
         end
 
+        def initialize commit:, settings: self.class.defaults, validator: Validators::Email
+          super commit: commit, settings: settings
+          @validator = validator
+        end
+
         def valid?
-          address = String email
-          address.match?(/\A.+\@.+\Z/) && address.match?(/\.{1}.+\Z/)
+          validator.new(commit.author_email).valid?
         end
 
         def issue
           return {} if valid?
 
-          {hint: %(Use "<name>@<server>.<domain>" instead of "#{email}".)}
+          {hint: %(Use "<name>@<server>.<domain>" instead of "#{commit.author_email}".)}
         end
 
         private
 
-        def email
-          commit.author_email
-        end
+        attr_reader :validator
       end
     end
   end

@@ -36,31 +36,15 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
 
   describe "#valid?" do
     context "with valid email" do
-      let(:email) { "a@b.c" }
+      let(:email) { "test@example.com" }
 
       it "answers true" do
         expect(commit_author_email_style.valid?).to eq(true)
       end
     end
 
-    context "with subdomain" do
-      let(:email) { "test@test.example.com" }
-
-      it "answers true" do
-        expect(commit_author_email_style.valid?).to eq(true)
-      end
-    end
-
-    context "with missing '@' symbol" do
-      let(:email) { "example.com" }
-
-      it "answers false" do
-        expect(commit_author_email_style.valid?).to eq(false)
-      end
-    end
-
-    context "with missing domain" do
-      let(:email) { "test@examplecom" }
+    context "with invalid email" do
+      let(:email) { "invalid" }
 
       it "answers false" do
         expect(commit_author_email_style.valid?).to eq(false)
@@ -78,10 +62,10 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
     end
 
     context "when invalid" do
-      let(:email) { "bogus" }
+      let(:email) { "invalid" }
 
       it "answers issue hint" do
-        expect(issue[:hint]).to eq(%(Use "<name>@<server>.<domain>" instead of "bogus".))
+        expect(issue[:hint]).to eq(%(Use "<name>@<server>.<domain>" instead of "invalid".))
       end
     end
   end
