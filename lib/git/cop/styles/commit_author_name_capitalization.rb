@@ -11,25 +11,24 @@ module Git
           }
         end
 
+        def initialize commit:, settings: self.class.defaults, validator: Validators::Capitalization
+          super commit: commit, settings: settings
+          @validator = validator
+        end
+
         def valid?
-          parts.all? { |name| String(name).match?(/\A[[:upper:]].*\Z/) }
+          validator.new(commit.author_name).valid?
         end
 
         def issue
           return {} if valid?
 
-          {hint: %(Capitalize each part of name: "#{full_name}".)}
+          {hint: %(Capitalize each part of name: "#{commit.author_name}".)}
         end
 
         private
 
-        def full_name
-          commit.author_name
-        end
-
-        def parts
-          full_name.split(/\s{1}/)
-        end
+        attr_reader :validator
       end
     end
   end

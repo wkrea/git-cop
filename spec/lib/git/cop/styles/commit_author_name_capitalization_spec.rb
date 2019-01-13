@@ -40,48 +40,16 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
   end
 
   describe "#valid?" do
-    context "with single name, capitalized" do
-      let(:name) { "Example" }
+    context "with capitalization" do
+      let(:name) { "Example Test" }
 
       it "answers true" do
         expect(commit_author_name_capitalization_style.valid?).to eq(true)
       end
     end
 
-    context "with single name, uncapitalized" do
-      let(:name) { "example" }
-
-      it "answers false" do
-        expect(commit_author_name_capitalization_style.valid?).to eq(false)
-      end
-    end
-
-    context "with single letter, capitalized" do
-      let(:name) { "E" }
-
-      it "answers true" do
-        expect(commit_author_name_capitalization_style.valid?).to eq(true)
-      end
-    end
-
-    context "with single letter, uncapitalized" do
-      let(:name) { "e" }
-
-      it "answers false" do
-        expect(commit_author_name_capitalization_style.valid?).to eq(false)
-      end
-    end
-
-    context "with multiple parts, all capitalized" do
-      let(:name) { "Example Tester" }
-
-      it "answers true" do
-        expect(commit_author_name_capitalization_style.valid?).to eq(true)
-      end
-    end
-
-    context "with multiple parts, mixed capitalized" do
-      let(:name) { "Example tester" }
+    context "without capitalization" do
+      let(:name) { "Example test" }
 
       it "answers false" do
         expect(commit_author_name_capitalization_style.valid?).to eq(false)
