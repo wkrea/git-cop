@@ -41,7 +41,15 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
   end
 
   describe "#valid?" do
-    context "when exactly minimum" do
+    context "with valid name" do
+      let(:name) { "Test Example" }
+
+      it "answers true" do
+        expect(commit_author_name_parts_style.valid?).to eq(true)
+      end
+    end
+
+    context "with custom minimum" do
       let(:name) { "Example" }
       let(:minimum) { 1 }
 
@@ -50,16 +58,8 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
       end
     end
 
-    context "when greater than minimum" do
-      let(:name) { "Example Test Tester" }
-
-      it "answers true" do
-        expect(commit_author_name_parts_style.valid?).to eq(true)
-      end
-    end
-
-    context "when less than minimum" do
-      let(:name) { "Example" }
+    context "with invalid name" do
+      let(:name) { "Invalid" }
 
       it "answers false" do
         expect(commit_author_name_parts_style.valid?).to eq(false)
@@ -77,10 +77,10 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
     end
 
     context "when invalid" do
-      let(:name) { "Example" }
+      let(:name) { "Invalid" }
 
       it "answers issue hint" do
-        hint = %(Detected 1 out of 2 parts required.)
+        hint = "Author name must consist of 2 parts (minimum)."
         expect(issue[:hint]).to eq(hint)
       end
     end

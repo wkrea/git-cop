@@ -12,30 +12,27 @@ module Git
           }
         end
 
-        def valid?
-          return false if parts.size < minimum
+        def initialize commit:, settings: self.class.defaults, validator: Validators::Name
+          super commit: commit, settings: settings
+          @validator = validator
+        end
 
-          parts.all? { |name| !String(name).empty? }
+        def valid?
+          validator.new(commit.author_name, minimum: minimum).valid?
         end
 
         def issue
           return {} if valid?
 
-          {hint: %(Detected #{parts.size} out of #{minimum} parts required.)}
+          {hint: "Author name must consist of #{minimum} parts (minimum)."}
         end
 
         private
 
-        def full_name
-          commit.author_name.strip
-        end
+        attr_reader :validator
 
         def minimum
           settings.fetch :minimum
-        end
-
-        def parts
-          full_name.split(/\s{1}/)
         end
       end
     end
