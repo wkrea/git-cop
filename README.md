@@ -52,6 +52,7 @@ history.
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
     - [Commit Trailer Collaborator Email](#commit-trailer-collaborator-email)
+    - [Commit Trailer Collaborator Name](#commit-trailer-collaborator-name)
   - [Style Guide](#style-guide)
     - [General](#general)
     - [Commits](#commits)
@@ -207,6 +208,10 @@ The default configuration is:
     :commit_trailer_collaborator_email:
       :enabled: false
       :severity: :error
+    :commit_trailer_collaborator_name:
+      :enabled: false
+      :severity: :error
+      :minimum: 2
 
 Feel free to take this default configuration, modify, and save as your own custom
 `configuration.yml`.
@@ -678,6 +683,20 @@ Ensures collaborator email address is valid for commit trailer.
 
     # Disallowed
     Co-Authored-By: River Tam <invalid>
+
+    # Allowed
+    Co-Authored-By: River Tam <river@firefly.com>
+
+### Commit Trailer Collaborator Name
+
+| Enabled | Severity |  Defaults  |
+|---------|----------|------------|
+| false   | error    | minimum: 2 |
+
+Ensures collaborator name consists of, at least, a first and last name. Example:
+
+    # Disallowed
+    Co-Authored-By: River <river@firefly.com>
 
     # Allowed
     Co-Authored-By: River Tam <river@firefly.com>
