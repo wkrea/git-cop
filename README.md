@@ -51,6 +51,7 @@ history.
     - [Commit Subject Length](#commit-subject-length)
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
+    - [Commit Trailer Collaborator Capitalization](#commit-trailer-collaborator-capitalization)
     - [Commit Trailer Collaborator Email](#commit-trailer-collaborator-email)
     - [Commit Trailer Collaborator Name](#commit-trailer-collaborator-name)
   - [Style Guide](#style-guide)
@@ -205,6 +206,9 @@ The default configuration is:
       :severity: :error
       :includes:
         - "\\."
+    :commit_trailer_collaborator_capitalization:
+      :enabled: false
+      :severity: :error
     :commit_trailer_collaborator_email:
       :enabled: false
       :severity: :error
@@ -672,6 +676,20 @@ Ensures commit subjects are suffixed consistently. The include list *is* case se
 allows for periods (`.`) to ensure each commit is sentance-like when generating release notes, Git
 tags, change logs, etc. This is handy when coupled with a tool, like
 [Milestoner](https://github.com/bkuhlmann/milestoner), which automates project milestone releases.
+
+### Commit Trailer Collaborator Capitalization
+
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| false   | error    | none     |
+
+Ensures collaborator name is properly capitalized. Example:
+
+    # Disallowed
+    shepherd derrial book
+
+    # Allowed
+    Shepherd Derrial Book
 
 ### Commit Trailer Collaborator Email
 

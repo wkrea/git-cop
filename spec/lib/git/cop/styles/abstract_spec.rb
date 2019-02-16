@@ -70,6 +70,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitSubjectLength,
         Git::Cop::Styles::CommitSubjectPrefix,
         Git::Cop::Styles::CommitSubjectSuffix,
+        Git::Cop::Styles::CommitTrailerCollaboratorCapitalization,
         Git::Cop::Styles::CommitTrailerCollaboratorEmail,
         Git::Cop::Styles::CommitTrailerCollaboratorName
       )
