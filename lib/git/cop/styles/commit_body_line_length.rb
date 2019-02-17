@@ -13,7 +13,7 @@ module Git
         end
 
         def valid?
-          commit.body_lines.all? { |line| valid_line? line }
+          commit.body_lines.all? { |line| !invalid_line? line }
         end
 
         def issue
@@ -21,24 +21,20 @@ module Git
 
           {
             hint: "Use #{length} characters or less per line.",
-            lines: affected_lines
+            lines: affected_commit_body_lines
           }
+        end
+
+        protected
+
+        def invalid_line? line
+          line.length > length
         end
 
         private
 
         def length
           settings.fetch :length
-        end
-
-        def valid_line? line
-          line.length <= length
-        end
-
-        def affected_lines
-          commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
-            lines << self.class.build_issue_line(index, line) unless valid_line?(line)
-          end
         end
       end
     end

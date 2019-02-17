@@ -21,7 +21,7 @@ module Git
 
           {
             hint: "Capitalize first word.",
-            lines: affected_lines
+            lines: affected_commit_body_lines
           }
         end
 
@@ -31,20 +31,14 @@ module Git
           Kit::FilterList.new settings.fetch :includes
         end
 
-        private
-
         def invalid_line? line
           line.match?(/\A\s*#{Regexp.union filter_list.to_regexp}\s[[:lower:]]+/)
         end
 
+        private
+
         def lowercased_bullets
           commit.body_lines.select { |line| invalid_line? line }
-        end
-
-        def affected_lines
-          commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
-            lines << self.class.build_issue_line(index, line) if invalid_line?(line)
-          end
         end
       end
     end

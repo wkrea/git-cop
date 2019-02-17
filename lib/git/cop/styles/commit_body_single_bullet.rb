@@ -13,7 +13,7 @@ module Git
         end
 
         def valid?
-          bullet_lines.size != 1
+          affected_commit_body_lines.size != 1
         end
 
         def issue
@@ -21,7 +21,7 @@ module Git
 
           {
             hint: "Use paragraph instead of single bullet.",
-            lines: affected_lines
+            lines: affected_commit_body_lines
           }
         end
 
@@ -31,20 +31,8 @@ module Git
           Kit::FilterList.new settings.fetch :includes
         end
 
-        private
-
-        def bullet? line
+        def invalid_line? line
           line.match?(/\A#{Regexp.union filter_list.to_regexp}\s+/)
-        end
-
-        def bullet_lines
-          commit.body_lines.select { |line| bullet? line }
-        end
-
-        def affected_lines
-          commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
-            lines << self.class.build_issue_line(index, line) if bullet?(line)
-          end
         end
       end
     end

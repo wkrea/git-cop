@@ -27,7 +27,7 @@ module Git
         end
 
         def self.defaults
-          fail NotImplementedError, "The `.defaults` method has not been implemented."
+          fail NotImplementedError, "The `.#{__method__}` method must be implemented."
         end
 
         def self.descendants
@@ -58,7 +58,7 @@ module Git
         end
 
         def valid?
-          fail NotImplementedError, "The `#valid?` method has not been implemented."
+          fail NotImplementedError, "The `##{__method__}` method must be implemented."
         end
 
         def invalid?
@@ -74,7 +74,7 @@ module Git
         end
 
         def issue
-          fail NotImplementedError, "The `#issue` method has not been implemented."
+          fail NotImplementedError, "The `##{__method__}` method must be implemented."
         end
 
         protected
@@ -83,6 +83,17 @@ module Git
 
         def load_filter_list
           Kit::FilterList.new settings[:list]
+        end
+
+        def affected_commit_body_lines
+          commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
+            yield if block_given?
+            lines << self.class.build_issue_line(index, line) if invalid_line?(line)
+          end
+        end
+
+        def invalid_line? _line
+          fail NotImplementedError, "The `.#{__method__}` method must be implemented."
         end
       end
     end
