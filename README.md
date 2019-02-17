@@ -52,6 +52,7 @@ history.
     - [Commit Subject Prefix](#commit-subject-prefix)
     - [Commit Subject Suffix](#commit-subject-suffix)
     - [Commit Trailer Collaborator Capitalization](#commit-trailer-collaborator-capitalization)
+    - [Commit Trailer Collaborator Duplication](#commit-trailer-collaborator-duplication)
     - [Commit Trailer Collaborator Email](#commit-trailer-collaborator-email)
     - [Commit Trailer Collaborator Key](#commit-trailer-collaborator-key)
     - [Commit Trailer Collaborator Name](#commit-trailer-collaborator-name)
@@ -208,6 +209,9 @@ The default configuration is:
       :includes:
         - "\\."
     :commit_trailer_collaborator_capitalization:
+      :enabled: false
+      :severity: :error
+    :commit_trailer_collaborator_duplication:
       :enabled: false
       :severity: :error
     :commit_trailer_collaborator_email:
@@ -696,6 +700,22 @@ Ensures collaborator name is properly capitalized. Example:
 
     # Allowed
     Shepherd Derrial Book
+
+### Commit Trailer Collaborator Duplication
+
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| false   | error    | none     |
+
+Ensures collaborator trailers are not duplicated. Example:
+
+    # Disallowed
+    Co-Authored-By: Shepherd Derrial Book <shepherd@firefly.com>
+    Co-Authored-By: Shepherd Derrial Book <shepherd@firefly.com>
+
+    # Allowed
+    Co-Authored-By: Malcolm Reynolds <malcolm@firefly.com>
+    Co-Authored-By: Shepherd Derrial Book <shepherd@firefly.com>
 
 ### Commit Trailer Collaborator Email
 

@@ -71,6 +71,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
         Git::Cop::Styles::CommitSubjectPrefix,
         Git::Cop::Styles::CommitSubjectSuffix,
         Git::Cop::Styles::CommitTrailerCollaboratorCapitalization,
+        Git::Cop::Styles::CommitTrailerCollaboratorDuplication,
         Git::Cop::Styles::CommitTrailerCollaboratorEmail,
         Git::Cop::Styles::CommitTrailerCollaboratorKey,
         Git::Cop::Styles::CommitTrailerCollaboratorName
