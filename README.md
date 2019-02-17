@@ -53,6 +53,7 @@ history.
     - [Commit Subject Suffix](#commit-subject-suffix)
     - [Commit Trailer Collaborator Capitalization](#commit-trailer-collaborator-capitalization)
     - [Commit Trailer Collaborator Email](#commit-trailer-collaborator-email)
+    - [Commit Trailer Collaborator Key](#commit-trailer-collaborator-key)
     - [Commit Trailer Collaborator Name](#commit-trailer-collaborator-name)
   - [Style Guide](#style-guide)
     - [General](#general)
@@ -212,6 +213,11 @@ The default configuration is:
     :commit_trailer_collaborator_email:
       :enabled: false
       :severity: :error
+    :commit_trailer_collaborator_key:
+      :enabled: false
+      :severity: :error
+      :includes:
+        - "Co-Authored-By"
     :commit_trailer_collaborator_name:
       :enabled: false
       :severity: :error
@@ -701,6 +707,20 @@ Ensures collaborator email address is valid for commit trailer.
 
     # Disallowed
     Co-Authored-By: River Tam <invalid>
+
+    # Allowed
+    Co-Authored-By: River Tam <river@firefly.com>
+
+### Commit Trailer Collaborator Key
+
+| Enabled | Severity |            Defaults            |
+|---------|----------|--------------------------------|
+| false   | error    | includes: `["Co-Authored-By"]` |
+
+Ensures collaborator trailer key is correct format.
+
+    # Disallowed
+    Co-authored-by: River Tam <river@firefly.com>
 
     # Allowed
     Co-Authored-By: River Tam <river@firefly.com>
