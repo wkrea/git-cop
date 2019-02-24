@@ -24,7 +24,8 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         "<author_date_relative>%ar</author_date_relative>%n" \
         "<subject>%s</subject>%n" \
         "<body>%b</body>%n" \
-        "<raw_body>%B</raw_body>%n"
+        "<raw_body>%B</raw_body>%n" \
+        "<trailers>%(trailers)</trailers>%n"
       )
     end
   end
@@ -282,7 +283,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       end
     end
 
-    context "with commented lines" do
+    context "with comments" do
       let :commit_message do
         "Added test file.\n\n" \
         "- A bullet.\n" \
@@ -290,12 +291,27 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         "A body line.\n"
       end
 
-      it "ignores commented lines" do
+      it "excludes comments" do
         Dir.chdir git_repo_dir do
           expect(saved_commit.body_lines).to contain_exactly(
             "- A bullet.",
             "A body line."
           )
+        end
+      end
+    end
+
+    context "with trailers" do
+      let :commit_message do
+        "Added test file.\n\n" \
+        "A body line.\n\n" \
+        "Trailer-One: 1\n" \
+        "Trailer-Two: 2\n"
+      end
+
+      it "excludes trailers" do
+        Dir.chdir git_repo_dir do
+          expect(saved_commit.body_lines).to contain_exactly("A body line.")
         end
       end
     end
@@ -330,7 +346,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         "- Second bullet.\n\n"
       end
 
-      it "answers body paragraphs" do
+      it "answers paragraphs" do
         Dir.chdir git_repo_dir do
           expect(saved_commit.body_paragraphs).to contain_exactly(
             "The opening paragraph.\nA bunch of words.",
@@ -340,7 +356,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       end
     end
 
-    context "with commented lines" do
+    context "with comments" do
       let :commit_message do
         "Added test.\n\n" \
         "A standard paragraph.\n\n" \
@@ -348,12 +364,27 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         "Another paragraph.\n\n"
       end
 
-      it "ignores commented lines" do
+      it "excludes comments" do
         Dir.chdir git_repo_dir do
           expect(saved_commit.body_paragraphs).to contain_exactly(
             "A standard paragraph.",
             "Another paragraph."
           )
+        end
+      end
+    end
+
+    context "with trailers" do
+      let :commit_message do
+        "Added test.\n\n" \
+        "A standard paragraph.\n\n" \
+        "Trailer-One: 1\n" \
+        "Trailer-Two: 2\n"
+      end
+
+      it "excludes trailers" do
+        Dir.chdir git_repo_dir do
+          expect(saved_commit.body_paragraphs).to contain_exactly("A standard paragraph.")
         end
       end
     end
@@ -364,6 +395,81 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       it "answers empty array" do
         Dir.chdir git_repo_dir do
           expect(saved_commit.body_paragraphs).to be_empty
+        end
+      end
+    end
+  end
+
+  describe "#trailers" do
+    it "answers empty array" do
+      expect(saved_commit.trailers).to be_empty
+    end
+  end
+
+  describe "#trailer_lines" do
+    before do
+      Dir.chdir git_repo_dir do
+        `touch test.txt`
+        `git add --all .`
+        `git commit --message $'#{commit_message}'`
+      end
+    end
+
+    context "with trailers" do
+      let :commit_message do
+        "Added test.\n\n" \
+        "One: 1\n" \
+        "Two: 2\n" \
+      end
+
+      it "answers an array of lines" do
+        Dir.chdir git_repo_dir do
+          expect(saved_commit.trailer_lines).to contain_exactly(
+            "One: 1",
+            "Two: 2"
+          )
+        end
+      end
+    end
+
+    context "without trailers" do
+      let(:commit_message) { "Added test.\n" }
+
+      it "answers empty array" do
+        Dir.chdir git_repo_dir do
+          expect(saved_commit.trailer_lines).to be_empty
+        end
+      end
+    end
+  end
+
+  describe "#trailer_index" do
+    it "answers nil without trailers" do
+      expect(saved_commit.trailer_index).to eq(nil)
+    end
+
+    context "with trailers and comments" do
+      let :commit_message do
+        "Added test.\n\n" \
+        "A paragraph.\n\n" \
+        "Trailer-One: 1\n" \
+        "Trailer-Two: 2\n\n" \
+        "# One\n\n" \
+        "# Two\n" \
+        "# Three\n\n"
+      end
+
+      before do
+        Dir.chdir git_repo_dir do
+          `touch test.txt`
+          `git add --all .`
+          `git commit --message $'#{commit_message}'`
+        end
+      end
+
+      it "answers index" do
+        Dir.chdir git_repo_dir do
+          expect(saved_commit.trailer_index).to eq(2)
         end
       end
     end

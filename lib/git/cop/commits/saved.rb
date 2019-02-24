@@ -6,6 +6,7 @@ module Git
   module Cop
     module Commits
       # Represents an existing commit.
+      # :reek:TooManyMethods
       class Saved
         using Refinements::Strings
 
@@ -16,7 +17,8 @@ module Git
           author_date_relative: "%ar",
           subject: "%s",
           body: "%b",
-          raw_body: "%B"
+          raw_body: "%B",
+          trailers: "%(trailers)"
         }.freeze
 
         def self.pattern
@@ -44,11 +46,19 @@ module Git
         end
 
         def body_lines
-          body.split("\n").reject { |line| line.start_with? "#" }
+          body_without_trailing_spaces
         end
 
         def body_paragraphs
-          body.split("\n\n").map(&:chomp).reject { |line| line.start_with? "#" }
+          body_without_trailers.split("\n\n").map(&:chomp).reject { |line| line.start_with? "#" }
+        end
+
+        def trailer_lines
+          trailers.split "\n"
+        end
+
+        def trailer_index
+          body.split("\n").index trailer_lines.first
         end
 
         def fixup?
@@ -65,6 +75,18 @@ module Git
 
         def show_command sha
           %(git show --stat --pretty=format:"#{self.class.pattern}" #{sha})
+        end
+
+        def body_without_trailing_spaces
+          body_without_comments.reverse.drop_while(&:empty?).reverse
+        end
+
+        def body_without_comments
+          body_without_trailers.split("\n").reject { |line| line.start_with? "#" }
+        end
+
+        def body_without_trailers
+          body.sub trailers, ""
         end
 
         def method_missing name, *arguments, &block
