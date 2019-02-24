@@ -92,6 +92,15 @@ module Git
           end
         end
 
+        def affected_commit_trailer_lines
+          commit.trailer_lines
+                .each.with_object([])
+                .with_index(commit.trailer_index) do |(line, lines), index|
+                  yield if block_given?
+                  lines << self.class.build_issue_line(index, line) if invalid_line? line
+                end
+        end
+
         def invalid_line? _line
           fail NotImplementedError, "The `.#{__method__}` method must be implemented."
         end
