@@ -19,17 +19,21 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   end
 
   describe "#raw_body" do
+    let :raw_body do
+      "Added example.\n" \
+      "\n" \
+      "An example paragraph.\n" \
+      "\n" \
+      "A bullet list:\n" \
+      "  - One.\n" \
+      "\n" \
+      "# A comment block.\n\n" \
+      "Example-One: 1\n" \
+      "Example-Two: 2\n"
+    end
+
     it "answers file contents" do
-      expect(unsaved_commit.raw_body).to eq(
-        "Added example.\n" \
-        "\n" \
-        "An example paragraph.\n" \
-        "\n" \
-        "A bullet list:\n" \
-        "  - One.\n" \
-        "\n" \
-        "# A comment block.\n"
-      )
+      expect(unsaved_commit.raw_body).to eq(raw_body)
     end
   end
 
@@ -78,16 +82,21 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   end
 
   describe "#body" do
+    let :body do
+      "\n" \
+      "An example paragraph.\n" \
+      "\n" \
+      "A bullet list:\n" \
+      "  - One.\n" \
+      "\n" \
+      "# A comment block.\n" \
+      "\n" \
+      "Example-One: 1\n" \
+      "Example-Two: 2\n"
+    end
+
     it "answers body from file" do
-      expect(unsaved_commit.body).to eq(
-        "\n" \
-        "An example paragraph.\n" \
-        "\n" \
-        "A bullet list:\n" \
-        "  - One.\n" \
-        "\n" \
-        "# A comment block.\n"
-      )
+      expect(unsaved_commit.body).to eq(body)
     end
 
     it "answers empty string when raw body is a single line" do
@@ -126,8 +135,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
         "An example paragraph.",
         "",
         "A bullet list:",
-        "  - One.",
-        ""
+        "  - One."
       )
     end
 
@@ -163,6 +171,59 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
     it "answers empty array when raw body is empty" do
       allow(unsaved_commit).to receive(:raw_body).and_return("")
       expect(unsaved_commit.body_paragraphs).to eq([])
+    end
+  end
+
+  describe "#trailers" do
+    it "answers trailers" do
+      expect(unsaved_commit.trailers).to eq("Example-One: 1\nExample-Two: 2\n")
+    end
+
+    context "without trailers" do
+      let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
+
+      it "answers empty string" do
+        expect(unsaved_commit.trailers).to eq("")
+      end
+    end
+  end
+
+  describe "#trailer_lines" do
+    it "answers trailer lines" do
+      expect(unsaved_commit.trailer_lines).to contain_exactly(
+        "Example-One: 1",
+        "Example-Two: 2"
+      )
+    end
+
+    context "without trailers" do
+      let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
+
+      it "answers empty array" do
+        expect(unsaved_commit.trailer_lines).to eq([])
+      end
+    end
+  end
+
+  describe "#trailer_index" do
+    it "answers index for default commit" do
+      expect(unsaved_commit.trailer_index).to eq(8)
+    end
+
+    context "with scissors commit" do
+      let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
+
+      it "answers nil" do
+        expect(unsaved_commit.trailer_index).to eq(nil)
+      end
+    end
+
+    context "with invalid commit" do
+      let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-invalid.txt" }
+
+      it "answers nil" do
+        expect(unsaved_commit.trailer_index).to eq(nil)
+      end
     end
   end
 
