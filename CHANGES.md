@@ -1,3 +1,19 @@
+# 3.1.0 (2019-03-01)
+
+- Added README Git Hook style guide.
+- Added capitalization validator.
+- Added email validator.
+- Added name validator.
+- Updated README to reference updated Runcom documentation.
+- Updated to Gemsmith 13.0.0.
+- Updated to Rubocop 0.65.0.
+- Updated to Ruby 2.6.1.
+- Removed README upgrade documentation.
+- Refactored affected commit body lines to abstract class.
+- Refactored commit author email cop to use validator.
+- Refactored commit author name capitalization cop to use validator.
+- Refactored commit author name parts cop to use validator.
+
 # 3.0.0 (2019-01-01)
 
 - Fixed Circle CI cache for Ruby version.
