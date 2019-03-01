@@ -57,6 +57,7 @@ history.
     - [Branches](#branches)
     - [Tags](#tags)
     - [Rebases](#rebases)
+    - [Hooks](#hooks)
     - [Pull Requests](#pull-requests)
     - [GitHub](#github)
   - [Tests](#tests)
@@ -733,6 +734,18 @@ worth considering:
 - Avoid rebasing a shared branch. If you must do this, clear communcation should be used to warn
   those ahead of time, ensure that all of their work is checked in, and that their local branch is
   deleted first.
+
+### Hooks
+
+- Use hooks to augment and automate your personal workflow such as checking code quality, detecting
+  forgotten debug statements, etc.
+- Use hooks globally rather than locally per project. Doing this applies the same functionality
+  across all projects automatically, reduces maintenance per project, and provides consistency
+  across all projects. This can best be managed via your
+  [Dotfiles](https://github.com/bkuhlmann/dotfiles/tree/master/home_files/.config/git/hooks).
+- Avoid forcing global or local project hooks as a team-wide mandate. Hooks are a personal tool much
+  like editors or other tools one choose to do their work. For team consistency, use a continuous
+  integration build server instead.
 
 ### Pull Requests
 
