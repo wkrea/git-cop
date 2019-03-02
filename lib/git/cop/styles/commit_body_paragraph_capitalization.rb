@@ -38,7 +38,7 @@ module Git
           klass = self.class
 
           commit.body_paragraphs.each.with_object([]).with_index do |(line, lines), index|
-            lines << klass.build_issue_line(index, line) if klass.invalid?(line)
+            lines << klass.build_issue_line(index, line) if klass.invalid? line
           end
         end
       end

@@ -19,7 +19,7 @@ module Git
 
           def shas
             result, _status = shell.capture2e %(git log --pretty=format:"%H" master..#{name})
-            result.split("\n")
+            result.split "\n"
           end
 
           private

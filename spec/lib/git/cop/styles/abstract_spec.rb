@@ -13,7 +13,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
   let(:settings) { {enabled: enabled} }
 
   let :valid_style_class do
-    Class.new(described_class) do
+    Class.new described_class do
       def valid?
         true
       end
@@ -21,7 +21,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
   end
 
   let :invalid_style_class do
-    Class.new(described_class) do
+    Class.new described_class do
       def valid?
         false
       end

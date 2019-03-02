@@ -24,7 +24,7 @@ module Git
         attr_reader :collector, :colorizer
 
         def commit_report
-          collector.to_h.reduce("") do |details, (commit, cops)|
+          collector.to_h.reduce "" do |details, (commit, cops)|
             details + Commit.new(commit: commit, cops: cops).to_s
           end
         end

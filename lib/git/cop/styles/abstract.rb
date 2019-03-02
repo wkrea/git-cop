@@ -15,7 +15,7 @@ module Git
 
         def self.inherited klass
           @descendants ||= []
-          @descendants << klass unless klass.to_s.start_with?("#<Class") # Ignore anonymous classes.
+          @descendants << klass unless klass.to_s.start_with? "#<Class" # Ignore anonymous classes.
         end
 
         def self.id
@@ -52,7 +52,7 @@ module Git
 
         def severity
           level = settings.fetch :severity
-          fail(Errors::Severity, level: level) unless LEVELS.include?(level)
+          fail Errors::Severity, level: level unless LEVELS.include? level
 
           level
         end
@@ -88,7 +88,7 @@ module Git
         def affected_commit_body_lines
           commit.body_lines.each.with_object([]).with_index do |(line, lines), index|
             yield if block_given?
-            lines << self.class.build_issue_line(index, line) if invalid_line?(line)
+            lines << self.class.build_issue_line(index, line) if invalid_line? line
           end
         end
 

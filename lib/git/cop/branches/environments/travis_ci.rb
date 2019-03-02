@@ -35,7 +35,7 @@ module Git
             prepare_project
 
             result, _status = shell.capture2e %(git log --pretty=format:"%H" origin/master..#{name})
-            result.split("\n")
+            result.split "\n"
           end
 
           private

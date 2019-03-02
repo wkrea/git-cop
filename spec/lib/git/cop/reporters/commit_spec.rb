@@ -58,7 +58,7 @@ RSpec.describe Git::Cop::Reporters::Commit do
     end
 
     context "with valid cops" do
-      subject(:commit_reporter) do
+      subject :commit_reporter do
         described_class.new commit: commit, cops: [cop_instance, cop_instance]
       end
 

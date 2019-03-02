@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
-  subject(:commit_author_name_parts_style) do
+  subject :commit_author_name_parts_style do
     described_class.new commit: commit, settings: settings
   end
 

@@ -12,7 +12,7 @@ module Git
         end
 
         def to_s
-          if content.include?("\n")
+          if content.include? "\n"
             Lines::Paragraph.new(data).to_s
           else
             Lines::Sentence.new(data).to_s

@@ -25,7 +25,7 @@ module Git
 
         def initialize sha:, shell: Open3
           data, status = shell.capture2e show_command(sha)
-          fail(Errors::SHA, sha) unless status.success?
+          fail Errors::SHA, sha unless status.success?
 
           @data = data.encode Encoding::UTF_8, invalid: :replace, undef: :replace
         end
@@ -44,11 +44,11 @@ module Git
         end
 
         def body_lines
-          body.split("\n").reject { |line| line.start_with?("#") }
+          body.split("\n").reject { |line| line.start_with? "#" }
         end
 
         def body_paragraphs
-          body.split("\n\n").map(&:chomp).reject { |line| line.start_with?("#") }
+          body.split("\n\n").map(&:chomp).reject { |line| line.start_with? "#" }
         end
 
         def fixup?
@@ -68,7 +68,7 @@ module Git
         end
 
         def method_missing name, *arguments, &block
-          return super unless respond_to_missing?(name)
+          return super unless respond_to_missing? name
 
           String data[%r(\<#{name}\>(?<content>.*?)\<\/#{name}\>)m, :content]
         end
