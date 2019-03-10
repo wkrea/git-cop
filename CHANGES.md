@@ -1,3 +1,18 @@
+# 3.2.0 (2019-03-10)
+
+- Fixed Rubocop Style/MethodCallWithArgsParentheses issues.
+- Added abstract style affected commit trailer lines.
+- Added commit trailer collaborator capitalization cop.
+- Added commit trailer collaborator duplication cop.
+- Added commit trailer collaborator email cop.
+- Added commit trailer collaborator key cop.
+- Added commit trailer collaborator name cop.
+- Added saved commit trailers.
+- Added trailer collaborator parser.
+- Added unsaved commit trailers.
+- Updated Circle CI configuration to install latest Git version.
+- Removed RSpec standard output/error suppression.
+
 # 3.1.0 (2019-03-01)
 
 - Added README Git Hook style guide.
