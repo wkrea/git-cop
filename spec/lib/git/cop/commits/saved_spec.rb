@@ -400,9 +400,71 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
     end
   end
 
+  describe "#raw_body" do
+    it "answers raw body" do
+      expect(commit.raw_body).to eq(
+        "Added test documentation.\n\n" \
+        "- Necessary for testing purposes.\n"
+      )
+    end
+
+    context "with trailers and comments" do
+      before do
+        Dir.chdir git_repo_dir do
+          `touch test.txt`
+          `git add --all .`
+          `git commit --message $'#{commit_message}'`
+        end
+      end
+
+      let :commit_message do
+        "Added test.\n\n" \
+        "An example body.\n\n" \
+        "One: 1\n" \
+        "Two: 2\n" \
+        "# A comment.\n" \
+        "# A second comment.\n"
+      end
+
+      it "answers raw body" do
+        expect(commit.raw_body).to eq(
+          "Added test.\n\n" \
+          "An example body.\n\n" \
+          "One: 1\n" \
+          "Two: 2\n" \
+          "# A comment.\n" \
+          "# A second comment.\n"
+        )
+      end
+    end
+  end
+
   describe "#trailers" do
-    it "answers empty array" do
+    it "answers empty array without trailers" do
       expect(commit.trailers).to be_empty
+    end
+
+    context "with trailers" do
+      before do
+        Dir.chdir git_repo_dir do
+          `touch test.txt`
+          `git add --all .`
+          `git commit --message $'#{commit_message}'`
+        end
+      end
+
+      let :commit_message do
+        "Added test.\n\n" \
+        "One: 1\n" \
+        "Two: 2\n"
+      end
+
+      it "answers trailers" do
+        expect(commit.trailers).to eq(
+          "One: 1\n" \
+          "Two: 2\n"
+        )
+      end
     end
   end
 
@@ -481,13 +543,6 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
 
   describe "#squash?" do
     it_behaves_like "a squash commit"
-  end
-
-  describe "#raw_body" do
-    it "answers raw body" do
-      content = "Added test documentation.\n\n- Necessary for testing purposes.\n"
-      expect(commit.raw_body).to eq(content)
-    end
   end
 
   describe "#respond_to?" do
