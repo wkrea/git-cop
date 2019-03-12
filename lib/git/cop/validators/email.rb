@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
+require "uri"
+
 module Git
   module Cop
     module Validators
       class Email
-        DEFAULT_PATTERN = /\A.+\@.+\.{1}.+\Z/.freeze
-
-        def initialize text, pattern: DEFAULT_PATTERN
+        def initialize text, pattern: URI::MailTo::EMAIL_REGEXP
           @text = text
           @pattern = pattern
         end

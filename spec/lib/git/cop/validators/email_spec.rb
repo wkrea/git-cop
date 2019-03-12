@@ -32,16 +32,16 @@ RSpec.describe Git::Cop::Validators::Email do
       end
     end
 
-    context "with missing '@' symbol" do
-      let(:text) { "example.com" }
+    context "with special characters" do
+      let(:text) { "test@invalid!~#$%^&*(){}[].com" }
 
       it "answers false" do
         expect(email.valid?).to eq(false)
       end
     end
 
-    context "with missing domain" do
-      let(:text) { "test@example" }
+    context "with missing '@' symbol" do
+      let(:text) { "example.com" }
 
       it "answers false" do
         expect(email.valid?).to eq(false)
