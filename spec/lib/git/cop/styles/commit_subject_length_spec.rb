@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitSubjectLength do
-  subject(:commit_subject_length_style) { described_class.new commit: commit, settings: settings }
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:content) { "Added test subject." }
   let(:status) { instance_double Process::Status, success?: true }
@@ -41,7 +41,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
   describe "#valid?" do
     context "when valid" do
       it "answers true" do
-        expect(commit_subject_length_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
       let(:content) { "Curabitur eleifend wisi iaculis ipsum." }
 
       it "answers false" do
-        expect(commit_subject_length_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
       let(:content) { "fixup! Curabitur eleifend wisix." }
 
       it "answers true" do
-        expect(commit_subject_length_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -65,7 +65,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
       let(:content) { "squash! Curabitur eleifend wisix." }
 
       it "answers true" do
-        expect(commit_subject_length_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -73,13 +73,13 @@ RSpec.describe Git::Cop::Styles::CommitSubjectLength do
       let(:length) { 10 }
 
       it "answers false" do
-        expect(commit_subject_length_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_subject_length_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do

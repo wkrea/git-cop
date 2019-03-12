@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
-  subject(:commit_body_bullet_capitalization_style) { described_class.new commit: commit }
+  subject(:cop) { described_class.new commit: commit }
 
   let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -39,7 +39,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       let(:body_lines) { ["- Test bullet."] }
 
       it "answers true" do
-        expect(commit_body_bullet_capitalization_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       let(:body_lines) { ["a test line."] }
 
       it "answers true" do
-        expect(commit_body_bullet_capitalization_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       let(:body_lines) { [] }
 
       it "answers true" do
-        expect(commit_body_bullet_capitalization_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       let(:body_lines) { ["-test bullet."] }
 
       it "answers true" do
-        expect(commit_body_bullet_capitalization_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       let(:body_lines) { ["- test bullet."] }
 
       it "answers false" do
-        expect(commit_body_bullet_capitalization_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -79,13 +79,13 @@ RSpec.describe Git::Cop::Styles::CommitBodyBulletCapitalization do
       let(:body_lines) { ["  - test bullet."] }
 
       it "answers false" do
-        expect(commit_body_bullet_capitalization_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_body_bullet_capitalization_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       let(:body_lines) { [] }

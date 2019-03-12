@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
-  subject(:commit_author_email_style) { described_class.new commit: commit }
+  subject(:cop) { described_class.new commit: commit }
 
   let(:email) { "test@example.com" }
   let(:status) { instance_double Process::Status, success?: true }
@@ -39,7 +39,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
       let(:email) { "test@example.com" }
 
       it "answers true" do
-        expect(commit_author_email_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -47,13 +47,13 @@ RSpec.describe Git::Cop::Styles::CommitAuthorEmail do
       let(:email) { "invalid" }
 
       it "answers false" do
-        expect(commit_author_email_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_author_email_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do

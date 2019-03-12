@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
-  subject(:commit_subject_prefix_style) { described_class.new commit: commit, settings: settings }
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:content) { "Added test file." }
   let(:status) { instance_double Process::Status, success?: true }
@@ -40,7 +40,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
   describe "#valid?" do
     context "with no issues" do
       it "answers true" do
-        expect(commit_subject_prefix_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       let(:include) { [] }
 
       it "answers true" do
-        expect(commit_subject_prefix_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       end
 
       it "answers true" do
-        expect(commit_subject_prefix_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       end
 
       it "answers true" do
-        expect(commit_subject_prefix_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -83,7 +83,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       let(:content) { "Bogus subject line." }
 
       it "answers false" do
-        expect(commit_subject_prefix_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       before { allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(false) }
 
       it "answers false" do
-        expect(commit_subject_prefix_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -103,13 +103,13 @@ RSpec.describe Git::Cop::Styles::CommitSubjectPrefix do
       before { allow(commit).to receive(:is_a?).with(Git::Cop::Commits::Unsaved).and_return(false) }
 
       it "answers false" do
-        expect(commit_subject_prefix_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_subject_prefix_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty string" do

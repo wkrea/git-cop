@@ -3,9 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
-  subject :commit_author_name_parts_style do
-    described_class.new commit: commit, settings: settings
-  end
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:name) { "Example Tester" }
   let(:status) { instance_double Process::Status, success?: true }
@@ -45,7 +43,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
       let(:name) { "Test Example" }
 
       it "answers true" do
-        expect(commit_author_name_parts_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -54,7 +52,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
       let(:minimum) { 1 }
 
       it "answers true" do
-        expect(commit_author_name_parts_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -62,13 +60,13 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
       let(:name) { "Invalid" }
 
       it "answers false" do
-        expect(commit_author_name_parts_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_author_name_parts_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do

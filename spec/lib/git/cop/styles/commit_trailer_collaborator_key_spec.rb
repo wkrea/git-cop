@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorKey do
-  subject(:commit_trailer_collaborator_key_style) { described_class.new commit: commit }
+  subject(:cop) { described_class.new commit: commit }
 
   let(:status) { instance_double Process::Status, success?: true }
   let(:shell) { class_spy Open3, capture2e: ["", status] }
@@ -41,7 +41,7 @@ RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorKey do
       let(:trailer_lines) { ["Unknown: value"] }
 
       it "answers true" do
-        expect(commit_trailer_collaborator_key_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorKey do
       let(:trailer_lines) { ["Co-Authored-By:"] }
 
       it "answers true" do
-        expect(commit_trailer_collaborator_key_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorKey do
       let(:trailer_lines) { ["Co-Authored-By: Test Example <test@example.com>"] }
 
       it "answers true" do
-        expect(commit_trailer_collaborator_key_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -65,7 +65,7 @@ RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorKey do
       let(:trailer_lines) { ["Co-authored-by:"] }
 
       it "answers false" do
-        expect(commit_trailer_collaborator_key_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -73,13 +73,13 @@ RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorKey do
       let(:trailer_lines) { ["Co-authored-by: Test Example <test@example.com>"] }
 
       it "answers false" do
-        expect(commit_trailer_collaborator_key_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_trailer_collaborator_key_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       let(:trailer_lines) { ["Co-Authored-By: Test Example <test@example.com>"] }

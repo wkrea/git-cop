@@ -3,9 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
-  subject :commit_author_name_capitalization_style do
-    described_class.new commit: commit, settings: settings
-  end
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:name) { "Example Tester" }
   let(:status) { instance_double Process::Status, success?: true }
@@ -44,7 +42,7 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "Example Test" }
 
       it "answers true" do
-        expect(commit_author_name_capitalization_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -52,13 +50,13 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
       let(:name) { "Example test" }
 
       it "answers false" do
-        expect(commit_author_name_capitalization_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_author_name_capitalization_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do

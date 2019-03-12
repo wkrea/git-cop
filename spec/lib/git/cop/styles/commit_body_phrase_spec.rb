@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
-  subject(:commit_body_phrase_style) { described_class.new commit: commit, settings: settings }
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:body_lines) { ["This is an example of a commit message body."] }
   let(:status) { instance_double Process::Status, success?: true }
@@ -69,7 +69,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
 
   describe "#valid?" do
     it "answers true when valid" do
-      expect(commit_body_phrase_style.valid?).to eq(true)
+      expect(cop.valid?).to eq(true)
     end
 
     context "with excluded word (mixed case)" do
@@ -77,7 +77,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, basically."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["Just for test purposes."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["Adjusted for testing purposes."] }
 
       it "answers true" do
-        expect(commit_body_phrase_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, obviously."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -129,7 +129,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, Obviously."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, of course."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -145,7 +145,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
       let(:body_lines) { ["This will fail, Of Course."] }
 
       it "answers false" do
-        expect(commit_body_phrase_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -187,16 +187,16 @@ RSpec.describe Git::Cop::Styles::CommitBodyPhrase do
           shell = class_spy Open3, capture2e: ["", status]
           commit = object_double Git::Cop::Commits::Saved.new(sha: "1", shell: shell),
                                  body_lines: [phrase]
-          commit_body_phrase_style = described_class.new commit: commit
+          cop = described_class.new commit: commit
 
-          expect(commit_body_phrase_style.valid?).to eq(false)
+          expect(cop.valid?).to eq(false)
         end
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_body_phrase_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do

@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::Abstract do
-  subject(:abstract_style) { described_class.new commit: commit, settings: settings }
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:sha) { "123" }
   let(:status) { instance_double Process::Status, success?: true }
@@ -91,7 +91,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:enabled) { true }
 
       it "answers true" do
-        expect(abstract_style.enabled?).to eq(true)
+        expect(cop.enabled?).to eq(true)
       end
     end
 
@@ -99,7 +99,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:enabled) { false }
 
       it "answers false" do
-        expect(abstract_style.enabled?).to eq(false)
+        expect(cop.enabled?).to eq(false)
       end
     end
   end
@@ -109,7 +109,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:settings) { {severity: :error} }
 
       it "answers severity" do
-        expect(abstract_style.severity).to eq(:error)
+        expect(cop.severity).to eq(:error)
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:settings) { Hash.new }
 
       it "fails with key error" do
-        result = -> { abstract_style.severity }
+        result = -> { cop.severity }
         expect(&result).to raise_error(KeyError)
       end
     end
@@ -126,7 +126,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
       let(:settings) { {severity: :bogus} }
 
       it "fails with invalid severity error" do
-        result = -> { abstract_style.severity }
+        result = -> { cop.severity }
         expect(&result).to raise_error(Git::Cop::Errors::Severity)
       end
     end
@@ -134,7 +134,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
 
   describe "#valid?" do
     it "fails with NotImplementedError" do
-      result = -> { abstract_style.valid? }
+      result = -> { cop.valid? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
@@ -149,7 +149,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
 
     it "fails with NotImplementedError when not implemented" do
-      result = -> { abstract_style.invalid? }
+      result = -> { cop.invalid? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
@@ -166,7 +166,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
 
     it "fails with NotImplementedError when not implemented" do
-      result = -> { abstract_style.warning? }
+      result = -> { cop.warning? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
@@ -183,14 +183,14 @@ RSpec.describe Git::Cop::Styles::Abstract do
     end
 
     it "fails with NotImplementedError when not implemented" do
-      result = -> { abstract_style.error? }
+      result = -> { cop.error? }
       expect(&result).to raise_error(NotImplementedError, /.+\#valid\?.+/)
     end
   end
 
   describe "#issue" do
     it "fails with NotImplementedError" do
-      result = -> { abstract_style.issue }
+      result = -> { cop.issue }
       expect(&result).to raise_error(NotImplementedError, /.+\#issue.+/)
     end
   end

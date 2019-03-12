@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
-  subject(:commit_body_line_length_style) { described_class.new commit: commit, settings: settings }
+  subject(:cop) { described_class.new commit: commit, settings: settings }
 
   let(:body_lines) { ["Curabitur eleifend wisi iaculis ipsum."] }
   let(:status) { instance_double Process::Status, success?: true }
@@ -41,7 +41,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
   describe "#valid?" do
     context "when valid" do
       it "answers true" do
-        expect(commit_body_line_length_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
       end
 
       it "answers false" do
-        expect(commit_body_line_length_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -65,13 +65,13 @@ RSpec.describe Git::Cop::Styles::CommitBodyLineLength do
       end
 
       it "answers false" do
-        expect(commit_body_line_length_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_body_line_length_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do

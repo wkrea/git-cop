@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Styles::CommitBodyBullet do
-  subject(:commit_body_bullet_style) { described_class.new commit: commit }
+  subject(:cop) { described_class.new commit: commit }
 
   let(:body_lines) { ["- Test message."] }
   let(:status) { instance_double Process::Status, success?: true }
@@ -37,14 +37,14 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
 
   describe "#valid?" do
     it "answers true when valid" do
-      expect(commit_body_bullet_style.valid?).to eq(true)
+      expect(cop.valid?).to eq(true)
     end
 
     context "without bullet" do
       let(:body) { "Test message." }
 
       it "answers true" do
-        expect(commit_body_bullet_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       let(:body_lines) { ["", " ", "\n"] }
 
       it "answers true" do
-        expect(commit_body_bullet_style.valid?).to eq(true)
+        expect(cop.valid?).to eq(true)
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       let(:body_lines) { ["* Test message."] }
 
       it "answers false" do
-        expect(commit_body_bullet_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       let(:body_lines) { ["•   Test message."] }
 
       it "answers false" do
-        expect(commit_body_bullet_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
 
@@ -76,13 +76,13 @@ RSpec.describe Git::Cop::Styles::CommitBodyBullet do
       let(:body_lines) { ["  • Test message."] }
 
       it "answers false" do
-        expect(commit_body_bullet_style.valid?).to eq(false)
+        expect(cop.valid?).to eq(false)
       end
     end
   end
 
   describe "#issue" do
-    let(:issue) { commit_body_bullet_style.issue }
+    let(:issue) { cop.issue }
 
     context "when valid" do
       it "answers empty hash" do
