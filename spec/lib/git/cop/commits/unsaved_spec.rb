@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
-  subject(:unsaved_commit) { described_class.new path: path }
+  subject(:commit) { described_class.new path: path }
 
   let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-valid.txt" }
 
@@ -33,20 +33,20 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
     end
 
     it "answers file contents" do
-      expect(unsaved_commit.raw_body).to eq(raw_body)
+      expect(commit.raw_body).to eq(raw_body)
     end
   end
 
   describe "#sha" do
     it "answers random SHA" do
-      expect(unsaved_commit.sha).to match(/[0-9a-f]{40}/)
+      expect(commit.sha).to match(/[0-9a-f]{40}/)
     end
   end
 
   describe "#author_name" do
     it "answers name" do
       Dir.chdir git_repo_dir do
-        expect(unsaved_commit.author_name).to eq("Test Example")
+        expect(commit.author_name).to eq("Test Example")
       end
     end
   end
@@ -54,30 +54,30 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
   describe "#author_email" do
     it "answers email address" do
       Dir.chdir git_repo_dir do
-        expect(unsaved_commit.author_email).to eq("test@example.com")
+        expect(commit.author_email).to eq("test@example.com")
       end
     end
   end
 
   describe "#author_date_relative" do
     it "answers zero seconds" do
-      expect(unsaved_commit.author_date_relative).to eq("0 seconds ago")
+      expect(commit.author_date_relative).to eq("0 seconds ago")
     end
   end
 
   describe "#subject" do
     it "answers subject from file" do
-      expect(unsaved_commit.subject).to eq("Added example.")
+      expect(commit.subject).to eq("Added example.")
     end
 
     it "answers raw body when raw body is a single line" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("A test body.")
-      expect(unsaved_commit.subject).to eq("A test body.")
+      allow(commit).to receive(:raw_body).and_return("A test body.")
+      expect(commit.subject).to eq("A test body.")
     end
 
     it "answers empty string when raw body is empty" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("")
-      expect(unsaved_commit.subject).to eq("")
+      allow(commit).to receive(:raw_body).and_return("")
+      expect(commit.subject).to eq("")
     end
   end
 
@@ -96,29 +96,29 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
     end
 
     it "answers body from file" do
-      expect(unsaved_commit.body).to eq(body)
+      expect(commit.body).to eq(body)
     end
 
     it "answers empty string when raw body is a single line" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("A test body.")
-      expect(unsaved_commit.body).to eq("")
+      allow(commit).to receive(:raw_body).and_return("A test body.")
+      expect(commit.body).to eq("")
     end
 
     it "answers body when raw body has multiple lines" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("A test subject.\nA test body.\n")
-      expect(unsaved_commit.body).to eq("A test body.\n")
+      allow(commit).to receive(:raw_body).and_return("A test subject.\nA test body.\n")
+      expect(commit.body).to eq("A test body.\n")
     end
 
     it "answers empty string when raw body is empty" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("")
-      expect(unsaved_commit.body).to eq("")
+      allow(commit).to receive(:raw_body).and_return("")
+      expect(commit.body).to eq("")
     end
 
     context "with scissor content" do
       let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
 
       it "answers body, ignoring scissor content" do
-        expect(unsaved_commit.body).to eq(
+        expect(commit.body).to eq(
           "\n" \
           "A fixture for commits made via `git commit --verbose` which include\n" \
           "scissor-related content.\n\n" \
@@ -130,7 +130,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
 
   describe "#body_lines" do
     it "answers body lines with comments ignored" do
-      expect(unsaved_commit.body_lines).to contain_exactly(
+      expect(commit.body_lines).to contain_exactly(
         "",
         "An example paragraph.",
         "",
@@ -140,57 +140,57 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
     end
 
     it "answers body line with no leading line after subject" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("A test subject.\nA test body.\n")
-      expect(unsaved_commit.body_lines).to contain_exactly("A test body.")
+      allow(commit).to receive(:raw_body).and_return("A test subject.\nA test body.\n")
+      expect(commit.body_lines).to contain_exactly("A test body.")
     end
 
     it "answers empty array when raw body is a single line" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("A test body.")
-      expect(unsaved_commit.body_lines).to eq([])
+      allow(commit).to receive(:raw_body).and_return("A test body.")
+      expect(commit.body_lines).to eq([])
     end
 
     it "answers empty array when raw body is empty" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("")
-      expect(unsaved_commit.body_lines).to eq([])
+      allow(commit).to receive(:raw_body).and_return("")
+      expect(commit.body_lines).to eq([])
     end
   end
 
   describe "#body_paragraphs" do
     it "answers paragraphs with comments ignored" do
-      expect(unsaved_commit.body_paragraphs).to contain_exactly(
+      expect(commit.body_paragraphs).to contain_exactly(
         "An example paragraph.",
         "A bullet list:\n  - One."
       )
     end
 
     it "answers empty array when raw body is single line" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("A test body.")
-      expect(unsaved_commit.body_paragraphs).to eq([])
+      allow(commit).to receive(:raw_body).and_return("A test body.")
+      expect(commit.body_paragraphs).to eq([])
     end
 
     it "answers empty array when raw body is empty" do
-      allow(unsaved_commit).to receive(:raw_body).and_return("")
-      expect(unsaved_commit.body_paragraphs).to eq([])
+      allow(commit).to receive(:raw_body).and_return("")
+      expect(commit.body_paragraphs).to eq([])
     end
   end
 
   describe "#trailers" do
     it "answers trailers" do
-      expect(unsaved_commit.trailers).to eq("Example-One: 1\nExample-Two: 2\n")
+      expect(commit.trailers).to eq("Example-One: 1\nExample-Two: 2\n")
     end
 
     context "without trailers" do
       let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
 
       it "answers empty string" do
-        expect(unsaved_commit.trailers).to eq("")
+        expect(commit.trailers).to eq("")
       end
     end
   end
 
   describe "#trailer_lines" do
     it "answers trailer lines" do
-      expect(unsaved_commit.trailer_lines).to contain_exactly(
+      expect(commit.trailer_lines).to contain_exactly(
         "Example-One: 1",
         "Example-Two: 2"
       )
@@ -200,21 +200,21 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
       let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
 
       it "answers empty array" do
-        expect(unsaved_commit.trailer_lines).to eq([])
+        expect(commit.trailer_lines).to eq([])
       end
     end
   end
 
   describe "#trailer_index" do
     it "answers index for default commit" do
-      expect(unsaved_commit.trailer_index).to eq(8)
+      expect(commit.trailer_index).to eq(8)
     end
 
     context "with scissors commit" do
       let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-scissors.txt" }
 
       it "answers nil" do
-        expect(unsaved_commit.trailer_index).to eq(nil)
+        expect(commit.trailer_index).to eq(nil)
       end
     end
 
@@ -222,21 +222,17 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
       let(:path) { "#{Bundler.root}/spec/support/fixtures/commit-invalid.txt" }
 
       it "answers nil" do
-        expect(unsaved_commit.trailer_index).to eq(nil)
+        expect(commit.trailer_index).to eq(nil)
       end
     end
   end
 
   describe "#fixup?" do
-    it_behaves_like "a fixup commit" do
-      let(:commit) { unsaved_commit }
-    end
+    it_behaves_like "a fixup commit"
   end
 
   describe "#squash?" do
-    it_behaves_like "a squash commit" do
-      let(:commit) { unsaved_commit }
-    end
+    it_behaves_like "a squash commit"
   end
 
   describe "commits with invalid encoding" do
