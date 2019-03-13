@@ -54,6 +54,7 @@ RSpec.describe Git::Cop::Styles::Abstract do
     # rubocop:disable RSpec/ExampleLength
     it "answers descendant classes" do
       expect(described_class.descendants).to contain_exactly(
+        Git::Cop::Styles::CommitAuthorCapitalization,
         Git::Cop::Styles::CommitAuthorEmail,
         Git::Cop::Styles::CommitAuthorName,
         Git::Cop::Styles::CommitAuthorNameCapitalization,

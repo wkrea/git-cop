@@ -35,6 +35,7 @@ history.
       - [Circle CI](#circle-ci)
       - [Travis CI](#travis-ci)
   - [Cops](#cops)
+    - [Commit Author Capitalization](#commit-author-capitalization)
     - [Commit Author Email](#commit-author-email)
     - [Commit Author Name](#commit-author-name)
     - [Commit Author Name Capitalization](#commit-author-name-capitalization)
@@ -111,6 +112,9 @@ as provided by the [Runcom](https://github.com/bkuhlmann/runcom) gem.
 
 The default configuration is:
 
+    :commit_author_capitalization:
+      :enabled: true
+      :severity: :error
     :commit_author_email:
       :enabled: true
       :severity: :error
@@ -416,6 +420,22 @@ by checking the `TRAVIS` environment variable. No additional setup required!
 
 The following details the various cops provided by this gem to ensure a high standard of commits for
 your project.
+
+### Commit Author Capitalization
+
+| Enabled | Severity | Defaults |
+|---------|----------|----------|
+| true    | error    | none     |
+
+Ensures auther name is properly capitalized. Example:
+
+    # Disallowed
+    jayne cobb
+    dr. simon tam
+
+    # Allowed
+    Jayne Cobb
+    Dr. Simon Tam
 
 ### Commit Author Email
 
