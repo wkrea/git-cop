@@ -36,6 +36,7 @@ history.
       - [Travis CI](#travis-ci)
   - [Cops](#cops)
     - [Commit Author Email](#commit-author-email)
+    - [Commit Author Name](#commit-author-name)
     - [Commit Author Name Capitalization](#commit-author-name-capitalization)
     - [Commit Author Name Parts](#commit-author-name-parts)
     - [Commit Body Bullet](#commit-body-bullet)
@@ -113,6 +114,10 @@ The default configuration is:
     :commit_author_email:
       :enabled: true
       :severity: :error
+    :commit_author_name:
+      :enabled: true
+      :severity: :error
+      :minimum: 2
     :commit_author_name_capitalization:
       :enabled: true
       :severity: :error
@@ -426,6 +431,20 @@ too. This takes it a step further to ensure the email address loosely resembles 
 
     # Allowed
     jayne@serenity.com
+
+### Commit Author Name
+
+| Enabled | Severity |  Defaults  |
+|---------|----------|------------|
+| true    | error    | minimum: 2 |
+
+Ensures author name consists of, at least, a first and last name. Example:
+
+    # Disallowed
+    Kaylee
+
+    # Allowed
+    Kaywinnet Lee Frye
 
 ### Commit Author Name Capitalization
 
