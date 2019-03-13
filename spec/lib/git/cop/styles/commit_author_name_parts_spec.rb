@@ -31,14 +31,19 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameParts do
   describe ".defaults" do
     it "answers defaults" do
       expect(described_class.defaults).to eq(
-        enabled: true,
-        severity: :error,
+        enabled: false,
+        severity: :warn,
         minimum: 2
       )
     end
   end
 
   describe "#valid?" do
+    it "prints deprecation warning" do
+      expectation = -> { cop.valid? }
+      expect(&expectation).to output(/DEPRECATION/).to_stderr
+    end
+
     context "with valid name" do
       let(:name) { "Test Example" }
 

@@ -122,8 +122,8 @@ The default configuration is:
       :enabled: true
       :severity: :error
     :commit_author_name_parts:
-      :enabled: true
-      :severity: :error
+      :enabled: false
+      :severity: :warn
       :minimum: 2
     :commit_body_bullet:
       :enabled: true
@@ -466,7 +466,10 @@ Ensures auther name is properly capitalized. Example:
 
 | Enabled | Severity |  Defaults  |
 |---------|----------|------------|
-| true    | error    | minimum: 2 |
+| false   | warn     | minimum: 2 |
+
+:warning: **This has been deprecated and will be removed in 4.0.0. Use *Commit Author Name*
+instead.**
 
 Ensures author name consists of, at least, a first and last name. Example:
 

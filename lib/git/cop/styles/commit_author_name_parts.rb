@@ -6,8 +6,8 @@ module Git
       class CommitAuthorNameParts < Abstract
         def self.defaults
           {
-            enabled: true,
-            severity: :error,
+            enabled: false,
+            severity: :warn,
             minimum: 2
           }
         end
@@ -18,6 +18,8 @@ module Git
         end
 
         def valid?
+          warn "[DEPRECATION]: Commit Author Name Parts is deprecated, " \
+               "use Commit Author Name instead."
           validator.new(commit.author_name, minimum: minimum).valid?
         end
 
