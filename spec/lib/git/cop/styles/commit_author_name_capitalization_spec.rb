@@ -31,13 +31,18 @@ RSpec.describe Git::Cop::Styles::CommitAuthorNameCapitalization do
   describe ".defaults" do
     it "answers defaults" do
       expect(described_class.defaults).to eq(
-        enabled: true,
-        severity: :error
+        enabled: false,
+        severity: :warn
       )
     end
   end
 
   describe "#valid?" do
+    it "prints deprecation warning" do
+      expectation = -> { cop.valid? }
+      expect(&expectation).to output(/DEPRECATION/).to_stderr
+    end
+
     context "with capitalization" do
       let(:name) { "Example Test" }
 

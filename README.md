@@ -123,8 +123,8 @@ The default configuration is:
       :severity: :error
       :minimum: 2
     :commit_author_name_capitalization:
-      :enabled: true
-      :severity: :error
+      :enabled: false
+      :severity: :warn
     :commit_author_name_parts:
       :enabled: false
       :severity: :warn
@@ -470,7 +470,10 @@ Ensures author name consists of, at least, a first and last name. Example:
 
 | Enabled | Severity | Defaults |
 |---------|----------|----------|
-| true    | error    | none     |
+| false   | warn     | none     |
+
+:warning: **This has been deprecated and will be removed in 4.0.0. Use *Commit Author
+Capitalization* instead.**
 
 Ensures auther name is properly capitalized. Example:
 

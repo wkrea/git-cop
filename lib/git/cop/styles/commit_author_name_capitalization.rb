@@ -6,8 +6,8 @@ module Git
       class CommitAuthorNameCapitalization < Abstract
         def self.defaults
           {
-            enabled: true,
-            severity: :error
+            enabled: false,
+            severity: :warn
           }
         end
 
@@ -17,6 +17,8 @@ module Git
         end
 
         def valid?
+          warn "[DEPRECATION]: Commit Author Name Capitalization is deprecated, " \
+               "use Commit Author Capitalization instead."
           validator.new(commit.author_name).valid?
         end
 
