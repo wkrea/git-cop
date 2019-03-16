@@ -244,7 +244,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         Dir.chdir git_repo_dir do
           `touch multi.txt`
           `git add --all .`
-          `git commit --message $'#{commit_message}'`
+          `git commit --message '#{commit_message}'`
         end
       end
 
@@ -260,7 +260,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       Dir.chdir git_repo_dir do
         `touch test.txt`
         `git add --all .`
-        `git commit --message $'#{commit_message}'`
+        `git commit --message '#{commit_message}'`
       end
     end
 
@@ -332,7 +332,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       Dir.chdir git_repo_dir do
         `touch test.txt`
         `git add --all .`
-        `git commit --message $'#{commit_message}'`
+        `git commit --message '#{commit_message}'`
       end
     end
 
@@ -413,7 +413,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         Dir.chdir git_repo_dir do
           `touch test.txt`
           `git add --all .`
-          `git commit --message $'#{commit_message}'`
+          `git commit --message '#{commit_message}'`
         end
       end
 
@@ -427,14 +427,16 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       end
 
       it "answers raw body" do
-        expect(commit.raw_body).to eq(
-          "Added test.\n\n" \
-          "An example body.\n\n" \
-          "One: 1\n" \
-          "Two: 2\n" \
-          "# A comment.\n" \
-          "# A second comment.\n"
-        )
+        Dir.chdir git_repo_dir do
+          expect(commit.raw_body).to eq(
+            "Added test.\n\n" \
+            "An example body.\n\n" \
+            "One: 1\n" \
+            "Two: 2\n" \
+            "# A comment.\n" \
+            "# A second comment.\n"
+          )
+        end
       end
     end
   end
@@ -449,7 +451,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         Dir.chdir git_repo_dir do
           `touch test.txt`
           `git add --all .`
-          `git commit --message $'#{commit_message}'`
+          `git commit --message '#{commit_message}'`
         end
       end
 
@@ -473,7 +475,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
       Dir.chdir git_repo_dir do
         `touch test.txt`
         `git add --all .`
-        `git commit --message $'#{commit_message}'`
+        `git commit --message '#{commit_message}'`
       end
     end
 
@@ -525,7 +527,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         Dir.chdir git_repo_dir do
           `touch test.txt`
           `git add --all .`
-          `git commit --message $'#{commit_message}'`
+          `git commit --message '#{commit_message}'`
         end
       end
 
