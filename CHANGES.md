@@ -1,3 +1,17 @@
+# 3.3.0 (2019-03-16)
+
+- Fixed Commit Trailer Collaborator Email cop email handling.
+- Added Commit Author Capitalization cop.
+- Added Commit Author Name cop.
+- Added additional saved commit specs for raw body and trailers.
+- Updated Commit Author Name Capitalization cop to deprecated status.
+- Updated Commit Author Name Parts cop to deprecated status.
+- Updated email validator to use URI regular expression.
+- Updated to Ruby 2.6.2.
+- Refactored commit specs to use commit as subject.
+- Refactored commit to scrub erroneous encodings.
+- Refactored style specs to use cop as subject.
+
 # 3.2.0 (2019-03-10)
 
 - Fixed Rubocop Style/MethodCallWithArgsParentheses issues.
