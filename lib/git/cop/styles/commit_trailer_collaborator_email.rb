@@ -40,7 +40,7 @@ module Git
 
         def invalid_line? line
           collaborator = parser.new line
-          collaborator.match? && !validator.new(line).valid?
+          collaborator.match? && !validator.new(collaborator.email).valid?
         end
 
         private

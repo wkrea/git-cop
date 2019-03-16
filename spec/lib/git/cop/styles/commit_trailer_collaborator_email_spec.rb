@@ -52,24 +52,8 @@ RSpec.describe Git::Cop::Styles::CommitTrailerCollaboratorEmail do
       end
     end
 
-    context "with subdomain" do
-      let(:trailer_lines) { ["Co-Authored-By: Test Example <test@test.example.com>"] }
-
-      it "answers true" do
-        expect(cop.valid?).to eq(true)
-      end
-    end
-
-    context "with missing '@' symbol" do
-      let(:trailer_lines) { ["Co-Authored-By: Test Example <example.com>"] }
-
-      it "answers false" do
-        expect(cop.valid?).to eq(false)
-      end
-    end
-
-    context "with missing domain" do
-      let(:trailer_lines) { ["Co-Authored-By: Test Example <test@examplecom>"] }
+    context "with invalid email" do
+      let(:trailer_lines) { ["Co-Authored-By: Test Example <invalid>"] }
 
       it "answers false" do
         expect(cop.valid?).to eq(false)
