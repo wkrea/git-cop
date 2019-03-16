@@ -564,7 +564,7 @@ RSpec.describe Git::Cop::Commits::Saved, :git_repo do
         `touch example.txt`
         `git add --all .`
         `git commit -m "Added \210\221\332\332\337\341\341."`
-        commit = -> { described_class.new(sha: sha).body }
+        commit = -> { described_class.new(sha: sha).subject }
 
         expect(&commit).not_to raise_error
       end

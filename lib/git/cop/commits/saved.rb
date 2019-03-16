@@ -29,7 +29,7 @@ module Git
           data, status = shell.capture2e show_command(sha)
           fail Errors::SHA, sha unless status.success?
 
-          @data = data.encode Encoding::UTF_8, invalid: :replace, undef: :replace
+          @data = data.scrub "?"
         end
 
         def == other

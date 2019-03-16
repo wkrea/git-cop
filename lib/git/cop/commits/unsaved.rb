@@ -23,7 +23,7 @@ module Git
           @path = Pathname path
           @sha = sha
           @shell = shell
-          @raw_body = File.read(path).encode Encoding::UTF_8, invalid: :replace, undef: :replace
+          @raw_body = File.read(path).scrub "?"
         end
 
         def author_name

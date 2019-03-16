@@ -239,7 +239,7 @@ RSpec.describe Git::Cop::Commits::Unsaved, :git_repo do
     it "doesn't fail with argument error" do
       path = "#{temp_dir}/invalid_commit.txt"
       File.open(path, "w") { |file| file.write "Added \210\221\332\332\337\341\341." }
-      commit = -> { described_class.new(path: path).body }
+      commit = -> { described_class.new(path: path).subject }
 
       expect(&commit).not_to raise_error
     end
