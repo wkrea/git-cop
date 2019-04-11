@@ -7,19 +7,25 @@ RSpec.describe Git::Cop::Branches::Feature do
 
   describe ".environment" do
     it "answers local environment" do
-      ClimateControl.modify CIRCLECI: "false", TRAVIS: "false" do
+      ClimateControl.modify CIRCLECI: "false", DEPLOY_URL: "false", TRAVIS: "false" do
         expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::Local)
       end
     end
 
     it "answers Circle CI environment" do
-      ClimateControl.modify CIRCLECI: "true", TRAVIS: "false" do
+      ClimateControl.modify CIRCLECI: "true", DEPLOY_URL: "false", TRAVIS: "false" do
         expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::CircleCI)
       end
     end
 
+    it "answers Netlify environment" do
+      ClimateControl.modify CIRCLECI: "false", DEPLOY_URL: "netlify", TRAVIS: "false" do
+        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::NetlifyCI)
+      end
+    end
+
     it "answers Travis CI environment" do
-      ClimateControl.modify CIRCLECI: "false", TRAVIS: "true" do
+      ClimateControl.modify CIRCLECI: "false", DEPLOY_URL: "false", TRAVIS: "true" do
         expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::TravisCI)
       end
     end

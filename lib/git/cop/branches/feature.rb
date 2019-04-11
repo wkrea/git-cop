@@ -14,6 +14,8 @@ module Git
         def self.environment
           if ENV["CIRCLECI"] == "true"
             Environments::CircleCI.new
+          elsif String(ENV["DEPLOY_URL"]).include?("netlify")
+            Environments::NetlifyCI.new
           elsif ENV["TRAVIS"] == "true"
             Environments::TravisCI.new
           else
