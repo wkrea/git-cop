@@ -10,6 +10,7 @@
 
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/git-cop.svg?style=svg)](https://circleci.com/gh/bkuhlmann/git-cop)
 [![Travis CI Status](https://travis-ci.org/bkuhlmann/git-cop.svg?branch=master)](https://travis-ci.org/bkuhlmann/git-cop)
+[![Netlify CI Status](https://api.netlify.com/api/v1/badges/d4a15c9c-46ba-49db-9f31-33f389ee3259/deploy-status)](https://app.netlify.com/sites/git-cop/deploys)
 
 Enforces Git rebase workflow with consistent Git commits for a clean and easy to read/debug project
 history.
