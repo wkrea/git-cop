@@ -3,33 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Feature do
-  subject(:feature_branch) { described_class.new }
+  subject(:feature_branch) { described_class.new environment: environment }
 
-  describe ".environment" do
-    it "answers local environment" do
-      ClimateControl.modify CIRCLECI: "false", DEPLOY_URL: "false", TRAVIS: "false" do
-        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::Local)
-      end
-    end
-
-    it "answers Circle CI environment" do
-      ClimateControl.modify CIRCLECI: "true", DEPLOY_URL: "false", TRAVIS: "false" do
-        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::CircleCI)
-      end
-    end
-
-    it "answers Netlify environment" do
-      ClimateControl.modify CIRCLECI: "false", DEPLOY_URL: "netlify", TRAVIS: "false" do
-        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::NetlifyCI)
-      end
-    end
-
-    it "answers Travis CI environment" do
-      ClimateControl.modify CIRCLECI: "false", DEPLOY_URL: "false", TRAVIS: "true" do
-        expect(described_class.environment).to be_a(Git::Cop::Branches::Environments::TravisCI)
-      end
-    end
-  end
+  let(:environment) { {} }
 
   describe ".initialize", :temp_dir do
     let(:git_repo) { class_spy Git::Kit::Repo, exist?: exist }
@@ -57,6 +33,57 @@ RSpec.describe Git::Cop::Branches::Feature do
   end
 
   describe "#name" do
+    context "with Circle CI environments", :git_repo do
+      let :environment do
+        {
+          "CIRCLECI" => "true",
+          "TRAVIS" => "false"
+        }
+      end
+
+      it "answers name" do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test`
+          expect(feature_branch.name).to eq("origin/test")
+        end
+      end
+    end
+
+    context "with Netlify CI environments", :git_repo do
+      let :environment do
+        {
+          "CIRCLECI" => "false",
+          "DEPLOY_URL" => "http://www.example.com/netlify/path",
+          "COMMIT_REF" => "test",
+          "TRAVIS" => "false"
+        }
+      end
+
+      it "answers name" do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test`
+          expect(feature_branch.name).to eq("test")
+        end
+      end
+    end
+
+    context "with Travis CI environments", :git_repo do
+      let :environment do
+        {
+          "CIRCLECI" => "false",
+          "TRAVIS" => "true",
+          "TRAVIS_PULL_REQUEST_BRANCH" => "test"
+        }
+      end
+
+      it "answers name" do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test`
+          expect(feature_branch.name).to eq("test")
+        end
+      end
+    end
+
     context "with local environment", :git_repo do
       before do
         Dir.chdir git_repo_dir do
