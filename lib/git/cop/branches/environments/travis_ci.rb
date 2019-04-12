@@ -6,44 +6,30 @@ module Git
   module Cop
     module Branches
       module Environments
-        # Provides feature branch information for Travis CI build environment.
+        # Provides Travis CI build environment feature branch information.
         class TravisCI
-          def self.ci_branch
-            ENV["TRAVIS_BRANCH"]
-          end
-
-          def self.pull_request_branch
-            ENV["TRAVIS_PULL_REQUEST_BRANCH"]
-          end
-
-          def self.pull_request_slug
-            ENV["TRAVIS_PULL_REQUEST_SLUG"]
-          end
-
-          def initialize shell: Open3
+          def initialize environment: ENV, shell: Open3
+            @environment = environment
             @shell = shell
           end
 
           def name
-            klass = self.class
-            pull_request_branch = klass.pull_request_branch
-
-            pull_request_branch.empty? ? klass.ci_branch : pull_request_branch
+            pull_request_branch.empty? ? ci_branch : pull_request_branch
           end
 
           def shas
             prepare_project
 
-            result, _status = shell.capture2e %(git log --pretty=format:"%H" origin/master..#{name})
-            result.split "\n"
+            shell.capture2e(%(git log --pretty=format:"%H" origin/master..#{name}))
+                 .then { |result, _status| result.split "\n" }
           end
 
           private
 
-          attr_reader :shell
+          attr_reader :environment, :shell
 
           def prepare_project
-            slug = self.class.pull_request_slug
+            slug = pull_request_slug
 
             unless slug.empty?
               shell.capture2e "git remote add -f original_branch https://github.com/#{slug}.git"
@@ -52,6 +38,18 @@ module Git
 
             shell.capture2e "git remote set-branches --add origin master"
             shell.capture2e "git fetch"
+          end
+
+          def ci_branch
+            environment["TRAVIS_BRANCH"]
+          end
+
+          def pull_request_branch
+            environment["TRAVIS_PULL_REQUEST_BRANCH"]
+          end
+
+          def pull_request_slug
+            environment["TRAVIS_PULL_REQUEST_SLUG"]
           end
         end
       end

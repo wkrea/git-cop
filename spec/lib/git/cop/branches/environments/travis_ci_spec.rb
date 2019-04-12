@@ -3,58 +3,41 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Environments::TravisCI do
-  subject(:travis_ci) { described_class.new shell: shell }
+  subject(:travis_ci) { described_class.new environment: environment, shell: shell }
 
+  let(:environment) { {} }
   let(:shell) { class_spy Open3 }
 
-  describe ".ci_branch" do
-    it "answers branch" do
-      ClimateControl.modify TRAVIS_BRANCH: "test" do
-        expect(described_class.ci_branch).to eq("test")
-      end
-    end
-  end
-
-  describe ".pull_request_branch" do
-    it "answers branch" do
-      ClimateControl.modify TRAVIS_PULL_REQUEST_BRANCH: "test" do
-        expect(described_class.pull_request_branch).to eq("test")
-      end
-    end
-  end
-
-  describe ".pull_request_slug" do
-    it "answers slug" do
-      ClimateControl.modify TRAVIS_PULL_REQUEST_SLUG: "test" do
-        expect(described_class.pull_request_slug).to eq("test")
-      end
-    end
-  end
-
   describe "#name" do
-    it "answers pull request branch name when defined" do
-      allow(described_class).to receive(:pull_request_branch).and_return("pr_test")
-      allow(described_class).to receive(:ci_branch).and_return("ci_test")
+    context "with pull request branch" do
+      let :environment do
+        {
+          "TRAVIS_PULL_REQUEST_BRANCH" => "pr_test",
+          "TRAVIS_BRANCH" => "ci_test"
+        }
+      end
 
-      expect(travis_ci.name).to eq("pr_test")
+      it "answers pull request branch name" do
+        expect(travis_ci.name).to eq("pr_test")
+      end
     end
 
-    it "answers ci branch name when pull request branch is undefined" do
-      allow(described_class).to receive(:pull_request_branch).and_return("")
-      allow(described_class).to receive(:ci_branch).and_return("ci_test")
+    context "without pull request branch and CI branch" do
+      let :environment do
+        {
+          "TRAVIS_PULL_REQUEST_BRANCH" => "",
+          "TRAVIS_BRANCH" => "ci_test"
+        }
+      end
 
-      expect(travis_ci.name).to eq("ci_test")
+      it "answers CI branch name" do
+        expect(travis_ci.name).to eq("ci_test")
+      end
     end
   end
 
   describe "#shas" do
     let(:commits_command) { %(git log --pretty=format:"%H" origin/master..test_name) }
-    let :environment do
-      {
-        TRAVIS_PULL_REQUEST_BRANCH: "test_name",
-        TRAVIS_PULL_REQUEST_SLUG: ""
-      }
-    end
 
     before do
       allow(shell).to receive(:capture2e).with("git remote set-branches --add origin master")
@@ -62,14 +45,28 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
       allow(shell).to receive(:capture2e).with(commits_command).and_return(["abc\ndef", true])
     end
 
-    it "answers Git commit SHAs without pull request slug" do
-      ClimateControl.modify environment do
+    context "with pull request branch and without slug" do
+      let :environment do
+        {
+          "TRAVIS_PULL_REQUEST_BRANCH" => "test_name",
+          "TRAVIS_PULL_REQUEST_SLUG" => ""
+        }
+      end
+
+      it "answers Git commit SHAs" do
         expect(travis_ci.shas).to contain_exactly("abc", "def")
       end
     end
 
-    it "answers Git commit SHAs with pull request slug" do
-      ClimateControl.modify environment.merge(TRAVIS_PULL_REQUEST_SLUG: "test_slug") do
+    context "with pull request branch and slug" do
+      let :environment do
+        {
+          "TRAVIS_PULL_REQUEST_BRANCH" => "test_name",
+          "TRAVIS_PULL_REQUEST_SLUG" => "test_slug"
+        }
+      end
+
+      it "answers Git commit SHAs" do
         remote_add_command = "git remote add -f original_branch https://github.com/test_slug.git"
         remote_fetch_command = "git fetch original_branch test_name:test_name"
         allow(shell).to receive(:capture2e).with(remote_add_command)
