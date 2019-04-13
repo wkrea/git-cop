@@ -9,9 +9,10 @@ RSpec.describe Git::Cop::Reporters::Cop do
   let(:cop_class) { class_spy Git::Cop::Styles::CommitAuthorEmail, label: "Commit Author Email" }
 
   let :cop_instance do
-    instance_spy Git::Cop::Styles::CommitAuthorEmail, class: cop_class,
-                                                      severity: severity,
-                                                      issue: issue
+    instance_spy Git::Cop::Styles::CommitAuthorEmail,
+                 class: cop_class,
+                 severity: severity,
+                 issue: issue
   end
 
   describe "#to_s" do

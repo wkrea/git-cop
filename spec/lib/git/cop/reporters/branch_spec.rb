@@ -26,13 +26,14 @@ RSpec.describe Git::Cop::Reporters::Branch do
       let(:collector) { Git::Cop::Collector.new }
 
       let :cop_instance do
-        instance_spy Git::Cop::Styles::CommitAuthorEmail, class: cop_class,
-                                                          commit: commit,
-                                                          severity: :warn,
-                                                          invalid?: true,
-                                                          warning?: true,
-                                                          error?: false,
-                                                          issue: issue
+        instance_spy Git::Cop::Styles::CommitAuthorEmail,
+                     class: cop_class,
+                     commit: commit,
+                     severity: :warn,
+                     invalid?: true,
+                     warning?: true,
+                     error?: false,
+                     issue: issue
       end
 
       before { collector.add cop_instance }
@@ -56,13 +57,14 @@ RSpec.describe Git::Cop::Reporters::Branch do
       let(:collector) { Git::Cop::Collector.new }
 
       let :cop_instance do
-        instance_spy Git::Cop::Styles::CommitAuthorEmail, class: cop_class,
-                                                          commit: commit,
-                                                          severity: :error,
-                                                          invalid?: true,
-                                                          warning?: false,
-                                                          error?: true,
-                                                          issue: issue
+        instance_spy Git::Cop::Styles::CommitAuthorEmail,
+                     class: cop_class,
+                     commit: commit,
+                     severity: :error,
+                     invalid?: true,
+                     warning?: false,
+                     error?: true,
+                     issue: issue
       end
 
       before do
