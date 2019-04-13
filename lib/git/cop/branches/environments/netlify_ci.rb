@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
-require "open3"
-
 module Git
   module Cop
     module Branches
       module Environments
         # Provides Netlify CI build environment feature branch information.
         class NetlifyCI
-          def initialize environment: ENV, shell: Open3
+          def initialize environment: ENV, repo: Git::Kit::Repo.new
             @environment = environment
-            @shell = shell
+            @repo = repo
           end
 
           def name
@@ -18,13 +16,12 @@ module Git
           end
 
           def shas
-            shell.capture2e(%(git log --pretty=format:"%H" master..#{name}))
-                 .then { |result, _status| result.split "\n" }
+            repo.shas start: "master", finish: name
           end
 
           private
 
-          attr_reader :environment, :shell
+          attr_reader :environment, :repo
         end
       end
     end

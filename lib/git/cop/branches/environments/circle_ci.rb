@@ -1,30 +1,26 @@
 # frozen_string_literal: true
 
-require "open3"
-
 module Git
   module Cop
     module Branches
       module Environments
-        # Provides feature branch information for Circle CI build environment.
+        # Provides Circle CI build environment feature branch information.
         class CircleCI
-          def initialize shell: Open3
-            @shell = shell
+          def initialize repo: Git::Kit::Repo.new
+            @repo = repo
           end
 
           def name
-            result, _status = shell.capture2e "git rev-parse --abbrev-ref HEAD | tr -d '\n'"
-            "origin/#{result}"
+            "origin/#{repo.branch_name}"
           end
 
           def shas
-            result, _status = shell.capture2e %(git log --pretty=format:"%H" origin/master..#{name})
-            result.split "\n"
+            repo.shas start: "origin/master", finish: name
           end
 
           private
 
-          attr_reader :shell
+          attr_reader :repo
         end
       end
     end

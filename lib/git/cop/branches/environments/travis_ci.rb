@@ -8,8 +8,9 @@ module Git
       module Environments
         # Provides Travis CI build environment feature branch information.
         class TravisCI
-          def initialize environment: ENV, shell: Open3
+          def initialize environment: ENV, repo: Git::Kit::Repo.new, shell: Open3
             @environment = environment
+            @repo = repo
             @shell = shell
           end
 
@@ -19,14 +20,12 @@ module Git
 
           def shas
             prepare_project
-
-            shell.capture2e(%(git log --pretty=format:"%H" origin/master..#{name}))
-                 .then { |result, _status| result.split "\n" }
+            repo.shas start: "origin/master", finish: name
           end
 
           private
 
-          attr_reader :environment, :shell
+          attr_reader :environment, :repo, :shell
 
           def prepare_project
             slug = pull_request_slug

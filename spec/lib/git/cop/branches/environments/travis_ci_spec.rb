@@ -3,9 +3,10 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Environments::TravisCI do
-  subject(:travis_ci) { described_class.new environment: environment, shell: shell }
+  subject(:travis_ci) { described_class.new environment: environment, repo: repo, shell: shell }
 
   let(:environment) { {} }
+  let(:repo) { instance_spy Git::Kit::Repo, shas: %w[abc def] }
   let(:shell) { class_spy Open3 }
 
   describe "#name" do
@@ -42,7 +43,6 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
     before do
       allow(shell).to receive(:capture2e).with("git remote set-branches --add origin master")
       allow(shell).to receive(:capture2e).with("git fetch")
-      allow(shell).to receive(:capture2e).with(commits_command).and_return(["abc\ndef", true])
     end
 
     context "with pull request branch and without slug" do
@@ -51,6 +51,11 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
           "TRAVIS_PULL_REQUEST_BRANCH" => "test_name",
           "TRAVIS_PULL_REQUEST_SLUG" => ""
         }
+      end
+
+      it "uses specific start and finish range" do
+        travis_ci.shas
+        expect(repo).to have_received(:shas).with(start: "origin/master", finish: "test_name")
       end
 
       it "answers Git commit SHAs" do
@@ -66,12 +71,23 @@ RSpec.describe Git::Cop::Branches::Environments::TravisCI do
         }
       end
 
-      it "answers Git commit SHAs" do
-        remote_add_command = "git remote add -f original_branch https://github.com/test_slug.git"
-        remote_fetch_command = "git fetch original_branch test_name:test_name"
+      let :remote_add_command do
+        "git remote add -f original_branch https://github.com/test_slug.git"
+      end
+
+      let(:remote_fetch_command) { "git fetch original_branch test_name:test_name" }
+
+      before do
         allow(shell).to receive(:capture2e).with(remote_add_command)
         allow(shell).to receive(:capture2e).with(remote_fetch_command)
+      end
 
+      it "uses specific start and finish range" do
+        travis_ci.shas
+        expect(repo).to have_received(:shas).with(start: "origin/master", finish: "test_name")
+      end
+
+      it "answers Git commit SHAs" do
         expect(travis_ci.shas).to contain_exactly("abc", "def")
       end
     end

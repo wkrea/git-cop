@@ -3,26 +3,23 @@
 require "spec_helper"
 
 RSpec.describe Git::Cop::Branches::Environments::Local do
-  subject(:local) { described_class.new shell: shell }
+  subject(:local) { described_class.new repo: repo }
 
-  let(:shell) { class_spy Open3 }
+  let(:repo) { instance_spy Git::Kit::Repo, branch_name: "test", shas: %w[abc def] }
 
   describe "#name" do
     it "answers Git branch name" do
-      command = "git rev-parse --abbrev-ref HEAD | tr -d '\n'"
-      allow(shell).to receive(:capture2e).with(command).and_return(["test", true])
-
       expect(local.name).to eq("test")
     end
   end
 
   describe "#shas" do
-    it "answers Git commit SHAs" do
-      name_command = "git rev-parse --abbrev-ref HEAD | tr -d '\n'"
-      shas_command = %(git log --pretty=format:"%H" master..test)
-      allow(shell).to receive(:capture2e).with(name_command).and_return("test")
-      allow(shell).to receive(:capture2e).with(shas_command).and_return(["abc\ndef", true])
+    it "uses specific start and finish range" do
+      local.shas
+      expect(repo).to have_received(:shas).with(start: "master", finish: "test")
+    end
 
+    it "answers Git commit SHAs" do
       expect(local.shas).to contain_exactly("abc", "def")
     end
   end
