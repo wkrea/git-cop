@@ -1,3 +1,21 @@
+# 3.4.0 (2019-04-13)
+
+- Fixed Rubocop layout issues.
+- Fixed multpile line commit messages for specs.
+- Added Git kit repo branch name and SHA functionality.
+- Added Netlify build status badge to README.
+- Added Netlify environment detection.
+- Added Netlify environment.
+- Added Rubocop Performance gem.
+- Added Travis CI build status to README.
+- Updated to Code Quality 4.0.0.
+- Updated to Rubocop 0.67.0.
+- Removed Code Climate gem.
+- Refactored Git kit repo to be constructed.
+- Refactored Travis CI environment to inject environment.
+- Refactored branch environemnts to use Git repo.
+- Refactored feature branch to inject environment.
+
 # 3.3.0 (2019-03-16)
 
 - Fixed Commit Trailer Collaborator Email cop email handling.

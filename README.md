@@ -36,6 +36,7 @@ history.
       - [Post Commit](#post-commit)
     - [Continuous Integration (CI)](#continuous-integration-ci)
       - [Circle CI](#circle-ci)
+      - [Netlify CI](#netlify-ci)
       - [Travis CI](#travis-ci)
   - [Cops](#cops)
     - [Commit Author Capitalization](#commit-author-capitalization)
@@ -413,6 +414,16 @@ server that is not listed, please open a pull request with support.
 
 This gem automatically detects and configures itself for [Circle CI](https://circleci.com) builds by
 checking the `CIRCLECI` environment variable. No additional setup required!
+
+#### Netlify CI
+
+This gem automatically detects and configures itself for [Netlify CI](https://www.netlify.com) builds by
+checking the Netlify `DEPLOY_URL` environment variable. No additional setup required!
+
+*:information_source: We have a [pull request](https://github.com/netlify/build-image/pull/297) open with the
+Netlify team that, in the future, will allow us to auto-detect the Netlify environment via the
+`NETLIFY` environment key instead. Regardless, you shouldn't have to worry about any of this as Git
+Cop will do the right thing.*
 
 #### Travis CI
 
