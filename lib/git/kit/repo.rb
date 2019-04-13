@@ -3,9 +3,18 @@
 module Git
   module Kit
     class Repo
-      def self.exist?
-        system "git rev-parse --git-dir > /dev/null 2>&1"
+      def initialize shell: Open3
+        @shell = shell
       end
+
+      def exist?
+        shell.capture2e("git rev-parse --git-dir > /dev/null 2>&1")
+             .then { |result, status| result && status.success? }
+      end
+
+      private
+
+      attr_reader :shell
     end
   end
 end

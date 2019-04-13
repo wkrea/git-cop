@@ -8,7 +8,7 @@ RSpec.describe Git::Cop::Branches::Feature do
   let(:environment) { {} }
 
   describe ".initialize", :temp_dir do
-    let(:git_repo) { class_spy Git::Kit::Repo, exist?: exist }
+    let(:git_repo) { instance_spy Git::Kit::Repo, exist?: exist }
 
     context "when Git repository exists" do
       let(:exist) { true }

@@ -11,7 +11,7 @@ module Git
 
         def_delegators :selected_environment, :name, :shas
 
-        def initialize environment: ENV, git_repo: Git::Kit::Repo
+        def initialize environment: ENV, git_repo: Git::Kit::Repo.new
           message = "Invalid repository. Are you within a Git-enabled project?"
           fail Errors::Base, message unless git_repo.exist?
 
