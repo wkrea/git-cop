@@ -23,4 +23,68 @@ RSpec.describe Git::Kit::Repo do
       end
     end
   end
+
+  describe "#branch_name", :git_repo do
+    it "answers master branch name" do
+      Dir.chdir(git_repo_dir) { expect(repo.branch_name).to eq("master") }
+    end
+
+    it "answers feature branch name" do
+      Dir.chdir git_repo_dir do
+        `git checkout -b test > /dev/null 2>&1`
+        expect(repo.branch_name).to eq("test")
+      end
+    end
+  end
+
+  describe "#shas", :git_repo do
+    context "with default start and finish" do
+      it "answers array of SHAs" do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test > /dev/null 2>&1`
+          git_commit_file "test.md"
+          sha = `git log --pretty=format:%H -1`
+
+          expect(repo.shas).to eq([sha])
+        end
+      end
+    end
+
+    context "with custom start and finish" do
+      it "answers array of SHAs" do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test > /dev/null 2>&1`
+          git_commit_file "test.md"
+          sha = `git log --pretty=format:%H -1`
+
+          expect(repo.shas(start: "master", finish: "test")).to eq([sha])
+        end
+      end
+    end
+
+    context "with multiple commits" do
+      it "answers empty array" do
+        Dir.chdir git_repo_dir do
+          `git checkout -b test > /dev/null 2>&1`
+          git_commit_file "one.md"
+          git_commit_file "two.md"
+          shas = `git log --pretty=format:%H -2`.split "\n"
+
+          expect(repo.shas(start: "master", finish: "test")).to eq(shas)
+        end
+      end
+    end
+
+    context "with no commits" do
+      it "answers empty array" do
+        Dir.chdir(git_repo_dir) { expect(repo.shas).to eq([]) }
+      end
+    end
+
+    def git_commit_file name
+      `touch #{name}`
+      `git add --all`
+      `git commit -m "Added #{name}."`
+    end
+  end
 end
