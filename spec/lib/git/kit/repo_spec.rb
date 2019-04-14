@@ -80,11 +80,5 @@ RSpec.describe Git::Kit::Repo do
         Dir.chdir(git_repo_dir) { expect(repo.shas).to eq([]) }
       end
     end
-
-    def git_commit_file name
-      `touch #{name}`
-      `git add --all`
-      `git commit -m "Added #{name}."`
-    end
   end
 end

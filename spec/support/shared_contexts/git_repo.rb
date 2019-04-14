@@ -26,4 +26,10 @@ RSpec.shared_context "Git Repository", :git_repo do
 
     FileUtils.rm_rf temp_dir
   end
+
+  def git_commit_file name
+    `touch #{name}`
+    `git add --all`
+    `git commit -m "Added #{name}."`
+  end
 end

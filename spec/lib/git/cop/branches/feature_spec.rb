@@ -104,9 +104,7 @@ RSpec.describe Git::Cop::Branches::Feature do
       before do
         Dir.chdir git_repo_dir do
           `git checkout -b test`
-          `touch test.txt`
-          `git add --all .`
-          `git commit --message "Added test file."`
+          git_commit_file "test.txt"
         end
       end
 
@@ -129,9 +127,7 @@ RSpec.describe Git::Cop::Branches::Feature do
       before do
         Dir.chdir git_repo_dir do
           `git checkout -b test`
-          `touch test.txt`
-          `git add --all .`
-          `git commit --message "Added test file."`
+          git_commit_file "test.txt"
         end
       end
 
