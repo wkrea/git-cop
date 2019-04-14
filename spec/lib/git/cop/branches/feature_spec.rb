@@ -43,7 +43,7 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "answers name" do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           expect(feature_branch.name).to eq("origin/test")
         end
       end
@@ -61,7 +61,7 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "answers name" do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           expect(feature_branch.name).to eq("test")
         end
       end
@@ -78,7 +78,7 @@ RSpec.describe Git::Cop::Branches::Feature do
 
       it "answers name" do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           expect(feature_branch.name).to eq("test")
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe Git::Cop::Branches::Feature do
     context "with local environment", :git_repo do
       before do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
         end
       end
 
@@ -103,7 +103,7 @@ RSpec.describe Git::Cop::Branches::Feature do
     context "with local environment", :git_repo do
       before do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           git_commit_file "test.txt"
         end
       end
@@ -126,7 +126,7 @@ RSpec.describe Git::Cop::Branches::Feature do
     context "with local environment", :git_repo do
       before do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           git_commit_file "test.txt"
         end
       end

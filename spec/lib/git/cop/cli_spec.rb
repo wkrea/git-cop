@@ -21,7 +21,7 @@ RSpec.describe Git::Cop::CLI do
     context "with warnings" do
       before do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           `printf "%s\n" "Test content." > one.txt`
           `git add --all .`
           `git commit --no-verify --message "Added test file."`
@@ -71,7 +71,7 @@ RSpec.describe Git::Cop::CLI do
     context "with errors" do
       before do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           `printf "%s\n" "Test content." > one.txt`
           `git add --all .`
           `git commit --no-verify --message "Made a test commit"`
@@ -108,7 +108,7 @@ RSpec.describe Git::Cop::CLI do
     context "with no issues" do
       before do
         Dir.chdir git_repo_dir do
-          `git checkout -b test`
+          git_create_branch
           `printf "%s\n" "Test content." > one.txt`
           `git add --all .`
           `git commit --no-verify --message "Added a test commit." --message "A test body."`

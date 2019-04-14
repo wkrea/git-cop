@@ -19,7 +19,7 @@ RSpec.describe Git::Cop::Runner, :temp_dir, :git_repo do
 
   before do
     Dir.chdir git_repo_dir do
-      `git checkout -b test`
+      git_create_branch
       `printf "%s\n" "Test content." > one.txt`
       `git add --all .`
     end

@@ -31,7 +31,7 @@ RSpec.describe Git::Kit::Repo do
 
     it "answers feature branch name" do
       Dir.chdir git_repo_dir do
-        `git checkout -b test > /dev/null 2>&1`
+        git_create_branch
         expect(repo.branch_name).to eq("test")
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe Git::Kit::Repo do
     context "with default start and finish" do
       it "answers array of SHAs" do
         Dir.chdir git_repo_dir do
-          `git checkout -b test > /dev/null 2>&1`
+          git_create_branch
           git_commit_file "test.md"
           sha = `git log --pretty=format:%H -1`
 
@@ -53,7 +53,7 @@ RSpec.describe Git::Kit::Repo do
     context "with custom start and finish" do
       it "answers array of SHAs" do
         Dir.chdir git_repo_dir do
-          `git checkout -b test > /dev/null 2>&1`
+          git_create_branch
           git_commit_file "test.md"
           sha = `git log --pretty=format:%H -1`
 
@@ -65,7 +65,7 @@ RSpec.describe Git::Kit::Repo do
     context "with multiple commits" do
       it "answers empty array" do
         Dir.chdir git_repo_dir do
-          `git checkout -b test > /dev/null 2>&1`
+          git_create_branch
           git_commit_file "one.md"
           git_commit_file "two.md"
           shas = `git log --pretty=format:%H -2`.split "\n"

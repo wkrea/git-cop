@@ -27,6 +27,10 @@ RSpec.shared_context "Git Repository", :git_repo do
     FileUtils.rm_rf temp_dir
   end
 
+  def git_create_branch name = "test"
+    `git checkout -b "#{name}" > /dev/null 2>&1`
+  end
+
   def git_commit_file name
     `touch #{name}`
     `git add --all`
