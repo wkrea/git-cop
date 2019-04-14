@@ -1,27 +1,32 @@
 # frozen_string_literal: true
 
+require "open3"
+
 module Git
   module Cop
     module Branches
       module Environments
         # Provides Netlify CI build environment feature branch information.
         class NetlifyCI
-          def initialize environment: ENV, repo: Git::Kit::Repo.new
+          def initialize environment: ENV, repo: Git::Kit::Repo.new, shell: Open3
             @environment = environment
             @repo = repo
+            @shell = shell
           end
 
           def name
-            environment["COMMIT_REF"]
+            environment["HEAD"]
           end
 
           def shas
-            repo.shas start: "master", finish: name
+            shell.capture2e "git remote add -f origin #{environment["REPOSITORY_URL"]}"
+            shell.capture2e "git fetch origin #{name}:#{name}"
+            repo.shas start: "origin/master", finish: "origin/#{name}"
           end
 
           private
 
-          attr_reader :environment, :repo
+          attr_reader :environment, :repo, :shell
         end
       end
     end

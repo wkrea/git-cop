@@ -54,7 +54,7 @@ RSpec.describe Git::Cop::Branches::Feature do
         {
           "CIRCLECI" => "false",
           "DEPLOY_URL" => "http://www.example.com/netlify/path",
-          "COMMIT_REF" => "test",
+          "HEAD" => "test",
           "TRAVIS" => "false"
         }
       end
