@@ -1,3 +1,11 @@
+# 3.4.1 (2019-04-14)
+
+- Fixed Netlify branch detection.
+- Fixed Ruby warnings.
+- Added Ruby warnings to RSpec helper.
+- Refactored RSpec Git branch creation to shared context.
+- Refactored RSpec Git commit file helper to shared context.
+
 # 3.4.0 (2019-04-13)
 
 - Fixed Rubocop layout issues.
