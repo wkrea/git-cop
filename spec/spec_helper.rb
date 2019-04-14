@@ -23,7 +23,7 @@ ENV["TRAVIS"] = "false"
 RSpec.configure do |config|
   config.color = true
   config.disable_monkey_patching!
-  config.example_status_persistence_file_path = "./tmp/rspec-status.txt"
+  config.example_status_persistence_file_path = "./tmp/rspec-examples.txt"
   config.filter_run_when_matching :focus
   config.formatter = ENV["CI"] == "true" ? :progress : :documentation
   config.mock_with(:rspec) { |mocks| mocks.verify_partial_doubles = true }
