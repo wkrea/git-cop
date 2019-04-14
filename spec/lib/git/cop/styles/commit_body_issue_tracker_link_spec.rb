@@ -40,7 +40,7 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
   end
 
   describe "#valid?" do
-    context "when no links" do
+    context "with no links" do
       let(:body_lines) { ["A body line."] }
 
       it "answers true" do
@@ -48,38 +48,38 @@ RSpec.describe Git::Cop::Styles::CommitBodyIssueTrackerLink do
       end
     end
 
-    context "with fix link" do
-      ["fix #1", "Fix #12", "fixes #3", "Fixes #4", "fixed #5", "Fixed #6"].each do |line|
+    ["fix #1", "Fix #12", "fixes #3", "Fixes #4", "fixed #5", "Fixed #6"].each do |line|
+      context %(with "#{line}" link) do
         let(:body_lines) { [line] }
 
-        it %(answers false with "#{line}") do
+        it "answers false" do
           expect(cop.valid?).to eq(false)
         end
       end
     end
 
-    context "with close link" do
-      ["close #1", "Close #12", "closes #3", "Closes #4", "closed #5", "Closed #6"].each do |line|
+    ["close #1", "Close #12", "closes #3", "Closes #4", "closed #5", "Closed #6"].each do |line|
+      context %(with "#{line}" link) do
         let(:body_lines) { [line] }
 
-        it %(answers false with "#{line}") do
+        it "answers false" do
           expect(cop.valid?).to eq(false)
         end
       end
     end
 
-    context "with resolve link" do
-      [
-        "resolve #1",
-        "Resolve #12",
-        "resolves #3",
-        "Resolves #4",
-        "resolved #5",
-        "Resolved #6"
-      ].each do |line|
+    [
+      "resolve #1",
+      "Resolve #12",
+      "resolves #3",
+      "Resolves #4",
+      "resolved #5",
+      "Resolved #6"
+    ].each do |line|
+      context %(with "#{line}" link) do
         let(:body_lines) { [line] }
 
-        it %(answers false with "#{line}") do
+        it "answers false" do
           expect(cop.valid?).to eq(false)
         end
       end
