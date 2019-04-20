@@ -907,7 +907,9 @@ worth considering:
   - Provide a high level overview that answers *why* the pull request is necessary.
   - Provide a link to the issue/task that prompted the pull request (if any).
   - Provide screenshots/screencasts if possible.
-  - Ensure all commits within the pull request are related to the purpose of the pull request.
+  - Ensure commits within the pull request are related to the purpose of the pull request.
+  - [Prefer pull requests with ~250 lines or less](https://is.gd/l5bcij) in order to keep the
+    quality of the code review and defect detection high.
   - Avoid working on a large issue without getting feedback first in order to not overwhelm/surprise
     the maintainers. More discussion up front will help ensure your work has a higher chance of
     acceptance.
