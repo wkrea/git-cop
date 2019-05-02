@@ -1,3 +1,9 @@
+# 3.4.2 (2019-05-01)
+
+- Updated RSpec helper examples file name.
+- Updated RSpec helper to verify constant names.
+- Updated to Ruby 2.6.3.
+
 # 3.4.1 (2019-04-14)
 
 - Fixed Netlify branch detection.
