@@ -62,8 +62,8 @@ module Git
       def police
         collector = analyze_commits options.commits
         abort if collector.errors?
-      rescue Errors::Base => exception
-        abort colorizer.red("#{Identity.label}: #{exception.message}")
+      rescue Errors::Base => error
+        abort colorizer.red("#{Identity.label}: #{error.message}")
       end
 
       desc "--hook", "Add Git Hook support."
@@ -78,8 +78,8 @@ module Git
         else
           help "--hook"
         end
-      rescue Errors::Base => exception
-        abort colorizer.red("#{Identity.label}: #{exception.message}")
+      rescue Errors::Base => error
+        abort colorizer.red("#{Identity.label}: #{error.message}")
       end
 
       desc "-v, [--version]", "Show gem version."
